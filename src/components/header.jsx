@@ -37,7 +37,7 @@ export default function Header() {
     }
     //input search mobile
     function setVisibility() {
-        if (document.getElementById("search").style.display == "none") {
+        if (document.getElementById("search").style.display === "none") {
             document.getElementById("search").style.display = "block";
         } else {
             document.getElementById("search").style.display = "none";

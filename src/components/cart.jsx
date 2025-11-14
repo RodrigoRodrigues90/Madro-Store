@@ -14,8 +14,8 @@ import Loading from '../components/loading';
 
 export default function cart() {
     //===pega o estado do carrinho===//
-    const { valorFrete, frete, produtos, activeState } = useSelector(({ cartReducer }) => cartReducer);
-
+    const { valorFrete, frete, produtos = [], activeState } = useSelector(({ cartReducer }) => cartReducer);
+    const shippingServices = frete?.data?.ShippingSevicesArray || [];
 
     // ===altera o estado de ativo/desativo do menu do carrinho de compras===//
     const dispatch = useDispatch();
@@ -61,6 +61,10 @@ export default function cart() {
     }
     const sendToFetch = async () => {
         try {
+            dispatch({
+                type: actionTypes.VALORFRETE,
+                payload: 0
+            });
             setloading(true);
             const response = await calculateFrete(dispatch, cep);
             changeRes(response)
@@ -121,36 +125,37 @@ export default function cart() {
                     {isloading && <Loading />}
 
                     {/* info frete */}
-                    {frete && frete.data && frete.data[0]?.price && (
+                    {frete && frete.servicos && frete.servicos[2]?.ShippingPrice && (
                         <ItemFrete
-                            prazo={frete.data[0].custom_delivery_time}
-                            valor={frete.data[0].price}
-                            nome="PAC"
+                            prazo={frete.servicos[2].DeliveryTime}
+                            valor={frete.servicos[2].ShippingPrice}
+                            nome={frete.servicos[2].ServiceDescription}
                         />
                     )}
-                    {frete && frete.data && frete.data[1]?.price && (
+                    {frete && frete.servicos && frete.servicos[0]?.ShippingPrice && (
                         <ItemFrete
-                            prazo={frete.data[1].custom_delivery_time}
-                            valor={frete.data[1].price}
-                            nome="SEDEX"
+                            prazo={frete.servicos[0].DeliveryTime}
+                            valor={frete.servicos[0].ShippingPrice}
+                            nome={frete.servicos[0].ServiceDescription}
                         />
                     )}
 
                     {/* cep inválido */}
-                    { res && res.errors && !isloading && (<p style={{
-                        color: "#daaddb9",
-                        padding: "1em",
-                        display: "flex",
-                        justifyContent: "center",
-                        fontWeight: "bold"
-                    }}>Verifique o Cep</p>
+                    {(res && !isloading && shippingServices.length === 0) && (
+                        <p style={{
+                            color: "#daaddb9",
+                            padding: "1em",
+                            display: "flex",
+                            justifyContent: "center",
+                            fontWeight: "bold"
+                        }}>Verifique o Cep</p>
                     )}
 
                     <p style={{ fontSize: "12px" }}>O prazo de entrega <strong> não contabiliza feriados.</strong></p>
                 </div>
 
                 {/* Total da compra */}
-                <div style={produtos.length == 0 || valorFrete == 0 ? { display: "none" } : { display: "block" }} className='payment-wrapper'>
+                <div style={produtos.length === 0 || parseFloat(valorFrete) === 0 ? { display: "none" } : { display: "block" }} className='payment-wrapper'>
                     <div className='price-wrapper'>
                         <h1>Total: </h1>
                         <div style={{ textAlign: 'end' }}>

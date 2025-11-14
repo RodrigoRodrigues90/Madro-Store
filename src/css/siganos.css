@@ -47,8 +47,8 @@
     display: flex;
     color: #ae325b;
     font-weight:900;
-    font-size: 24px;
-    padding:.2em;
+    font-size: 18px;
+    
 }
 .siganos-wrapper img{
     width: 15%;
@@ -73,8 +73,8 @@
     background-color: #aa788957;
     transition: 1s;    
 }
-@media (width < 380px){
-    .titulo-siganos h1{
-        font-size: 23px;
+@media (width < 480px){
+    .titulo-siganos{
+        font-size: 10px;
     }
 }

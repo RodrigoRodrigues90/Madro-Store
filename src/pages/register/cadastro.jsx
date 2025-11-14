@@ -41,6 +41,7 @@ const Cadastro = () => {
             setLoading(true);
             const response = await createUser(value);
             showAlert(response.msg)
+            navigate('/Madro-Store');
         } catch (e) {
             showAlert(e)
         } finally {

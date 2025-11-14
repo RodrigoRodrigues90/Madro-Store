@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Overlay from '../../components/overlay';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
@@ -16,7 +17,7 @@ const Login = () => {
     const [isLoading, setLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState(null);
     const [responseStatus, setResponseStatus] = useState(null)
-
+    const navigate = useNavigate();
     //validação de formulário
     const validationSchema = Yup.object().shape({
         email: Yup.string().email('*E-mail inválido*').required('Campo obrigatório*'),
@@ -29,7 +30,8 @@ const Login = () => {
             setLoading(true);
             const response = await logUser(values);
             if (response.status == 200) {
-                window.alert("logado!")
+                window.alert(`Olá, ${response.msg} \u{1F60A}\u2764`)
+                navigate('/Madro-Store');
             } else {
                 setResponseStatus(response.status)
                 setResponseMessage(response.msg);

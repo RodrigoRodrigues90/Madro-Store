@@ -1,6 +1,6 @@
 export default function createUser(values) {
 
-     const backendEndpoint = 'https://expressjs-madro.up.railway.app/auth/register';
+     const backendEndpoint = "https://expressjs-puce.vercel.app/auth/register" ;
     //local
     //const backendEndpoint = 'http://localhost:3333/auth/register';
     return new Promise((resolve, reject) => {

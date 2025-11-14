@@ -1,6 +1,5 @@
-export default function logUser(values) {
-
-    const backendEndpoint = 'https://expressjs-madro.up.railway.app/auth/login';
+export default function logUser(values) {         
+    const backendEndpoint = "https://expressjs-puce.vercel.app/auth/login" ;
     //local
     //const backendEndpoint = 'http://localhost:3333/auth/login';
     return new Promise((resolve, reject) => {
