@@ -1,104 +1,89 @@
-import "../css/sectionImage.css";
+import { useRef } from 'react';
+import { gsap } from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { Sparkles, ArrowDown, ShoppingBag } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import video from '../assets/backGround.mp4';
+import '../css/section.css';
 
-import dicanatal from "../assets/madro/dica_natal.jpeg";
-import dicamae from "../assets/madro/dica_mae.jpeg";
-import dicaamiga from "../assets/madro/amiga.jpeg";
-import dicairma from "../assets/madro/irma.jpeg";
-import novidades from "../assets/madro/novidades.jpg";
+export default function HeroSection() {
+    const containerRef = useRef(null);
+    const titleRef = useRef(null);
+    const badgeRef = useRef(null);
+    const sloganRef = useRef(null);
+    const ctaRef = useRef(null);
 
+    useGSAP(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-import truck from "../assets/section/truck.svg";
-import desconto from "../assets/section/desconto.svg";
-import parcela from "../assets/section/card.svg";
-
-import { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectFade, Autoplay } from 'swiper/modules'
-
-
-export default function SectionImage() {
-    
-    /*muda os itens que aparecem em tela sobre o 
-    carrosel de frete,desconto,parcelamento de acordo 
-    com o tamanho da tela*/
-    const [slidePerView, setSlidePerview] = useState(3)
-    
-    useEffect(() =>{
-
-        function handleResize() {
-          if(window.innerWidth < 700){
-            setSlidePerview(1)
-          }else{
-            setSlidePerview(3)
-          }  
-        }
-        handleResize();
-
-        window.addEventListener("resize",handleResize)
-    },[])
-
-    const data = [
-        { id: "1", image: dicanatal },
-        { id: "2", image: dicamae },
-        { id: "3", image: dicairma},
-        { id: "4", image: dicaamiga },
-        { id: "5", image: novidades}
-    ]
+        // Animação em sequência (Stagger / Timeline)
+        tl.fromTo(
+            badgeRef.current,
+            { y: -30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, delay: 0.2 }
+        )
+        .fromTo(
+            titleRef.current,
+            { scale: 0.8, opacity: 0, y: 30 },
+            { scale: 1, opacity: 1, y: 0, duration: 1.2 },
+            "-=0.4"
+        )
+        .fromTo(
+            sloganRef.current,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8 },
+            "-=0.6"
+        )
+        .fromTo(
+            ctaRef.current,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8 },
+            "-=0.4"
+        );
+    }, { scope: containerRef });
 
     return (
-        <div className="container">
+        <section ref={containerRef} className="hero-container">
+            <video 
+                className="hero-video" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+            >
+                <source 
+                    src={video} 
+                    type="video/mp4" 
+                />
+                Seu navegador não suporta vídeos HTML5.
+            </video>
+            <div className="hero-overlay"></div>
 
-            <div className="image-container">
+            <div className="hero-content">
+                <div ref={badgeRef} className="hero-badge">
+                    <Sparkles size={16} className="badge-icon" />
+                    <span>Coleção Exclusiva</span>
+                </div>
 
-                <Swiper
-                    modules={[EffectFade, Autoplay]}
-                    slidesPerView={1}
-                    pagination={{ clickable: true }}
-                    navigation={{ enabled: true }}
-                    loop="4"
-                    autoplay={{ delay: 5000 }}
-                    className="swiper"
+                <h1 ref={titleRef} className="hero-title">
+                    MADRO
+                </h1>
 
-                >
-                    {data.map((item) => (
-                        <SwiperSlide key={item.id} >
-                            <img src={item.image}
-                                alt="banner"
-                                className="image-banner" />
-                        </SwiperSlide>
-                    ))
-                    }
-                </Swiper>
+                <p ref={sloganRef} className="hero-slogan">
+                    Realce sua essência com o brilho dos detalhes.
+                </p>
+
+                <div ref={ctaRef} className="hero-actions">
+                    <Link to="/Madro-Store/produtos" className="btn-primary">
+                        <ShoppingBag size={18} />
+                        Explorar Produtos
+                    </Link>
+                </div>
             </div>
-            <div className="div-slider-button">
-            </div>
-            <Swiper
-                modules={[]} 
-                pagination={{ clickable: true }}
-                slidesPerView={slidePerView}
-                className="frete-wraper">
-                <SwiperSlide className="fret-cart">
-                    <div className="img-div">
-                        <img src={truck} alt="entrega"></img>
-                    </div>
-                    <h4>FRETE GRÁTIS</h4>
-                    <p>Para região de Florianópolis</p>
-                </SwiperSlide>
-                <SwiperSlide className="card-wraper">
-                    <div className="img-div">
-                        <img src={parcela} alt="parcela"></img>
-                    </div>
-                    <h4>PARCELAMENTO</h4>
-                    <p>Até 10x sem juros</p>
-                </SwiperSlide>
-                <SwiperSlide className="pix-wraper">
-                    <div className="img-div">
-                        <img src={desconto} alt="desconto"></img>
-                    </div>
-                    <h4>10% DE DESCONTO</h4>
-                    <p>Para pagamendos no pix</p>
-                </SwiperSlide>
-            </Swiper>
-        </div>
-    )
+
+            <a href="#produtos" className="scroll-indicator" aria-label="Rolar para baixo">
+                <ArrowDown size={22} />
+            </a>
+        </section>
+    );
 }

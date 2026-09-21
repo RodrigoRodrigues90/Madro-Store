@@ -1,20 +1,20 @@
-@font-face {
-  font-family: lora;
-  src: url(Lora/static/Lora-Medium.ttf);
-}
-
 *{
   padding:0;
   margin: 0;
   box-sizing: border-box;
 }
 :root{
-  color: white;
   --background-color: #daabbd;
 }
 .root{
-  font-family:lora;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  position: relative;
+}
+.hero-viewport-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }

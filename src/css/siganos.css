@@ -1,16 +1,9 @@
-@font-face {
-    font-family: lora;
-    src: url(../Lora/static/Lora-Medium.ttf);
-  }
 :root {
     --gradientCard: linear-gradient(-80deg,
             #43434331,
             #cdcdcd69,
             #e4e4e177,
             #36363618);
-}
-*{
-    font-family: lora;
 }
 
 .main-wrapper{

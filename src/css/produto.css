@@ -1,10 +1,5 @@
-@font-face {
-    font-family: lora;
-    src: url(Lora/static/Lora-Medium.ttf);
-  }
 .produto-wraper{
     background-color: #f0f0efe2;
-    font-family:lora;
     box-shadow: 2px 3px 12px #00000042; 
     width: 300px;
 }
@@ -58,7 +53,7 @@
 }
 .button-comprar{
     padding: 8px 20px;
-    font-family:lora, serif;
+    font-family:serif;
     color: white;
     border: 0;
     font-size: 15px;

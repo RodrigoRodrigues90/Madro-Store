@@ -3,16 +3,16 @@ import { useSelector, useDispatch } from "react-redux";
 import {useEffect} from "react"
 import Overlay from './components/overlay.jsx'
 import Header from './components/header';
-import Section from "./components/section";
 import Paralax from "./components/paralaxsection";
 import Void from "./components/void";
-import Main from "./components/mainProducts";
+import Main from "./components/HorizontalScrollSection.jsx";
 import Newsletter from './components/newsletter';
 import Siganos from './components/siganos';
 import Footer from './components/footer';
 import fundo from './assets/madro/voce_pode.jpg';
 import loadProducts from "./api/api-bling";
 import loadRoses from "./assets/loadRoses";
+import HeroSection from "./components/heroSection.jsx";
 
 function App() {
   //recuperando os valores dos produtos com Redux
@@ -30,24 +30,13 @@ function App() {
     <>
       <Overlay isOpen={activeState} />
       <Header />
-      <Section />
-      <Main
-        titulo="Destaque"
-        produtos={destaques}
-      />
-      <Void />
-      <Paralax foto={fundo} />
-      <Main
-        titulo="Lançamentos"
-        produtos={lancamentos}
-      />
-      <Newsletter />
-      <Void />
-      <Paralax foto={loadRoses()} />
-      <Void />
-      <Siganos />
-      <Void />
-      <Footer />
+      <HeroSection/>
+      <Main/>  
+      <Void/>
+      <Newsletter/>
+      <Void/>
+      <Siganos/>
+      <Footer/>
     </>
 
   )
