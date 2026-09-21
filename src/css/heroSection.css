@@ -75,7 +75,7 @@
 
 @media (max-width: 480px) {
   .hero-svg-text {
-    font-size: 75px;
-    letter-spacing: 2px;
+    font-size: 70px;
+    letter-spacing: 1px;
   }
 }

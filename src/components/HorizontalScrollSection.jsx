@@ -2,59 +2,18 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './HorizontalScrollSection.css';
-import video from '../assets/backGround.mp4';
+import returnProducts from '../teste'; // Importação da função que retorna os produtos
 
 gsap.registerPlugin(ScrollTrigger);
-
-const PRODUCTS = [
-    {
-        id: 1,
-        title: 'Colar Medalha Ouro',
-        price: 'R$ 380',
-        tag: 'SHOP THIS LOOK',
-        video: { video },
-    },
-    {
-        id: 2,
-        title: 'Anéis de Sobreposição',
-        price: 'R$ 250',
-        tag: 'MUST HAVE',
-        video: { video },
-    },
-    {
-        id: 3,
-        title: 'Brincos Argola Ródio',
-        price: 'R$ 190',
-        tag: 'NOVIDADE',
-        video: { video },
-    },
-    {
-        id: 4,
-        title: 'Bracelete Elegance',
-        price: 'R$ 320',
-        tag: 'EXCLUSIVO',
-        video: { video },
-    },
-     {
-        id: 5,
-        title: 'Bracelete Elegance',
-        price: 'R$ 320',
-        tag: 'EXCLUSIVO',
-        video: { video },
-    },
-     {
-        id: 6,
-        title: 'Bracelete Elegance',
-        price: 'R$ 320',
-        tag: 'EXCLUSIVO',
-        video: { video },
-    },
-];
 
 export default function HorizontalScrollSection() {
     const targetRef = useRef(null);
     const trackRef = useRef(null);
     const watermarkRef = useRef(null);
+
+    // Carrega os dados da função returnProducts
+    const response = returnProducts();
+    const produtosList = response?.retorno?.produtos || [];
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -71,6 +30,7 @@ export default function HorizontalScrollSection() {
                     pin: true,
                     pinSpacing: true,
                     anticipatePin: 1,
+                    invalidateOnRefresh: true,
                 },
             });
 
@@ -89,8 +49,11 @@ export default function HorizontalScrollSection() {
             );
         }, targetRef);
 
+        // Recalcula o layout do ScrollTrigger caso o DOM monte elementos assincronamente
+        ScrollTrigger.refresh();
+
         return () => ctx.revert();
-    }, []);
+    }, [produtosList]);
 
     return (
         <section className="horizontal-section" ref={targetRef}>
@@ -104,29 +67,35 @@ export default function HorizontalScrollSection() {
                     <p>Explore o brilho em tempo real com nossas peças em movimento.</p>
                 </div>
 
-                {PRODUCTS.map((prod) => (
-                    <div className="video-card" key={prod.id}>
-                        <div className="video-wrapper">
-                            <video
-                                loop
-                                muted
-                                playsInline
-                                autoPlay
-                            >
-                                <source
-                                    src={video}
-                                    type="video/mp4"
+                {produtosList.map((item, index) => {
+                    const { produto } = item;
+                    
+                    // Extração e tratamento da imagem e preço
+                    const imagemSrc = produto.imagem && produto.imagem[0] ? produto.imagem[0].link : '';
+                    const precoFormatado = parseFloat(produto.preco).toLocaleString('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                    });
+                    const categoria = produto.categoria?.descricao || 'NOVIDADE';
+
+                    return (
+                        <div className="video-card" key={index}>
+                            <div className="video-wrapper">
+                                <img
+                                    src={imagemSrc}
+                                    alt={produto.descricao}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
-                            </video>
-                            <span className="card-badge">{prod.tag}</span>
+                                <span className="card-badge">{categoria}</span>
+                            </div>
+                            <div className="card-details">
+                                <h3>{produto.descricao}</h3>
+                                <p className="price">{precoFormatado}</p>
+                                <button className="buy-btn">Adicionar à Sacola</button>
+                            </div>
                         </div>
-                        <div className="card-details">
-                            <h3>{prod.title}</h3>
-                            <p className="price">{prod.price}</p>
-                            <button className="buy-btn">Adicionar à Sacola</button>
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </section>
     );

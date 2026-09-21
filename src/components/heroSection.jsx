@@ -76,6 +76,7 @@ export default function HeroSection({
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                 />
             </div>
 

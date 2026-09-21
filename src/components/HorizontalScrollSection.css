@@ -10,7 +10,7 @@
 
 .watermark-text {
   position: absolute;
-  left: 5%;
+  left: 10%;
   bottom: 2%;
   white-space: nowrap;
   font-family: 'Playfair Display', serif;
