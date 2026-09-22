@@ -47,7 +47,6 @@ export default function HeroSection({
                     },
                     0
                 );
-                tl.to({}, { duration: 1 },0.3);
 
                 // 3. Remove a máscara
                 tl.to(

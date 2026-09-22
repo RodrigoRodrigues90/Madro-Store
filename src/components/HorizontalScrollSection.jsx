@@ -7,8 +7,6 @@ import returnProducts from '../teste';
 
 gsap.registerPlugin(ScrollTrigger);
 
-ScrollTrigger.normalizeScroll(true);
-
 export default function HorizontalScrollSection() {
     const targetRef = useRef(null);
     const trackRef = useRef(null);
@@ -21,6 +19,7 @@ export default function HorizontalScrollSection() {
     const produtosList = response?.retorno?.produtos || [];
 
     useEffect(() => {
+        // Revelação do título e descrição com ScrollReveal
         const sr = ScrollReveal({
             origin: 'bottom',
             distance: '40px',
@@ -30,33 +29,29 @@ export default function HorizontalScrollSection() {
             reset: true,
         });
 
-        if (introTitleRef.current) {
-            sr.reveal(introTitleRef.current, { delay: 500 });
-        }
-
-        if (introTextRef.current) {
-            sr.reveal(introTextRef.current, { delay: 500 });
-        }
+        if (introTitleRef.current) sr.reveal(introTitleRef.current, { delay: 300 });
+        if (introTextRef.current) sr.reveal(introTextRef.current, { delay: 300 });
 
         const ctx = gsap.context(() => {
             const trackWidth = trackRef.current.scrollWidth;
             const viewportWidth = window.innerWidth;
             const xTranslate = -(trackWidth - viewportWidth);
 
+            // TIMELINE DE TRAVAMENTO E ROLAGEM ISOLADA
             const timeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: targetRef.current,
-                    start: 'top top',
-                    end: () => `+=${trackWidth}`,
-                    scrub: 1,
-                    pin: true,
-                    pinSpacing: true,
+                    start: 'top top',         // Trava a seção assim que o topo toca o topo da viewport
+                    end: () => `+=${trackWidth}`, // O tempo em que o scroll fica travado para mover o conteúdo
+                    scrub: 1,                 // Sincroniza o movimento com a roda do mouse/touch
+                    pin: true,                // Fixa a seção na tela enquanto o scroll acontece
+                    pinSpacing: true,         // Garante o espaço vertical para continuar descendo a página depois
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                 },
             });
 
-            // Scroll Horizontal da trilha
+            // Move a trilha de produtos na horizontal
             timeline.to(
                 trackRef.current,
                 {
@@ -66,7 +61,7 @@ export default function HorizontalScrollSection() {
                 0
             );
 
-            // Watermark de baixo se move para a esquerda
+            // Animação da marca d'água inferior (move para a esquerda)
             timeline.to(
                 watermarkBelowRef.current,
                 {
@@ -76,14 +71,14 @@ export default function HorizontalScrollSection() {
                 0
             );
 
-            // Watermark de cima se move na direção oposta (direita -> esquerda sincronizada)
+            // Animação da marca d'água superior (move para a direita)
             timeline.to(
                 watermarkUpRef.current,
                 {
-                    x: -xTranslate * 1.2,
+                    x: -xTranslate * 1.0,
                     ease: 'none',
                 },
-                0 // O parâmetro 0 garante que inicie junto no tempo zero da timeline
+                0
             );
         }, targetRef);
 
@@ -106,9 +101,9 @@ export default function HorizontalScrollSection() {
                     <h2 ref={introTitleRef}>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
                     <p ref={introTextRef}>Garanta os seus favoritos da estação.</p>
                 </div>
+
                 {produtosList.map((item, index) => {
                     const { produto } = item;
-
                     const imagemSrc = produto.imagem && produto.imagem[0] ? produto.imagem[0].link : '';
                     const categoria = produto.categoria?.descricao || 'NOVIDADE';
 
@@ -129,6 +124,7 @@ export default function HorizontalScrollSection() {
                     );
                 })}
             </div>
+
             <div className="watermark-text-below" ref={watermarkBelowRef}>
                 COLEÇÃO • EM MOVIMENTO • MADRO •
             </div>
