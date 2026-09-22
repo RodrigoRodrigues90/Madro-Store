@@ -6,6 +6,8 @@ import '../css/heroSection.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
+ScrollTrigger.normalizeScroll(true);
+
 export default function HeroSection({
     brandName = "MADRO",
     scrollText = "ROLE PARA EXPLORAR",
@@ -16,49 +18,75 @@ export default function HeroSection({
         const wrapper = heroWrapperRef.current;
         if (!wrapper) return;
         const headerElement = document.querySelector('header');
+
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: wrapper,
                     start: 'top top',
-                    end: '+=150%',
+                    end: '+=100%',
                     scrub: 1,
                     pin: true,
                     pinSpacing: true,
                     anticipatePin: 1,
+                    invalidateOnRefresh: true,
                 },
             });
 
+            // 1. Oculta o indicador de rolagem
             tl.to('#hero-scroll-hint', { opacity: 0, duration: 0.1 }, 0)
 
+                // 2. Faz o zoom da palavra/máscara SVG
                 .to(
                     '#hero-zoom-target',
                     {
-                        scale: 50,
-                        transformOrigin: '47% 50%',
-                        ease: 'power2.in',
+                        scale: 100,
+                        transformOrigin: '48% 50%',
+                        ease: 'power3.inOut',
+                        duration: 1,
                     },
                     0
                 )
 
+                // 3. Remove a máscara
                 .to(
                     '.hero-overlay-mask',
                     {
                         opacity: 0,
                         pointerEvents: 'none',
-                        ease: 'power1.out',
+                        duration: 0.15,
                     },
-                    0.85
-                )
+                    0.5
+                );
 
+            // 4. Animação do cabeçalho
             if (headerElement) {
                 tl.fromTo(
                     headerElement,
                     { opacity: 0, y: -20 },
-                    { opacity: 1, y: 0, ease: 'power1.out' },
-                    0.7
+                    { opacity: 1, y: 0, ease: 'power1.out', duration: 0.3 },
+                    0.4
                 );
             }
+
+            // 5. ANIMAÇÃO DOS TEXTOS NO FINAL DA TIMELINE (Inicia em 0.75 s/fator da timeline)
+            tl.fromTo(
+                '#subtitle-hero .hero-text-item',
+                {
+                    opacity: 0,
+                    y: 35,
+                    scale: 0.9,
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    stagger: 0.08, // Revela palavra 1 -> símbolo -> palavra 2 rapidamente em sequência
+                    duration: 0.25,
+                    ease: 'power2.out',
+                },
+                0.75 // Posição no final do zoom
+            );
 
         }, wrapper);
 
@@ -67,7 +95,7 @@ export default function HeroSection({
 
     return (
         <section ref={heroWrapperRef} className="hero-container">
-            {/* 1. CAMADA DE VÍDEO DE BACKGROUND (FIXA NO FUNDO DA HERO) */}
+            {/* 1. CAMADA DE VÍDEO DE BACKGROUND E TEXTO SOBREPOSTO */}
             <div className="hero-video-wrapper">
                 <video
                     className="hero-video-element"
@@ -78,25 +106,32 @@ export default function HeroSection({
                     playsInline
                     preload="metadata"
                 />
+
+                {/* Elemento de texto acionado no final da animação */}
+                <div id="subtitle-hero" className="subtitle-hero">
+                    <span className="hero-text-item">Nova</span>
+                    <br />
+                    <span className="hero-text-item">Coleção</span>
+                    <br />
+                    <span className="hero-text-item">Verão☼</span>
+
+                </div>
             </div>
 
             {/* 2. CAMADA DE OVERLAY COM MÁSCARA SVG */}
             <div className="hero-overlay-mask">
                 <svg
                     className="hero-svg-viewport"
-                    viewBox="0 0 1000 500"
+                    viewBox="0 0 1000 1000"
                     preserveAspectRatio="xMidYMid slice"
                 >
                     <defs>
                         <mask id="madro-hero-mask">
-                            {/* Retângulo branco cobre toda a tela com a cor de fundo */}
                             <rect width="100%" height="100%" fill="#ffffff" />
-
-                            {/* Texto preto cria o furo transparente para revelar o vídeo */}
                             <g id="hero-zoom-target">
                                 <text
                                     x="500"
-                                    y="250"
+                                    y="500"
                                     textAnchor="middle"
                                     dominantBaseline="central"
                                     className="hero-svg-text"
@@ -107,7 +142,6 @@ export default function HeroSection({
                         </mask>
                     </defs>
 
-                    {/* Renderiza a cor de fundo com o recorte aplicado */}
                     <rect
                         width="100%"
                         height="100%"
@@ -116,7 +150,6 @@ export default function HeroSection({
                     />
                 </svg>
 
-                {/* Dica de Rolagem */}
                 <div id="hero-scroll-hint" className="hero-scroll-hint">
                     <span>{scrollText}</span>
                 </div>

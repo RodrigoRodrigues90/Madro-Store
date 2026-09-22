@@ -1,21 +1,41 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import './HorizontalScrollSection.css';
-import returnProducts from '../teste'; // Importação da função que retorna os produtos
+import ScrollReveal from 'scrollreveal';
+import '../css/HorizontalScrollSection.css';
+import returnProducts from '../teste';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function HorizontalScrollSection() {
     const targetRef = useRef(null);
     const trackRef = useRef(null);
-    const watermarkRef = useRef(null);
+    const watermarkBelowRef = useRef(null);
+    const watermarkUpRef = useRef(null);
+    const introTitleRef = useRef(null);
+    const introTextRef = useRef(null);
 
-    // Carrega os dados da função returnProducts
     const response = returnProducts();
     const produtosList = response?.retorno?.produtos || [];
 
     useEffect(() => {
+        const sr = ScrollReveal({
+            origin: 'bottom',
+            distance: '40px',
+            duration: 1000,
+            delay: 300,
+            easing: 'cubic-bezier(0.5, 0, 0, 1)',
+            reset: true,
+        });
+
+        if (introTitleRef.current) {
+            sr.reveal(introTitleRef.current, { delay: 500 });
+        }
+
+        if (introTextRef.current) {
+            sr.reveal(introTextRef.current, { delay: 500 });
+        }
+
         const ctx = gsap.context(() => {
             const trackWidth = trackRef.current.scrollWidth;
             const viewportWidth = window.innerWidth;
@@ -34,48 +54,60 @@ export default function HorizontalScrollSection() {
                 },
             });
 
-            timeline.to(trackRef.current, {
-                x: xTranslate,
-                ease: 'none',
-            });
-
+            // Scroll Horizontal da trilha
             timeline.to(
-                watermarkRef.current,
+                trackRef.current,
+                {
+                    x: xTranslate,
+                    ease: 'none',
+                },
+                0
+            );
+
+            // Watermark de baixo se move para a esquerda
+            timeline.to(
+                watermarkBelowRef.current,
                 {
                     x: xTranslate * 0.7,
                     ease: 'none',
                 },
                 0
             );
+
+            // Watermark de cima se move na direção oposta (direita -> esquerda sincronizada)
+            timeline.to(
+                watermarkUpRef.current,
+                {
+                    x: -xTranslate * 0.7,
+                    ease: 'none',
+                },
+                0 // O parâmetro 0 garante que inicie junto no tempo zero da timeline
+            );
         }, targetRef);
 
-        // Recalcula o layout do ScrollTrigger caso o DOM monte elementos assincronamente
         ScrollTrigger.refresh();
 
-        return () => ctx.revert();
+        return () => {
+            ctx.revert();
+            sr.destroy();
+        };
     }, [produtosList]);
 
     return (
         <section className="horizontal-section" ref={targetRef}>
-            <div className="watermark-text" ref={watermarkRef}>
+            <div className="watermark-text-up" ref={watermarkUpRef}>
                 COLEÇÃO • EM MOVIMENTO • MADRO •
             </div>
 
             <div className="horizontal-track" ref={trackRef}>
                 <div className="intro-card">
-                    <h2>Shop in Motion</h2>
-                    <p>Explore o brilho em tempo real com nossas peças em movimento.</p>
+                    <h2 ref={introTitleRef}>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
+                    <p ref={introTextRef}>Garanta os seus favoritos da estação.</p>
                 </div>
-
                 {produtosList.map((item, index) => {
                     const { produto } = item;
-                    
-                    // Extração e tratamento da imagem e preço
+
                     const imagemSrc = produto.imagem && produto.imagem[0] ? produto.imagem[0].link : '';
-                    const precoFormatado = parseFloat(produto.preco).toLocaleString('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
-                    });
                     const categoria = produto.categoria?.descricao || 'NOVIDADE';
 
                     return (
@@ -86,16 +118,17 @@ export default function HorizontalScrollSection() {
                                     alt={produto.descricao}
                                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
-                                <span className="card-badge">{categoria}</span>
-                            </div>
-                            <div className="card-details">
-                                <h3>{produto.descricao}</h3>
-                                <p className="price">{precoFormatado}</p>
-                                <button className="buy-btn">Adicionar à Sacola</button>
+                                <div className="card-details">
+                                    <span className="card-badge">{categoria}</span>
+                                    <button className="buy-btn">Ver Produtos</button>
+                                </div>
                             </div>
                         </div>
                     );
                 })}
+            </div>
+            <div className="watermark-text-below" ref={watermarkBelowRef}>
+                COLEÇÃO • EM MOVIMENTO • MADRO •
             </div>
         </section>
     );
