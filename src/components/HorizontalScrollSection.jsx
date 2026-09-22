@@ -7,6 +7,8 @@ import returnProducts from '../teste';
 
 gsap.registerPlugin(ScrollTrigger);
 
+ScrollTrigger.normalizeScroll(true);
+
 export default function HorizontalScrollSection() {
     const targetRef = useRef(null);
     const trackRef = useRef(null);
@@ -68,7 +70,7 @@ export default function HorizontalScrollSection() {
             timeline.to(
                 watermarkBelowRef.current,
                 {
-                    x: xTranslate * 0.7,
+                    x: xTranslate * 1.2,
                     ease: 'none',
                 },
                 0
@@ -78,7 +80,7 @@ export default function HorizontalScrollSection() {
             timeline.to(
                 watermarkUpRef.current,
                 {
-                    x: -xTranslate * 0.7,
+                    x: -xTranslate * 1.2,
                     ease: 'none',
                 },
                 0 // O parâmetro 0 garante que inicie junto no tempo zero da timeline

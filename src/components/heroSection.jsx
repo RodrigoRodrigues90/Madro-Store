@@ -46,10 +46,11 @@ export default function HeroSection({
                         duration: 1,
                     },
                     0
-                )
+                );
+                tl.to({}, { duration: 1 },0.3);
 
                 // 3. Remove a máscara
-                .to(
+                tl.to(
                     '.hero-overlay-mask',
                     {
                         opacity: 0,
