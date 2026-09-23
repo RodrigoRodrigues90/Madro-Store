@@ -1,11 +1,45 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import ScrollReveal from 'scrollreveal';
 import '../css/HorizontalScrollSection.css';
-import returnProducts from '../teste';
+
+// Importação direta dos vídeos no topo do componente
+import oculosVideo from '../assets/oculos.mp4';
+import pulseirasVideo from '../assets/pulseira.mp4';
+import aneisVideo from '../assets/aneis.mp4';
+import colaresVideo from '../assets/colares.mp4';
+import brincosVideo from '../assets/brincos.mp4'
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Array manual de produtos
+const produtosManuais = [
+    {
+        id: 1,
+        categoria: 'Óculos',
+        videoSrc: oculosVideo,
+    },
+    {
+        id: 2,
+        categoria: 'Pulseiras',
+        videoSrc: pulseirasVideo,
+    },
+    {
+        id: 3,
+        categoria: 'Anéis',
+        videoSrc: aneisVideo,
+    },
+    {
+        id: 4,
+        categoria: 'Colares',
+        videoSrc: colaresVideo,
+    },
+    {
+        id: 5,
+        categoria: 'Brincos',
+        videoSrc: brincosVideo,
+    },
+];
 
 export default function HorizontalScrollSection() {
     const targetRef = useRef(null);
@@ -15,80 +49,71 @@ export default function HorizontalScrollSection() {
     const introTitleRef = useRef(null);
     const introTextRef = useRef(null);
 
-    const response = returnProducts();
-    const produtosList = response?.retorno?.produtos || [];
-
     useEffect(() => {
-        // Revelação do título e descrição com ScrollReveal
-        const sr = ScrollReveal({
-            origin: 'bottom',
-            distance: '40px',
-            duration: 1000,
-            delay: 300,
-            easing: 'cubic-bezier(0.5, 0, 0, 1)',
-            reset: true,
-        });
+        const mm = gsap.matchMedia();
 
-        if (introTitleRef.current) sr.reveal(introTitleRef.current, { delay: 300 });
-        if (introTextRef.current) sr.reveal(introTextRef.current, { delay: 300 });
-
-        const ctx = gsap.context(() => {
+        mm.add("(min-width: 1px)", () => {
             const trackWidth = trackRef.current.scrollWidth;
             const viewportWidth = window.innerWidth;
-            const xTranslate = -(trackWidth - viewportWidth);
+            
+            const calculatedTranslate = trackWidth - viewportWidth;
+            const xTranslate = calculatedTranslate > 0 
+                ? -calculatedTranslate 
+                : -(viewportWidth * 0.5);
 
-            // TIMELINE DE TRAVAMENTO E ROLAGEM ISOLADA
+            const scrollDistance = Math.max(trackWidth * 1.5, viewportWidth * 1.5);
+
             const timeline = gsap.timeline({
                 scrollTrigger: {
                     trigger: targetRef.current,
-                    start: 'top top',         // Trava a seção assim que o topo toca o topo da viewport
-                    end: () => `+=${trackWidth}`, // O tempo em que o scroll fica travado para mover o conteúdo
-                    scrub: 1,                 // Sincroniza o movimento com a roda do mouse/touch
-                    pin: true,                // Fixa a seção na tela enquanto o scroll acontece
-                    pinSpacing: true,         // Garante o espaço vertical para continuar descendo a página depois
+                    start: 'top top',
+                    end: () => `+=${scrollDistance}`,
+                    scrub: 1.5,
+                    pin: true,
+                    pinSpacing: true,
                     anticipatePin: 1,
                     invalidateOnRefresh: true,
                 },
             });
 
-            // Move a trilha de produtos na horizontal
+            // Revelação do Título/Texto de Entrada
+            timeline.fromTo(
+                [introTitleRef.current, introTextRef.current],
+                { y: 40, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.3, stagger: 0.1, ease: 'power2.out' },
+                0
+            );
+
+            // Animação da trilha horizontal
             timeline.to(
                 trackRef.current,
                 {
                     x: xTranslate,
                     ease: 'none',
                 },
-                0
+                0.2
             );
 
-            // Animação da marca d'água inferior (move para a esquerda)
+            // Marcas d'água
             timeline.to(
                 watermarkBelowRef.current,
-                {
-                    x: xTranslate * 1.2,
-                    ease: 'none',
-                },
-                0
+                { x: xTranslate * 0.4, ease: 'none' },
+                0.2
             );
 
-            // Animação da marca d'água superior (move para a direita)
             timeline.to(
                 watermarkUpRef.current,
-                {
-                    x: -xTranslate * 1.0,
-                    ease: 'none',
-                },
-                0
+                { x: -xTranslate * 0.4, ease: 'none' },
+                0.2
             );
-        }, targetRef);
+        });
 
         ScrollTrigger.refresh();
 
         return () => {
-            ctx.revert();
-            sr.destroy();
+            mm.revert();
         };
-    }, [produtosList]);
+    }, []);
 
     return (
         <section className="horizontal-section" ref={targetRef}>
@@ -102,27 +127,25 @@ export default function HorizontalScrollSection() {
                     <p ref={introTextRef}>Garanta os seus favoritos da estação.</p>
                 </div>
 
-                {produtosList.map((item, index) => {
-                    const { produto } = item;
-                    const imagemSrc = produto.imagem && produto.imagem[0] ? produto.imagem[0].link : '';
-                    const categoria = produto.categoria?.descricao || 'NOVIDADE';
-
-                    return (
-                        <div className="video-card" key={index}>
-                            <div className="video-wrapper">
-                                <img
-                                    src={imagemSrc}
-                                    alt={produto.descricao}
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                />
-                                <div className="card-details">
-                                    <span className="card-badge">{categoria}</span>
-                                    <button className="buy-btn">Ver Produtos</button>
-                                </div>
+                {produtosManuais.map((item) => (
+                    <div className="video-card" key={item.id}>
+                        <div className="video-wrapper">
+                            <video
+                                src={item.videoSrc}
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                            <div className="card-details">
+                                <span className="card-badge">{"✧"+item.categoria+"✧"}</span>
+                                <button className="buy-btn">Ver Produtos</button>
                             </div>
                         </div>
-                    );
-                })}
+                    </div>
+                ))}
+                <div className="scroll-end-spacer" />
             </div>
 
             <div className="watermark-text-below" ref={watermarkBelowRef}>

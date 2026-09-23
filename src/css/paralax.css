@@ -1,28 +1,53 @@
-
-.paralax-wraper{
+.paralax-wraper {
     position: relative;
     margin: 0 auto;
     width: 98%;
-    height: 300px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(252, 246, 251, 0.568);
 }
-.paralax-wraper > *{
-    overflow-x: hidden;
-    overflow-y: hidden;
+
+/* Container de compensação para o efeito parallax */
+.paralax-img-container {
+    position: absolute;
+    top: -15%; /* Margem superior para o deslocamento não cortar a imagem */
+    left: 0;
+    width: 100%;
+    height: 130%; /* Altura maior que a seção para permitir o deslizamento */
+    z-index: 1;
 }
-.inner-paralaxe{
+
+.paralax-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.inner-paralaxe {
     width: 100%;
     height: 250px;
     position: absolute;
     bottom: 100px;
     word-break: break-word;
-    
+    z-index: 2;
 }
-.inner-paralaxe h1{
+
+.inner-paralaxe h1 {
     text-align: center;
-    font-size: 200px;
-    color: rgb(255, 255, 255);
+    font-size: 3.5rem ;/* Tamanho responsivo para mobile e desktop */
+    font-weight: 900;
+    line-height: 1;
+    margin: 0;
+    padding: 0 1rem;
+}
+
+/* Estilização individual das palavras */
+.inner-paralaxe .word {
+    display: inline-block;
+    will-change: color, transform;
+    transition: text-shadow 0.3s ease;
 }

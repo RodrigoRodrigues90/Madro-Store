@@ -24,8 +24,8 @@ export default function HeroSection({
                 scrollTrigger: {
                     trigger: wrapper,
                     start: 'top top',
-                    end: '+=100%',
-                    scrub: 1,
+                    end: '+=350%',
+                    scrub: 2,
                     pin: true,
                     pinSpacing: true,
                     anticipatePin: 1,
@@ -40,24 +40,24 @@ export default function HeroSection({
                 .to(
                     '#hero-zoom-target',
                     {
-                        scale: 100,
-                        transformOrigin: '48% 50%',
-                        ease: 'power3.inOut',
+                        scale: 80,
+                        transformOrigin: '47% 50%',
+                        ease: 'power2.inOut',
                         duration: 1,
                     },
                     0
                 );
 
-                // 3. Remove a máscara
-                tl.to(
-                    '.hero-overlay-mask',
-                    {
-                        opacity: 0,
-                        pointerEvents: 'none',
-                        duration: 0.15,
-                    },
-                    0.5
-                );
+            // 3. Remove a máscara
+            tl.to(
+                '.hero-overlay-mask',
+                {
+                    opacity: 0,
+                    pointerEvents: 'none',
+                    duration: 0.15,
+                },
+                0.5
+            );
 
             // 4. Animação do cabeçalho
             if (headerElement) {
@@ -82,7 +82,7 @@ export default function HeroSection({
                     y: 0,
                     scale: 1,
                     stagger: 0.08, // Revela palavra 1 -> símbolo -> palavra 2 rapidamente em sequência
-                    duration: 0.25,
+                    duration: 0.5,
                     ease: 'power2.out',
                 },
                 0.75 // Posição no final do zoom

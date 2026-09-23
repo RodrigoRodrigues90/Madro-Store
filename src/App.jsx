@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
+import imageParalax from './assets/roses/roses5.avif'
 
 import Overlay from './components/overlay.jsx';
 import Header from './components/header';
@@ -11,6 +12,7 @@ import Void from "./components/void";
 import Main from "./components/HorizontalScrollSection.jsx";
 import Newsletter from './components/newsletter';
 import Siganos from './components/siganos';
+import Paralax from './components/paralaxsection.jsx'
 import Footer from './components/footer';
 import loadProducts from "./api/api-bling";
 import HeroSection from "./components/heroSection.jsx";
@@ -52,7 +54,8 @@ function App() {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <HeroSection />
-          <Main />  
+          <Main />
+          <Paralax foto={imageParalax}/>  
           <Void />
           <Newsletter />
           <Void />

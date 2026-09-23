@@ -13,7 +13,7 @@
 .watermark-text-below {
   position: absolute;
   left: 70px;
-  bottom: 10%;
+  bottom: 8%;
   white-space: nowrap;
   font-family: 'Playfair Display', serif;
   font-size: clamp(5rem, 5vw, 10rem);
@@ -44,6 +44,11 @@
   padding: 0 2vw;
   will-change: transform;
   z-index: 2;
+  width: max-content;
+}
+.scroll-end-spacer {
+  width: 15vw;
+  flex-shrink: 0;
 }
 
 .intro-card {
@@ -51,6 +56,8 @@
   max-width: 360px;
   padding-right: 2em;
   color: #581825;
+  min-width: 350px;
+  flex-shrink: 0;
 }
 
 .intro-card h2 {
@@ -75,6 +82,8 @@
   position: relative;
   width: 350px;
   height: 420px;
+  min-width: 320px; /* Evita que os cards encolham no desktop */
+  flex-shrink: 0;
   overflow: hidden;
   background: #FFFFFF;
   box-shadow: 0 10px 30px rgba(88, 24, 37, 0.08);
@@ -98,7 +107,6 @@
   object-fit: cover;
   transition: transform 0.5s ease;
 }
-
 
 .card-badge {
   background: rgba(253, 251, 251, 0.349);
