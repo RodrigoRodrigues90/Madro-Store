@@ -1,24 +1,37 @@
-*{
-  padding:0;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Syne:wght@600;700;800&display=swap');
+
+:root {
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+}
+
+* {
+  padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: var(--font-body) !important
 }
-:root{
+
+:root {
   --background-color: #daabbd;
+
 }
-.root{
+
+.root {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
   position: relative;
 }
+
 .hero-viewport-wrapper {
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
 }
-html, body {
+
+html,
+body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;

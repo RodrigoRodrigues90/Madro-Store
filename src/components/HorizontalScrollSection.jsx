@@ -16,27 +16,27 @@ gsap.registerPlugin(ScrollTrigger);
 const produtosManuais = [
     {
         id: 1,
-        categoria: 'Óculos',
+        categoria: 'ÓCULOS',
         videoSrc: oculosVideo,
     },
     {
         id: 2,
-        categoria: 'Pulseiras',
+        categoria: 'PULSEIRAS',
         videoSrc: pulseirasVideo,
     },
     {
         id: 3,
-        categoria: 'Anéis',
+        categoria: 'ANÉIS',
         videoSrc: aneisVideo,
     },
     {
         id: 4,
-        categoria: 'Colares',
+        categoria: 'COLARES',
         videoSrc: colaresVideo,
     },
     {
         id: 5,
-        categoria: 'Brincos',
+        categoria: 'BRINCOS',
         videoSrc: brincosVideo,
     },
 ];
@@ -138,8 +138,8 @@ export default function HorizontalScrollSection() {
                                 playsInline
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
+                            <span className="card-badge">{item.categoria}</span>
                             <div className="card-details">
-                                <span className="card-badge">{"✧"+item.categoria+"✧"}</span>
                                 <button className="buy-btn">Ver Produtos</button>
                             </div>
                         </div>

@@ -41,7 +41,7 @@ export default function HeroSection({
                     '#hero-zoom-target',
                     {
                         scale: 80,
-                        transformOrigin: '47% 50%',
+                        transformOrigin: '45% 50%',
                         ease: 'power2.inOut',
                         duration: 1,
                     },
