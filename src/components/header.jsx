@@ -27,11 +27,11 @@ export default function Header() {
     };
 
     const [classname, setActive] = useState(false);
-    const setState = () => setActive(!classname);
+    const setState = () => {}//setActive(!classname);
 
     function toggleSubMenu() {
-        const submenu = document.getElementById("products");
-        if (submenu) submenu.classList.toggle("open-submenu");
+        // const submenu = document.getElementById("products");
+        // if (submenu) submenu.classList.toggle("open-submenu");
     }
 
     const [msgAtiva, setMsgActive] = useState(msgActive);
@@ -87,8 +87,8 @@ export default function Header() {
                             <div className="label-log-cart" id="log">
                                 <User className="header-icon" size={24} color="#8a324f" />
                                 <ul style={{ width: '120px', padding: '0px', textAlign: 'center' }} className="sub-menu">
-                                    <li><Link to="/Madro-Store/cadastro">Cadastre-se</Link></li>
-                                    <li><Link to="/Madro-Store/login">Login</Link></li>
+                                    <li><Link to="">Cadastre-se</Link></li>
+                                    <li><Link to="">Login</Link></li>
                                 </ul>
                             </div>
                         </div>

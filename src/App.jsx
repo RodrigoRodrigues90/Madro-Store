@@ -1,11 +1,11 @@
 import "./index.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import imageParalax from './assets/roses/roses5.avif'
-
+import Preloader from './components/splashScreen.jsx';
 import Overlay from './components/overlay.jsx';
 import Header from './components/header';
 import Void from "./components/void";
@@ -23,6 +23,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 function App() {
   const { produtos } = useSelector((rootReducer) => rootReducer.allProducts);
   const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     loadProducts(dispatch);
@@ -49,6 +50,7 @@ function App() {
 
   return (
     <>
+      {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
       <Overlay isOpen={activeState} />
       <Header />
 
@@ -56,10 +58,10 @@ function App() {
         <div id="smooth-content">
           <HeroSection />
           <Main />
-          <Paralax foto={imageParalax}/>  
+          <Paralax foto={imageParalax} />
           <Void />
-          <Destaques/>
-          <Void/>
+          <Destaques />
+          <Void />
           <Newsletter />
           <Void />
           <Siganos />

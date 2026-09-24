@@ -1,0 +1,65 @@
+.preloader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f5f1f2; /* Tom bordô assinatura da MADRO */
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: all;
+}
+
+.preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: clamp(200px, 30vw, 320px);
+}
+
+.preloader-logo {
+    width: 160px;
+    height: auto;
+    object-fit: contain;
+    animation: pulseLogo 2s infinite ease-in-out;
+}
+
+@keyframes pulseLogo {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(0.98);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.preloader-bar-container {
+    width: 100%;
+    height: 2px;
+    background-color: rgba(188, 114, 194, 0.829);
+    overflow: hidden;
+    position: relative;
+}
+
+.preloader-bar {
+    width: 0%;
+    height: 120%;
+    background-color: #440b3a;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.preloader-percent {
+    font-family: serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #F5E6E8;
+    letter-spacing: 0.15em;
+    opacity: 0.8;
+}

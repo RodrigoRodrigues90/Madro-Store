@@ -80,7 +80,7 @@ export default function HorizontalScrollSection() {
             timeline.fromTo(
                 [introTitleRef.current, introTextRef.current],
                 { y: 40, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.3, stagger: 0.1, ease: 'power2.out' },
+                { y: 0, opacity: 1, duration: 0.1, stagger: 0.1, ease: 'power2.out' },
                 0
             );
 
@@ -89,7 +89,7 @@ export default function HorizontalScrollSection() {
                 trackRef.current,
                 {
                     x: xTranslate,
-                    ease: 'none',
+                    ease: 'power2.inOut',
                 },
                 0.2
             );

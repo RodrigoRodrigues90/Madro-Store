@@ -40,7 +40,7 @@ export default function HorizontalProductsSection() {
                     trigger: targetRef.current,
                     start: 'top top',
                     end: () => `+=${scrollDistance}`,
-                    scrub: 1.5,
+                    scrub: 0.5,
                     pin: true,
                     pinSpacing: true,
                     anticipatePin: 1,
@@ -52,7 +52,7 @@ export default function HorizontalProductsSection() {
             timeline.fromTo(
                 [introTitleRef.current, introTextRef.current],
                 { y: 40, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.3, stagger: 0.1, ease: 'power2.out' },
+                { y: 0, opacity: 1, duration: 0.09, stagger: 0.1, ease: 'power2.out' },
                 0
             );
 
@@ -61,7 +61,7 @@ export default function HorizontalProductsSection() {
                 track,
                 {
                     x: -xTranslate,
-                    ease: 'none',
+                    ease: 'power2.inOut',
                 },
                 0.2
             );
@@ -114,7 +114,7 @@ export default function HorizontalProductsSection() {
                 })}
                 
                 <div className="products-intro-card">
-                    <h2 ref={introTitleRef}>PRODUTOS EM ALTA</h2>
+                    <h2 ref={introTitleRef}>NOSSOS PRODUTOS EM ALTA</h2>
                     <p ref={introTextRef}>Descubra os destaques da loja.</p>
                 </div>
 

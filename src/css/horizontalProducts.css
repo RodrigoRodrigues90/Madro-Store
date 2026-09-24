@@ -12,11 +12,11 @@
 .products-watermark-text-below {
   position: absolute;
   left: 70px;
-  bottom: 8%;
+  bottom: 1rem;
   white-space: nowrap;
   font-family: serif;
   font-style: italic;
-  font-size: clamp(5rem, 8vw, 10rem);
+  font-size: clamp(9rem, 5vw, 10rem);
   font-weight: 800;
   color: rgba(88, 24, 37, 0.123);
   user-select: none;
@@ -27,7 +27,7 @@
 .products-watermark-text-up {
   position: absolute;
   right: 70px;
-  top: 8%;
+  top: 5rem;
   white-space: nowrap;
   font-family: serif;
   font-style: italic;
@@ -44,7 +44,7 @@
   right: 0;  
   display: flex;
   align-items: center;
-  padding: 0 1vw;
+  padding: 0 0.8vw;
   will-change: transform;
   z-index: 2;
   width: max-content;
