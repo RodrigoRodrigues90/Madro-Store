@@ -16,6 +16,7 @@ import Paralax from './components/paralaxsection.jsx'
 import Footer from './components/footer';
 import loadProducts from "./api/api-bling";
 import HeroSection from "./components/heroSection.jsx";
+import Destaques from "./components/HorizontalProductsSection.jsx"
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -57,6 +58,8 @@ function App() {
           <Main />
           <Paralax foto={imageParalax}/>  
           <Void />
+          <Destaques/>
+          <Void/>
           <Newsletter />
           <Void />
           <Siganos />

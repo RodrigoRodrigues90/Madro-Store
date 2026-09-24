@@ -2,43 +2,44 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import "../css/paralax.css";
-import rosesImg from "../assets/roses/roses5.avif";
+import rosesImg from "../assets/roses/roses5.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ParalaxSection() {
     const textRef = useRef(null);
 
-    const frase = "Você pode e vai muito além";
+    const frase = "Você brilha mais quando se sente linda ";
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
-            const words = textRef.current.querySelectorAll('.word');
+    const ctx = gsap.context(() => {
+        const words = textRef.current.querySelectorAll('.word');
 
-            // Animação em cadeia (stagger) para cada palavra acender no scroll
-            gsap.fromTo(
-                words,
-                {
-                    color: "#ffffff", // Cor inicial suave (cinza/esbranquiçado apagado)
-                    y: 10,
-                },
-                {
-                    color: "rgba(218, 127, 204, 0.62)", // Cor final (branco sólido)
-                    y: 0,
-                    stagger: 0.2, // Intervalo sequencial entre palavras
-                    ease: "power2.out",
-                    scrollTrigger: {
-                        trigger: textRef.current,
-                        start: "top 80%",  // Começa a acender quando a seção entra na tela
-                        end: "bottom 30%", // Termina de acender perto do topo
-                        scrub: 1.5,        // Amortecimento suave com a velocidade do scroll
-                    },
-                }
-            );
-        }, textRef);
+        gsap.to(words, {
+            color: "rgba(80, 21, 82, 0.78)",
+            y: 0, // Anima do translateY(20px) do CSS até o 0
+            stagger: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: textRef.current,
+                start: "top 85%",
+                end: "bottom 35%",
+                scrub: 1.5,
+                invalidateOnRefresh: true, // Recalcula as posições em caso de mudança de altura
+            },
+        });
+    }, textRef);
 
-        return () => ctx.revert();
-    }, []);
+    // Garante que o GSAP recalcule as posições após a montagem do ScrollSmoother
+    const timer = setTimeout(() => {
+        ScrollTrigger.refresh();
+    }, 100);
+
+    return () => {
+        clearTimeout(timer);
+        ctx.revert();
+    };
+}, []);
 
     return (
         <section className="paralax-wraper">

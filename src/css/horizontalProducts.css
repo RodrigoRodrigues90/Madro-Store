@@ -1,0 +1,92 @@
+.products-horizontal-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background-color: #F5E6E8;
+  overflow: hidden;
+  display: flex;
+  z-index: 20;
+  align-items: center;
+}
+
+.products-watermark-text-below {
+  position: absolute;
+  left: 70px;
+  bottom: 8%;
+  white-space: nowrap;
+  font-family: serif;
+  font-style: italic;
+  font-size: clamp(5rem, 8vw, 10rem);
+  font-weight: 800;
+  color: rgba(88, 24, 37, 0.123);
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.products-watermark-text-up {
+  position: absolute;
+  right: 70px;
+  top: 8%;
+  white-space: nowrap;
+  font-family: serif;
+  font-style: italic;
+  font-size: clamp(5rem, 5vw, 10rem);
+  font-weight: 800;
+  color: rgba(88, 24, 37, 0.123);
+  user-select: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.products-horizontal-track {
+  position: absolute;
+  right: 0;  
+  display: flex;
+  align-items: center;
+  padding: 0 1vw;
+  will-change: transform;
+  z-index: 2;
+  width: max-content;
+}
+
+.products-scroll-end-spacer {
+  width: 15vw;
+  flex-shrink: 0;
+}
+
+.products-intro-card {
+  min-width: 350px;
+  max-width: 360px;
+  padding-right: 2em;
+  color: #a55666;
+  flex-shrink: 0;
+  text-align: end;
+}
+
+.products-intro-card h2 {
+  font-family: sans-serif;
+  font-size: 3.5rem;
+  font-weight: bolder;
+  margin-bottom: 1rem;
+  line-height: 1;
+  overflow: hidden;
+}
+
+.products-intro-card p {
+  font-family: sans-serif;
+  font-size: 1.1rem;
+  opacity: 1;
+  font-weight: 800;
+
+}
+
+.product-card-container {
+  flex-shrink: 0;
+  margin-right: 2rem;
+  transition: transform 0.4s ease;
+}
+
+.product-card-container:hover {
+  transform: translateY(-8px);
+}
