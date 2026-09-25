@@ -6,68 +6,258 @@
             #36363618);
 }
 
-.main-wrapper{
+.siganos-bg {
+    background-color: #ae325b;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.main-wrapper {
+    border: #ffffff 13px solid;
     margin: 0;
     padding: 3em;
-    width: 100%;
+    max-width: 100rem;
     display: flex;
     justify-content: center;
     background-image: url(../assets/footer/flowers.jpg);
-    background-repeat: no-repeat; 
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
 }
-.siganos-wrapper{
-    width: 300px;
-    height: 200px;
+
+.siganos-wrapper {
+    width: 320px;
     display: flex;
     flex-direction: column;
-    height: 300px;   
+    height: 300px;
     background-image: var(--gradientCard);
     background-position: left;
     background-size: 130rem;
     transition: background-position 0.9s;
     justify-content: center;
-    align-items: center; 
-    border: 1px solid #ae325b1b ;
+    align-items: center;
+    border: 1px solid #ae325b1b;
     border-radius: 40px;
     box-shadow: 12px 10px 13px rgba(0, 0, 0, 0.459);
 }
-.siganos-wrapper:hover{
+
+.siganos-wrapper:hover {
     background-position: right;
 }
-.titulo-siganos{
+
+.titulo-siganos {
     display: flex;
     color: #ae325b;
-    font-weight:900;
+    font-weight: 900;
     font-size: 18px;
-    
+
 }
-.siganos-wrapper img{
+
+.siganos-wrapper img {
     width: 15%;
     padding: 2px;
 }
-.text{
+
+.text {
     text-align: center;
-    margin:12px;
+    margin: 12px;
     color: #ae325b;
 }
-.button{
-    background-color:#ffffff00;
+
+.button {
+    background-color: #ffffff00;
     border-radius: 20px;
-    border:1px solid #ae325b;
+    border: 1px solid #ae325b;
     padding: 1em 2em;
     font-size: 10px;
     font-weight: 600;
     color: #ae325b;
     cursor: pointer;
 }
-.button:hover{
+
+.button:hover {
     background-color: #aa788957;
-    transition: 1s;    
+    transition: 1s;
 }
-@media (width < 480px){
-    .titulo-siganos{
+
+@media (width < 480px) {
+    .titulo-siganos {
         font-size: 10px;
+    }
+}
+
+/* Container Principal do Depoimento */
+.depoimento-container {
+    flex: 1 1 320px;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    max-width: 400px;
+    padding: 1em;
+}
+
+.depoimento-tag {
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.4rem;
+}
+
+.depoimento-title {
+    font-family: serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 1.5rem 0;
+    line-height: 1.15;
+}
+
+/* Card com Efeito Glassmorphism */
+.depoimento-card {
+    position: relative;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Estrelas de Avaliação */
+.depoimento-stars {
+    color: #f7d070;
+    font-size: 1.2rem;
+    letter-spacing: 0.25em;
+    margin-bottom: 1rem;
+}
+
+/* Citação / Texto do Depoimento */
+.depoimento-quote {
+    font-family: serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ffffff;
+    margin: 0 0 1.5rem 0;
+}
+
+/* Autor */
+.depoimento-author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.author-name {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+}
+
+.author-location {
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Container dos Diferenciais */
+.diferenciais-container {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    width: 100%;
+}
+
+.diferenciais-tag {
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.4rem;
+}
+
+.diferenciais-title {
+    font-family: serif;
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 1.75rem 0;
+    line-height: 1.15;
+}
+
+.diferenciais-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.diferencial-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.diferencial-item:hover {
+    transform: translateX(6px);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.diferencial-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background-color: #ffffff;
+    color: #ae325b;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.diferencial-text h4 {
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 0 0 0.2rem 0;
+    color: #ffffff;
+}
+
+.diferencial-text p {
+    font-family: sans-serif;
+    font-size: 0.825rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+
+    .diferenciais-container {
+        text-align: left;
     }
 }

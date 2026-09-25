@@ -14,6 +14,7 @@ export default function HorizontalProductsSection() {
     const watermarkUpRef = useRef(null);
     const introTitleRef = useRef(null);
     const introTextRef = useRef(null);
+    const introCardRef = useRef(null);
 
     const rawProducts = returnProducts().retorno.produtos;
     const productList = rawProducts.length < 5
@@ -27,7 +28,7 @@ export default function HorizontalProductsSection() {
             const track = trackRef.current;
             const trackWidth = track.scrollWidth;
             const viewportWidth = window.innerWidth;
-            
+
             // Valor negativo para puxar a trilha em direção à ESQUERDA
             const xTranslate = -(trackWidth - viewportWidth);
             const scrollDistance = Math.max(trackWidth * 1.5, viewportWidth * 1.5);
@@ -47,6 +48,12 @@ export default function HorizontalProductsSection() {
                     invalidateOnRefresh: true,
                 },
             });
+
+            timeline.to(introCardRef.current, {
+                opacity: 1,
+                duration: 0.8,
+                ease: 'power3.out',
+            }, 0); // O
 
             // Revelação do Título
             timeline.fromTo(
@@ -96,7 +103,7 @@ export default function HorizontalProductsSection() {
             <div className="products-horizontal-track" ref={trackRef}>
 
                 <div className="products-scroll-end-spacer" />
-                
+
                 {productList.map((item, index) => {
                     const p = item.produto;
                     return (
@@ -112,8 +119,8 @@ export default function HorizontalProductsSection() {
                         </div>
                     );
                 })}
-                
-                <div className="products-intro-card">
+
+                <div ref={introCardRef} className="products-intro-card">
                     <h2 ref={introTitleRef}>NOSSOS PRODUTOS EM ALTA</h2>
                     <p ref={introTextRef}>Descubra os destaques da loja.</p>
                 </div>

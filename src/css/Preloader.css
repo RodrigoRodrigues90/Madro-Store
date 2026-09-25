@@ -4,7 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #f5f1f2; /* Tom bordô assinatura da MADRO */
+    background-color: #f5f1f2;
     z-index: 99999;
     display: flex;
     justify-content: center;
@@ -24,7 +24,7 @@
     width: 160px;
     height: auto;
     object-fit: contain;
-    animation: pulseLogo 2s infinite ease-in-out;
+    animation: pulseLogo 2s ease-in-out;
 }
 
 @keyframes pulseLogo {
@@ -59,7 +59,7 @@
     font-family: serif;
     font-style: italic;
     font-size: 0.9rem;
-    color: #F5E6E8;
+    color: #440b3a;
     letter-spacing: 0.15em;
     opacity: 0.8;
 }

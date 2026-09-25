@@ -56,12 +56,14 @@
 }
 
 .products-intro-card {
+  position: relative;
   min-width: 350px;
   max-width: 360px;
   padding-right: 2em;
-  color: #a55666;
   flex-shrink: 0;
+  color: #a55666;
   text-align: end;
+  --opacity: 1;
 }
 
 .products-intro-card h2 {
@@ -78,7 +80,6 @@
   font-size: 1.1rem;
   opacity: 1;
   font-weight: 800;
-
 }
 
 .product-card-container {

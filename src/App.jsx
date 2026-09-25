@@ -65,6 +65,7 @@ function App() {
           <Newsletter />
           <Void />
           <Siganos />
+          <Void />
           <Footer />
         </div>
       </div>
