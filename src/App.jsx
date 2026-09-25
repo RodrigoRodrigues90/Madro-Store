@@ -10,6 +10,7 @@ import Overlay from './components/overlay.jsx';
 import Header from './components/header';
 import Void from "./components/void";
 import Main from "./components/HorizontalScrollSection.jsx";
+import Diferencial from "./components/diferenciais.jsx"
 import Newsletter from './components/newsletter';
 import Siganos from './components/siganos';
 import Paralax from './components/paralaxsection.jsx'
@@ -61,7 +62,8 @@ function App() {
           <Paralax foto={imageParalax} />
           <Void />
           <Destaques />
-          <Void />
+          <Diferencial/>
+          <Void/>
           <Newsletter />
           <Void />
           <Siganos />

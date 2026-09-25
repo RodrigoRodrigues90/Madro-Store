@@ -19,7 +19,7 @@ export default function Footer() {
                 {/* Logo Central da Marca */}
                 <div className="footer-brand-section">
                     <img src={madro} alt="MADRO Store" className="footer-logo" />
-                    <p className="footer-tagline">Alta joalheria & design minimalista</p>
+                    <p className="footer-tagline">Semijoias & design minimalista</p>
                 </div>
 
                 {/* Grid de Seções do Rodapé */}
