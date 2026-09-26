@@ -4,62 +4,45 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #f5f1f2;
-    z-index: 99999;
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: all;
-}
-
-.preloader-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    width: clamp(200px, 30vw, 320px);
-}
-
-.preloader-logo {
-    width: 160px;
-    height: auto;
-    object-fit: contain;
-    animation: pulseLogo 2s ease-in-out;
-}
-
-@keyframes pulseLogo {
-    0%, 100% {
-        opacity: 0.6;
-        transform: scale(0.98);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.preloader-bar-container {
-    width: 100%;
-    height: 2px;
-    background-color: rgba(188, 114, 194, 0.829);
+    background: transparent;
     overflow: hidden;
-    position: relative;
+    pointer-events: auto;
 }
 
-.preloader-bar {
-    width: 0%;
-    height: 120%;
-    background-color: #440b3a;
+.splash-svg-viewport {
+    width: 100%;
+    height: 100%;
+    display: block;
+    user-select: none;
+}
+
+.splash-svg-text {
+    font-size: 95px;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    fill: #000000;
+}
+
+#splash-loader-bar {
+    transition: stroke-dashoffset 0.05s linear;
+}
+
+.splash-progress-info {
     position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.preloader-percent {
-    font-family: serif;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: #440b3a;
-    letter-spacing: 0.15em;
-    opacity: 0.8;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Montserrat', 'Helvetica Neue', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
 }

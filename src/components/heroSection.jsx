@@ -1,75 +1,32 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import videoBg from '../assets/backGround.mp4';
 import '../css/heroSection.css';
 
-gsap.registerPlugin(ScrollTrigger);
-
-ScrollTrigger.normalizeScroll(true);
-
-export default function HeroSection({
-    brandName = "MADRO",
-    scrollText = "ROLE PARA EXPLORAR",
-}) {
+export default function HeroSection({ isLoaded = false }) {
     const heroWrapperRef = useRef(null);
 
     useEffect(() => {
+        // Dispara apenas quando a SplashScreen for concluída (isLoaded = true)
+        if (!isLoaded) return;
+
         const wrapper = heroWrapperRef.current;
         if (!wrapper) return;
         const headerElement = document.querySelector('header');
 
         const ctx = gsap.context(() => {
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: wrapper,
-                    start: 'top top',
-                    end: '+=350%',
-                    scrub: 2,
-                    pin: true,
-                    pinSpacing: true,
-                    anticipatePin: 1,
-                    invalidateOnRefresh: true,
-                },
-            });
+            const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
 
-            // 1. Oculta o indicador de rolagem
-            tl.to('#hero-scroll-hint', { opacity: 0, duration: 0.1 }, 0)
-
-                // 2. Faz o zoom da palavra/máscara SVG
-                .to(
-                    '#hero-zoom-target',
-                    {
-                        scale: 80,
-                        transformOrigin: '46.5% 50%',
-                        ease: 'power2.inOut',
-                        duration: 1,
-                    },
-                    0
-                );
-
-            // 3. Remove a máscara
-            tl.to(
-                '.hero-overlay-mask',
-                {
-                    opacity: 0,
-                    pointerEvents: 'none',
-                    duration: 0.15,
-                },
-                0.5
-            );
-
-            // 4. Animação do cabeçalho
+            // 1. Entrada do Header da página (se existir)
             if (headerElement) {
                 tl.fromTo(
                     headerElement,
                     { opacity: 0, y: -20 },
-                    { opacity: 1, y: 0, ease: 'power1.out', duration: 0.3 },
-                    0.4
+                    { opacity: 1, y: 0, duration: 0.6 }
                 );
             }
 
-            // 5. ANIMAÇÃO DOS TEXTOS NO FINAL DA TIMELINE (Inicia em 0.75 s/fator da timeline)
+            // 2. Animação Stagger nos textos (Nova -> Coleção -> Verão☼)
             tl.fromTo(
                 '#subtitle-hero .hero-text-item',
                 {
@@ -81,21 +38,36 @@ export default function HeroSection({
                     opacity: 1,
                     y: 0,
                     scale: 1,
-                    stagger: 0.08, // Revela palavra 1 -> símbolo -> palavra 2 rapidamente em sequência
-                    duration: 0.5,
-                    ease: 'power2.out',
+                    stagger: 0.22,
+                    duration: 0.9,
                 },
-                0.75 // Posição no final do zoom
+                headerElement ? '-=0.3' : 0
             );
+
+            // 3. Revelação do indicador "VER MAIS" + Scroll Bounce
+            tl.fromTo(
+                '#hero-scroll-hint',
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.5 },
+                '-=0.2'
+            );
+
+            // Loop contínuo de Bounce para a seta/indicador de scroll
+            gsap.to('.hero-scroll-icon', {
+                y: 8,
+                repeat: -1,
+                yoyo: true,
+                duration: 0.75,
+                ease: 'power1.inOut',
+            });
 
         }, wrapper);
 
         return () => ctx.revert();
-    }, []);
+    }, [isLoaded]);
 
     return (
         <section ref={heroWrapperRef} className="hero-container">
-            {/* 1. CAMADA DE VÍDEO DE BACKGROUND E TEXTO SOBREPOSTO */}
             <div className="hero-video-wrapper">
                 <video
                     className="hero-video-element"
@@ -107,51 +79,19 @@ export default function HeroSection({
                     preload="metadata"
                 />
 
-                {/* Elemento de texto acionado no final da animação */}
+                {/* Subtítulo da Coleção */}
                 <div id="subtitle-hero" className="subtitle-hero">
                     <span className="hero-text-item">Nova</span>
                     <br />
                     <span className="hero-text-item">Coleção</span>
                     <br />
                     <span className="hero-text-item">Verão☼</span>
-
                 </div>
-            </div>
 
-            {/* 2. CAMADA DE OVERLAY COM MÁSCARA SVG */}
-            <div className="hero-overlay-mask">
-                <svg
-                    className="hero-svg-viewport"
-                    viewBox="0 0 1000 1000"
-                    preserveAspectRatio="xMidYMid slice"
-                >
-                    <defs>
-                        <mask id="madro-hero-mask">
-                            <rect width="100%" height="100%" fill="#ffffff" />
-                            <g id="hero-zoom-target">
-                                <text
-                                    x="500"
-                                    y="500"
-                                    textAnchor="middle"
-                                    dominantBaseline="central"
-                                    className="hero-svg-text"
-                                >
-                                    {brandName}
-                                </text>
-                            </g>
-                        </mask>
-                    </defs>
-
-                    <rect
-                        width="100%"
-                        height="100%"
-                        fill="#FDFBFB"
-                        mask="url(#madro-hero-mask)"
-                    />
-                </svg>
-
+                {/* Elemento VER MAIS com efeito Bounce */}
                 <div id="hero-scroll-hint" className="hero-scroll-hint">
-                    <span>{scrollText}</span>
+                    <span className="hero-scroll-text">VER MAIS</span>
+                    <span className="hero-scroll-icon">↓</span>
                 </div>
             </div>
         </section>

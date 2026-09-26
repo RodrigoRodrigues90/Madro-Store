@@ -24,7 +24,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 function App() {
   const { produtos } = useSelector((rootReducer) => rootReducer.allProducts);
   const dispatch = useDispatch();
-  const [loaded, setLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     loadProducts(dispatch);
@@ -51,19 +51,20 @@ function App() {
 
   return (
     <>
-      {!loaded && <Preloader onComplete={() => setLoaded(true)} />}
+      {!isLoaded && <Preloader onComplete={() => setIsLoaded(true)} />}
+      
       <Overlay isOpen={activeState} />
+      
       <Header />
-
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <HeroSection />
+          <HeroSection isLoaded={isLoaded} />
           <Main />
           <Paralax foto={imageParalax} />
           <Void />
           <Destaques />
-          <Diferencial/>
-          <Void/>
+          <Diferencial />
+          <Void />
           <Newsletter />
           <Void />
           <Siganos />

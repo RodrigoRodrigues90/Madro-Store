@@ -1,15 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import logo from '../assets/header/logo.webp';
 import '../css/Preloader.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Preloader({ onComplete }) {
-    const preloaderRef = useRef(null);
-    const logoRef = useRef(null);
-    const percentRef = useRef(null);
+export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
+    const splashRef = useRef(null);
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
@@ -18,21 +15,53 @@ export default function Preloader({ onComplete }) {
         let isFullyLoaded = false;
         let currentPercent = 0;
 
-        // 1. O contador avança até 90% enquanto os recursos descarregam
+        // Animação final de Zoom e saída da SplashScreen
+        const dismissPreloader = () => {
+            const ctx = gsap.context(() => {
+                const tl = gsap.timeline({
+                    onComplete: () => {
+                        document.body.style.overflow = 'auto';
+                        ScrollTrigger.refresh();
+                        if (onComplete) onComplete();
+                    }
+                });
+
+                // 1. Esconde a porcentagem e a barra de carregamento
+                tl.to(['.splash-progress-info', '#splash-loader-bar'], {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in'
+                })
+                // 2. Transição de Zoom no elemento MADRO vazado
+                .to('#splash-zoom-target', {
+                    scale: 85,
+                    transformOrigin: '45.5% 50%',
+                    duration: 1.8,
+                    ease: 'power2.inOut'
+                }, '-=0.1')
+                // 3. Oculta suavemente o container da SplashScreen
+                .to(splashRef.current, {
+                    opacity: 0,
+                    duration: 0.5,
+                    pointerEvents: 'none',
+                    ease: 'power2.out'
+                }, '-=0.6');
+            }, splashRef);
+        };
+
+        // Simulação / acompanhamento do progresso de carregamento
         const interval = setInterval(() => {
             if (currentPercent < 90 || isFullyLoaded) {
                 currentPercent += 1;
                 setProgress(currentPercent);
             }
 
-            // Quando atinge 100% (após o carregamento real confirmar)
             if (currentPercent >= 100) {
                 clearInterval(interval);
                 dismissPreloader();
             }
         }, 15);
 
-        // 2. Escuta o carregamento REAL de todas as mídias do DOM (imagens, vídeos, fontes)
         const handlePageLoad = () => {
             isFullyLoaded = true;
         };
@@ -43,51 +72,66 @@ export default function Preloader({ onComplete }) {
             window.addEventListener('load', handlePageLoad);
         }
 
-        // 3. Animação de fecho com GSAP
-        const dismissPreloader = () => {
-            const ctx = gsap.context(() => {
-                const tl = gsap.timeline({
-                    onComplete: () => {
-                        document.body.style.overflow = 'auto';
-                        ScrollTrigger.refresh(); // Recalcula o GSAP após remover o preloader
-                        if (onComplete) onComplete();
-                    }
-                });
-
-                tl.to([logoRef.current, percentRef.current, '.preloader-bar-container'], {
-                    opacity: 0,
-                    y: -20,
-                    duration: 0.4,
-                    ease: 'power2.in'
-                })
-                .to(preloaderRef.current, {
-                    yPercent: -100,
-                    duration: 0.8,
-                    ease: 'power4.inOut'
-                });
-            }, preloaderRef);
-        };
-
         return () => {
             clearInterval(interval);
             window.removeEventListener('load', handlePageLoad);
         };
     }, [onComplete]);
 
+    // Cálculo da linha SVG (dashoffset de 160 a 0)
+    const strokeDashoffset = 160 - (160 * progress) / 100;
+
     return (
-        <div className="preloader-overlay" ref={preloaderRef}>
-            <div className="preloader-content">
-                <img src={logo} alt="MADRO" className="preloader-logo" ref={logoRef} />
-                <div className="preloader-bar-container">
-                    {/* A barra acompanha o estado de progresso dinâmico */}
-                    <div 
-                        className="preloader-bar" 
-                        style={{ width: `${progress}%` }} 
-                    />
-                </div>
-                <span className="preloader-percent" ref={percentRef}>
-                    {progress}%
-                </span>
+        <div className="preloader-overlay" ref={splashRef}>
+            <svg
+                className="splash-svg-viewport"
+                viewBox="0 0 1000 1000"
+                preserveAspectRatio="xMidYMid slice"
+            >
+                <defs>
+                    <mask id="madro-splash-mask">
+                        {/* Fundo da máscara (Branco = Sólido) */}
+                        <rect width="100%" height="100%" fill="#ffffff" />
+                        
+                        {/* Elemento de Zoom (Preto = Transparente no SVG mask) */}
+                        <g id="splash-zoom-target">
+                            <text
+                                x="500"
+                                y="500"
+                                textAnchor="middle"
+                                dominantBaseline="central"
+                                className="splash-svg-text"
+                            >
+                                {brandName}
+                            </text>
+                        </g>
+
+                        {/* Barra de progresso vazada */}
+                        <line
+                            id="splash-loader-bar"
+                            x1="420"
+                            y1="550"
+                            x2="580"
+                            y2="550"
+                            stroke="#000000"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeDasharray="160"
+                            strokeDashoffset={strokeDashoffset}
+                        />
+                    </mask>
+                </defs>
+
+                <rect
+                    width="100%"
+                    height="100%"
+                    fill="#fbf7fcff"
+                    mask="url(#madro-splash-mask)"
+                />
+            </svg>
+
+            <div className="splash-progress-info">
+                <span>{progress}%</span>
             </div>
         </div>
     );
