@@ -1,100 +1,103 @@
 .horizontal-section {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  min-height: 80vh;
+  height: 100dvh;
+  max-height: 800px;
   background-color: #F5E6E8;
   overflow: hidden;
   display: flex;
-  z-index: 20;
   align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  z-index: 20;
 }
 
-/* Marca d'água superior e inferior */
-.watermark-text-below {
+/* Estrutura das Marcas d'água */
+.watermark-container {
   position: absolute;
-  left: 70px;
-  bottom: 1rem;
-  white-space: nowrap;
-  font-family: serif;
-  font-style: italic;
-  font-size: clamp(9rem, 8vw, 10rem);
-  font-weight: 800;
-  color: rgba(88, 24, 37, 0.123);
-  user-select: none;
+  width: 100%;
+  overflow: hidden;
   pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.watermark-up {
+  top: 2rem;
+}
+
+.watermark-below {
+  bottom: 2rem;
+}
+
+.watermark-track {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
   will-change: transform;
 }
 
-.watermark-text-up {
-  position: absolute;
-  right: 70px;
-  top: 5rem;
-  white-space: nowrap;
+.watermark-track span {
   font-family: serif;
   font-style: italic;
-  font-size: clamp(5rem, 5vw, 10rem);
+  font-size: clamp(3.5rem, 6vw, 6.5rem);
   font-weight: 800;
-  color: rgba(88, 24, 37, 0.123);
-  user-select: none;
-  pointer-events: none;
-  will-change: transform;
+  color: rgba(88, 24, 37, 0.08);
+  padding-right: 1rem;
 }
 
+/* Trilha de Conteúdo */
 .horizontal-track {
   display: flex;
   align-items: center;
-  padding: 0 2vw;
+  gap: 2rem;
+  padding: 0 1rem;
   will-change: transform;
   z-index: 2;
   width: max-content;
 }
 
-.scroll-end-spacer {
-  width: 15vw;
-  flex-shrink: 0;
-}
-
+/* Intro Card Ajustado */
 .intro-card {
-  max-width: 360px;
-  padding-right: 2em;
-  color: #a55666;
-  min-width: 350px;
+  width: clamp(260px, 22vw, 320px);
   flex-shrink: 0;
   text-align: center;
-  position: relative;
+  padding: 0 1rem;
+  color: #a55666;
 }
+
 .intro-card h2 {
   font-family: sans-serif;
-  font-size: 1.8rem;
-  font-weight: bolder;
-  margin-bottom: 1rem;
-  line-height: 1;
-  overflow: hidden;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 900;
+  margin-bottom: 0.8rem;
+  line-height: 1.15;
 }
 
 .intro-card p {
   font-family: sans-serif;
-  font-size: 1.1rem;
-  opacity: 1;
-  font-weight: 800;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  font-weight: 700;
+  opacity: 0.9;
 }
 
-/* Estrutura do Card */
+/* Video Card Responsivo e sem sobras */
 .video-card {
   position: relative;
-  width: 350px;
-  height: 420px;
-  min-width: 320px;
-  /* Evita que os cards encolham no desktop */
+  width: clamp(260px, 22vw, 320px);
+  height: clamp(360px, 30vw, 440px);
   flex-shrink: 0;
   overflow: hidden;
   background: #FFFFFF;
+  border-radius: 4px;
   box-shadow: 0 10px 30px rgba(88, 24, 37, 0.08);
   transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
 .video-card:hover {
-  box-shadow: 0 15px 35px rgba(88, 24, 37, 0.404);
+  box-shadow: 0 15px 35px rgba(88, 24, 37, 0.25);
+  transform: translateY(-4px);
 }
 
 .video-wrapper {
@@ -104,48 +107,34 @@
   overflow: hidden;
 }
 
-.video-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
 .card-badge {
   position: absolute;
-  top: 20px;
-  left: 10px;
-  color: rgb(255, 255, 255);
-  background-color: rgba(245, 245, 220, 0.233);
-  font-size: 2rem;
+  top: 15px;
+  left: 15px;
+  color: #ffffff;
+  background-color: rgba(245, 245, 220, 0.25);
+  font-size: 1.4rem;
   font-family: serif;
   font-style: italic;
-  font-weight: 100;
-  padding: 6px 14px;
+  font-weight: 400;
+  padding: 4px 12px;
   z-index: 3;
-  opacity: 0.9;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  backdrop-filter: blur(4px);
+  border-radius: 2px;
   pointer-events: none;
 }
 
 .card-details {
   position: absolute;
   inset: 0;
-  background: rgba(88, 24, 37, 0.4);
+  background: rgba(88, 24, 37, 0.35);
   display: flex;
-  flex-direction: column;
-  align-items: end;
-  justify-content: end;
+  align-items: flex-end;
+  justify-content: flex-end;
   z-index: 2;
-  opacity: 0.7;
+  opacity: 0;
   backdrop-filter: blur(2px);
   transition: opacity 0.3s ease;
-}
-
-/* Exibe a badge e o card-details no hover */
-.video-card:hover .card-badge {
-  opacity: 1;
 }
 
 .video-card:hover .card-details {
@@ -156,12 +145,12 @@
   background-color: #992a40;
   color: #fcfbf7;
   border: none;
-  margin: 1em;
-  padding: 0.85rem 1.5rem;
+  margin: 1.2rem;
+  padding: 0.75rem 1.3rem;
   border-radius: 2px;
   font-family: serif;
-  font-weight: 900;
-  font-size: 1.2rem;
+  font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transform: translateY(10px);
@@ -174,4 +163,29 @@
 
 .buy-btn:hover {
   background-color: #7A2234;
+}
+
+/* Responsividade Mobile */
+@media (max-width: 768px) {
+  .horizontal-section {
+    height: auto;
+    min-height: 520px;
+    padding: 40px 0;
+  }
+
+  .watermark-up {
+    top: 0.8rem;
+  }
+
+  .watermark-below {
+    bottom: 0.8rem;
+  }
+
+  .watermark-track span {
+    font-size: 2.8rem;
+  }
+
+  .horizontal-track {
+    gap: 1.2rem;
+  }
 }

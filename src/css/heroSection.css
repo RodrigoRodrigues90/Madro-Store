@@ -2,6 +2,7 @@
   position: relative;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -46,7 +47,7 @@
 /* Indicador VER MAIS + Seta Scroll */
 .hero-scroll-hint {
   position: absolute;
-  bottom: 35px;
+  bottom: calc(30px + env(safe-area-inset-bottom, 0px));
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -73,4 +74,14 @@
   line-height: 1;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   will-change: transform;
+}
+
+@media (max-height: 700px) {
+    .hero-scroll-hint {
+        bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+    }
+    
+    .subtitle-hero {
+        font-size: clamp(3.8rem, 4vw, 3rem);
+    }
 }

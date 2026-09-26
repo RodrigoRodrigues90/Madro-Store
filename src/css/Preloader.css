@@ -4,6 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -45,4 +46,10 @@
     text-transform: uppercase;
     pointer-events: none;
     user-select: none;
+}
+
+@media (max-height: 700px) {
+    .splash-progress-info {
+        bottom: calc(15px + env(safe-area-inset-bottom, 0px));
+    }
 }
