@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import videoBg from '../assets/backGround.mp4';
+import videoBg from '../assets/background-mobile.mp4';
 import '../css/heroSection.css';
 
 export default function HeroSection({ isLoaded = false }) {

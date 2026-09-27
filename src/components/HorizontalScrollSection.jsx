@@ -2,39 +2,39 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import '../css/HorizontalScrollSection.css';
 
-// Importação direta dos vídeos
-import oculosVideo from '../assets/oculos.mp4';
-import pulseirasVideo from '../assets/pulseira.mp4';
-import aneisVideo from '../assets/aneis.mp4';
-import colaresVideo from '../assets/colares.mp4';
-import brincosVideo from '../assets/brincos.mp4';
+// Importação direta dos arquivos WebP
+import oculosWebp from '../assets/oculos.webp';
+import pulseirasWebp from '../assets/pulseiras.webp';
+import aneisWebp from '../assets/aneis.webp';
+import colaresWebp from '../assets/colares.webp';
+import brincosWebp from '../assets/brincos.webp';
 
-// Array manual de produtos
+// Array manual de produtos com as mídias em WebP
 const produtosManuais = [
     {
         id: 1,
         categoria: 'ÓCULOS',
-        videoSrc: oculosVideo,
+        imgSrc: oculosWebp,
     },
     {
         id: 2,
         categoria: 'PULSEIRAS',
-        videoSrc: pulseirasVideo,
+        imgSrc: pulseirasWebp,
     },
     {
         id: 3,
         categoria: 'ANÉIS',
-        videoSrc: aneisVideo,
+        imgSrc: aneisWebp,
     },
     {
         id: 4,
         categoria: 'COLARES',
-        videoSrc: colaresVideo,
+        imgSrc: colaresWebp,
     },
     {
         id: 5,
         categoria: 'BRINCOS',
-        videoSrc: brincosVideo,
+        imgSrc: brincosWebp,
     },
 ];
 
@@ -51,11 +51,11 @@ export default function HorizontalScrollSection() {
         if (!track) return;
 
         const ctx = gsap.context(() => {
-            // 1. Carrossel de produtos (Esquerda)
+            // 1. Carrossel de produtos (Movimento para a esquerda)
             tweenRef.current = gsap.to(track, {
                 xPercent: -50,
                 ease: 'none',
-                duration: 30,
+                duration: 28,
                 repeat: -1,
             });
 
@@ -95,7 +95,7 @@ export default function HorizontalScrollSection() {
 
     return (
         <section className="horizontal-section">
-            {/* Marca d'água Superior (Desliza para a esquerda) */}
+            {/* Marca d'água Superior */}
             <div className="watermark-container watermark-up">
                 <div className="watermark-track" ref={wmUpRef}>
                     <span>{watermarkText.repeat(3)}</span>
@@ -110,7 +110,7 @@ export default function HorizontalScrollSection() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                {/* SET 1 */}
+                {/* LOTE 1 */}
                 <div className="intro-card">
                     <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
                     <p>Garanta os seus favoritos da estação.</p>
@@ -119,12 +119,10 @@ export default function HorizontalScrollSection() {
                 {produtosManuais.map((item) => (
                     <div className="video-card" key={`set1-${item.id}`}>
                         <div className="video-wrapper">
-                            <video
-                                src={item.videoSrc}
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
+                            <img
+                                src={item.imgSrc}
+                                alt={`Categoria ${item.categoria}`}
+                                loading="eager"
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                             <span className="card-badge">{item.categoria}</span>
@@ -135,7 +133,7 @@ export default function HorizontalScrollSection() {
                     </div>
                 ))}
 
-                {/* SET 2 (Duplicado para loop perfeito) */}
+                {/* LOTE 2 (Duplicado para o efeito de loop continuo sem emendas) */}
                 <div className="intro-card">
                     <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
                     <p>Garanta os seus favoritos da estação.</p>
@@ -144,13 +142,10 @@ export default function HorizontalScrollSection() {
                 {produtosManuais.map((item) => (
                     <div className="video-card" key={`set2-${item.id}`}>
                         <div className="video-wrapper">
-                            <video
-                                src={item.videoSrc}
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
-                                preload='none'
+                            <img
+                                src={item.imgSrc}
+                                alt={`Categoria ${item.categoria}`}
+                                loading="lazy"
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                             <span className="card-badge">{item.categoria}</span>
@@ -162,7 +157,7 @@ export default function HorizontalScrollSection() {
                 ))}
             </div>
 
-            {/* Marca d'água Inferior (Desliza para a direita) */}
+            {/* Marca d'água Inferior */}
             <div className="watermark-container watermark-below">
                 <div className="watermark-track" ref={wmBelowRef}>
                     <span>{watermarkText.repeat(3)}</span>
