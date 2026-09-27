@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Gem, Gift, ShieldCheck } from "lucide-react";
+import { Truck, Gift, ShieldCheck } from "lucide-react";
 import "../css/diferencial.css";
 
 // Registra o plugin do ScrollTrigger
@@ -51,16 +51,7 @@ export default function Siganos() {
                 <span className="diferenciais-tag">QUALIDADE & EXCLUSIVIDADE</span>
                 <h2 className="diferenciais-title">A Experiência MADRO</h2>
 
-                <div className="diferenciais-list">
-                    <div className="diferencial-item">
-                        <div className="diferencial-icon">
-                            <Gem size={20} />
-                        </div>
-                        <div className="diferencial-text">
-                            <h4>Banho de Alta Durabilidade</h4>
-                            <p>Peças banhadas em Ouro 18k e Prata 925, livres de níquel e hipoalergênicas.</p>
-                        </div>
-                    </div>
+               <div className="diferenciais-list">
 
                     <div className="diferencial-item">
                         <div className="diferencial-icon">
@@ -81,6 +72,17 @@ export default function Siganos() {
                             <p>Certificado de garantia em todas as semijóias e atendimento dedicado.</p>
                         </div>
                     </div>
+                   
+                    <div className="diferencial-item">
+                        <div className="diferencial-icon">
+                            <Truck size={20} />
+                        </div>
+                        <div className="diferencial-text">
+                            <h4>Frete Grátis Regional</h4>
+                            <p>Envio gratuito para Florianópolis e toda a região metropolitana.</p>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
         </section>

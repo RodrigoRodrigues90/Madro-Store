@@ -150,6 +150,7 @@ export default function HorizontalScrollSection() {
                                 muted
                                 loop
                                 playsInline
+                                preload='none'
                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                             <span className="card-badge">{item.categoria}</span>

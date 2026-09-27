@@ -1,5 +1,5 @@
 .diferenciais-bg {
-    border:2px solid #fffffffa;
+    border: 2px solid #fffffffa;
     background-color: #F5E6E8;
     padding: 4rem 1.5rem;
     gap: 2rem;
@@ -40,21 +40,21 @@
 /* Cards individuais translúcidos */
 .diferencial-item {
     display: flex;
-    align-items: flex-start;
     gap: 1rem;
     padding: 1rem 1.25rem;
     background: rgba(223, 133, 133, 0.103);
-    backdrop-filter: blur(2px);
-    border: 1px solid #b4466a57;
+    border: 1px solid #b3899757;
     border-radius: 4px;
     transition: transform 0.3s ease, background-color 0.3s ease;
     max-width: 320px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+
 }
 
 .diferencial-item:hover {
     background: #e7a3b454;
     transform: translateX(6px);
-    
+
 }
 
 /* Ícones redondos em branco e magenta */

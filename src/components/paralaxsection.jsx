@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import "../css/paralax.css";
-import rosesImg from "../assets/roses/roses5.webp";
+import rosesImg from "../assets/roses/roses5.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 

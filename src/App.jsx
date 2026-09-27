@@ -59,16 +59,15 @@ function App() {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <HeroSection isLoaded={isLoaded} />
+          <Void />
           <Main />
-          <Paralax foto={imageParalax} />
           <Void />
           <Destaques />
           <Diferencial />
-          <Void />
+          <Void/>
+          <Paralax foto={imageParalax} />
           <Newsletter />
-          <Void />
           <Siganos />
-          <Void />
           <Footer />
         </div>
       </div>
