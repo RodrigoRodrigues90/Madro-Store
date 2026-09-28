@@ -57,6 +57,7 @@ export default function HorizontalScrollSection() {
                 ease: 'none',
                 duration: 28,
                 repeat: -1,
+                force3D: true,
             });
 
             // 2. Marca d'água Superior (Movimento para a Esquerda)

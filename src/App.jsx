@@ -20,7 +20,7 @@ import HeroSection from "./components/heroSection.jsx";
 import Destaques from "./components/HorizontalProductsSection.jsx"
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
+ScrollTrigger.config({ ignoreMobileResize: true });
 function App() {
   const { produtos } = useSelector((rootReducer) => rootReducer.allProducts);
   const dispatch = useDispatch();

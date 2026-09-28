@@ -1,7 +1,7 @@
 .hero-container {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 100svh;
   height: 100dvh;
   overflow: hidden;
 }
@@ -22,7 +22,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   z-index: 1;
 }
 
@@ -63,14 +62,14 @@
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.25em;
-  color: #ffffff;
+  color: #ad3160;
   text-transform: uppercase;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .hero-scroll-icon {
   font-size: 1.2rem;
-  color: #ffffff;
+  color: #ad3160;
   line-height: 1;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   will-change: transform;
