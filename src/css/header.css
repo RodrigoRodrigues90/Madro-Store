@@ -7,24 +7,77 @@ header {
     z-index: 10000;
     transition: all 0.3s ease;
     color: #8a324f;
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    opacity: 1;
+}
+
+.top-banner {
+    width: 100%;
+    background-color: #8a324f;
+    color: #ffffff;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    max-height: 0;
+    opacity: 1;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-banner.visible {
+    max-height: 38px;
+    padding: 8px 16px;
+    opacity: 1;
 }
 
 .center {
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(5px);
     position: relative;
-    display: flex;
-    padding: 2em;
-    align-items: center;
-    justify-content: space-around;
+    padding: 0.8rem 1.5rem;
     width: 100%;
     box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:1px 0px 8px 1px #3130314b;
 }
 
-/* Logomarca */
+.wrapper-itens {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 700px;
+    width: 100%;
+}
+
+#logo-id {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+}
+
+.logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
 .menu-list {
     display: flex;
     gap: 2.5rem;
@@ -34,16 +87,12 @@ header {
     padding: 0;
     list-style: none;
 }
-.logo h1{
-    color: #8a324f;
-}
 
 a {
     text-decoration: none;
-    color: none;
+    color: inherit;
     transition: color 0.3s ease;
 }
-
 
 .item-menu,
 .item-menu-produtos,
@@ -55,11 +104,10 @@ a {
 }
 
 /* ==========================================================================
-   SUBMENUS (PRODUTOS E LOGIN)
+   SUBMENUS
    ========================================================================== */
-
 .sub-menu,
-#log > .sub-menu {
+#log>.sub-menu {
     position: absolute;
     top: 100%;
     left: 50%;
@@ -70,20 +118,17 @@ a {
     border-radius: 12px;
     padding: 0.5rem 0;
     margin-top: 1px;
-    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.171);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.17);
     border: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 99999;
-    
-    /* Controle de visibilidade suave */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
 
-/* Exibe os submenus ao passar o mouse no item pai */
-.item-menu-produtos:hover > .sub-menu,
-#log:hover > .sub-menu {
+.item-menu-produtos:hover>.sub-menu,
+#log:hover>.sub-menu {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -115,7 +160,6 @@ a {
 /* ==========================================================================
    ÍCONES (LOGIN E CARRINHO)
    ========================================================================== */
-
 .icons-log-cart-div {
     display: flex;
     align-items: center;
@@ -159,7 +203,6 @@ a {
 /* ==========================================================================
    ELEMENTOS E MENU MOBILE
    ========================================================================== */
-
 .icons-search-menu-mobile {
     display: flex;
     align-items: center;
@@ -210,7 +253,7 @@ a {
     color: rgba(255, 255, 255, 0.7);
 }
 
-/* Drawer / Menu lateral oculto */
+/* Menu lateral oculto */
 .hidden-menu {
     position: fixed;
     display: flex;
@@ -272,7 +315,7 @@ a {
     list-style: none;
 }
 
-/* Submenu sanfona no mobile */
+/* Submenu mobile */
 .hidden-submenu {
     border-radius: 8px;
     max-height: 0px;
@@ -325,14 +368,12 @@ a {
     color: #d891a9;
 }
 
-/* ==========================================================================
-   RESPONSIVIDADE
-   ========================================================================== */
-
+/* RESPONSIVIDADE */
 @media (max-width: 1000px) {
     .center {
-        padding: 1em .6rem;
+        padding: 1em 1.4rem;
     }
+
     .menu-mobile {
         display: block;
     }

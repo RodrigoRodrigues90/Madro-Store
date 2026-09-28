@@ -24,7 +24,7 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 function App() {
   const { produtos } = useSelector((rootReducer) => rootReducer.allProducts);
   const dispatch = useDispatch();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [splashFinished, setSplashFinished] = useState(false);
 
   useEffect(() => {
     loadProducts(dispatch);
@@ -51,20 +51,22 @@ function App() {
 
   return (
     <>
-      {!isLoaded && <Preloader onComplete={() => setIsLoaded(true)} />}
-      
+      {/* Exibe o SplashScreen e chama setSplashFinished(true) quando terminar */}
+      {!splashFinished && (
+        <Preloader onComplete={() => setSplashFinished(true)} />
+      )}
       <Overlay isOpen={activeState} />
-      
-      <Header />
+
+      {/* O Header só inicia a animação de entrada quando splashFinished for true */}
+      <Header isSplashFinished={splashFinished} />
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <HeroSection isLoaded={isLoaded} />
-          <Void />
+          <HeroSection isLoaded={setSplashFinished} />
           <Main />
           <Void />
           <Destaques />
           <Diferencial />
-          <Void/>
+          <Void />
           <Paralax foto={imageParalax} />
           <Newsletter />
           <Siganos />

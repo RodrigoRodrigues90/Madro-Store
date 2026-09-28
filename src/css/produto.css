@@ -58,6 +58,7 @@
 
 /* Preço e parcelamento */
 .valor-produto {
+    font-family: serif;
     color: #992a40;
     font-weight: 800;
     font-size: clamp(0.95rem, 3vw, 1.2rem);
@@ -65,14 +66,20 @@
 }
 
 .parcelamento {
+    font-family: serif;
     color: #a55666;
-    font-size: clamp(0.68rem, 2vw, 0.75rem);
+    font-size: clamp(0.8rem, 2vw, 0.75rem);
     text-align: center;
     margin-bottom: 0.5rem;
     line-height: 1.2;
 }
 
+.parcelamento p {
+    font-family: serif;
+}
+
 .parcelamento strong {
+    font-family: serif;
     color: #581825;
 }
 

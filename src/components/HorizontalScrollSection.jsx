@@ -9,33 +9,12 @@ import aneisWebp from '../assets/aneis.webp';
 import colaresWebp from '../assets/colares.webp';
 import brincosWebp from '../assets/brincos.webp';
 
-// Array manual de produtos com as mídias em WebP
 const produtosManuais = [
-    {
-        id: 1,
-        categoria: 'ÓCULOS',
-        imgSrc: oculosWebp,
-    },
-    {
-        id: 2,
-        categoria: 'PULSEIRAS',
-        imgSrc: pulseirasWebp,
-    },
-    {
-        id: 3,
-        categoria: 'ANÉIS',
-        imgSrc: aneisWebp,
-    },
-    {
-        id: 4,
-        categoria: 'COLARES',
-        imgSrc: colaresWebp,
-    },
-    {
-        id: 5,
-        categoria: 'BRINCOS',
-        imgSrc: brincosWebp,
-    },
+    { id: 1, categoria: 'ÓCULOS', imgSrc: oculosWebp },
+    { id: 2, categoria: 'PULSEIRAS', imgSrc: pulseirasWebp },
+    { id: 3, categoria: 'ANÉIS', imgSrc: aneisWebp },
+    { id: 4, categoria: 'COLARES', imgSrc: colaresWebp },
+    { id: 5, categoria: 'BRINCOS', imgSrc: brincosWebp },
 ];
 
 export default function HorizontalScrollSection() {
@@ -51,26 +30,26 @@ export default function HorizontalScrollSection() {
         if (!track) return;
 
         const ctx = gsap.context(() => {
-            // 1. Carrossel de produtos (Movimento para a esquerda)
+            // 1. Carrossel Infinito de Produtos
             tweenRef.current = gsap.to(track, {
                 xPercent: -50,
                 ease: 'none',
-                duration: 28,
+                duration: 25,
                 repeat: -1,
                 force3D: true,
             });
 
-            // 2. Marca d'água Superior (Movimento para a Esquerda)
+            // 2. Marca d'água Superior (Esquerda)
             if (wmUp) {
                 gsap.to(wmUp, {
                     xPercent: -50,
                     ease: 'none',
-                    duration: 35,
+                    duration: 32,
                     repeat: -1,
                 });
             }
 
-            // 3. Marca d'água Inferior (Movimento oposto: Direita)
+            // 3. Marca d'água Inferior (Direita)
             if (wmBelow) {
                 gsap.fromTo(
                     wmBelow,
@@ -78,7 +57,7 @@ export default function HorizontalScrollSection() {
                     {
                         xPercent: 0,
                         ease: 'none',
-                        duration: 35,
+                        duration: 32,
                         repeat: -1,
                     }
                 );
@@ -88,7 +67,7 @@ export default function HorizontalScrollSection() {
         return () => ctx.revert();
     }, []);
 
-    // Pausa a rolagem no hover
+    // Pausa no Hover / Toque
     const handleMouseEnter = () => tweenRef.current?.pause();
     const handleMouseLeave = () => tweenRef.current?.play();
 
@@ -110,11 +89,15 @@ export default function HorizontalScrollSection() {
                 ref={trackRef}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
+                onTouchStart={handleMouseEnter}
+                onTouchEnd={handleMouseLeave}
             >
                 {/* LOTE 1 */}
                 <div className="intro-card">
-                    <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
-                    <p>Garanta os seus favoritos da estação.</p>
+                    <div className="intro-content">
+                        <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
+                        <p>Garanta os seus favoritos da estação.</p>
+                    </div>
                 </div>
 
                 {produtosManuais.map((item) => (
@@ -124,7 +107,6 @@ export default function HorizontalScrollSection() {
                                 src={item.imgSrc}
                                 alt={`Categoria ${item.categoria}`}
                                 loading="eager"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                             <span className="card-badge">{item.categoria}</span>
                             <div className="card-details">
@@ -134,10 +116,12 @@ export default function HorizontalScrollSection() {
                     </div>
                 ))}
 
-                {/* LOTE 2 (Duplicado para o efeito de loop continuo sem emendas) */}
+                {/* LOTE 2 (Loop contínuo sem emendas) */}
                 <div className="intro-card">
-                    <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
-                    <p>Garanta os seus favoritos da estação.</p>
+                    <div className="intro-content">
+                        <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
+                        <p>Garanta os seus favoritos da estação.</p>
+                    </div>
                 </div>
 
                 {produtosManuais.map((item) => (
@@ -147,7 +131,6 @@ export default function HorizontalScrollSection() {
                                 src={item.imgSrc}
                                 alt={`Categoria ${item.categoria}`}
                                 loading="lazy"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                             <span className="card-badge">{item.categoria}</span>
                             <div className="card-details">
