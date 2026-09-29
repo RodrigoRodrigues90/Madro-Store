@@ -1,16 +1,11 @@
-/* ==========================================================================
-   HERO SECTION (CORREÇÃO DE ESPAÇAMENTO E LAYOUT)
-   ========================================================================== */
-
 .hero-section {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(185, 125, 135); /* Fundo creme editorial em vez de branco puro */
+    background-color: rgb(185, 125, 135);
 }
 
-/* Container da Imagem com Gradiente */
 .hero-banner-container {
     position: relative;
     width: 100%;
@@ -27,7 +22,7 @@
     display: block;
 }
 
-/* Sobreposição do texto no Banner (Leitura limpa) */
+
 .hero-banner-overlay {
     position: absolute;
     inset: 0;
@@ -51,11 +46,17 @@
 }
 
 .hero-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
     font-size: 2.2rem;
     font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
     margin: 0 0 0.8rem 0;
     line-height: 1.15;
+    align-items: center;
 }
 
 .hero-description {
@@ -69,9 +70,8 @@
     letter-spacing: 1.2px;
 }
 
-/* Botão Principal de Ação (CTA) */
 .hero-cta-button {
-    display: inline-block;
+    display: flex;
     background-color: #8a324f;
     color: #ffffff;
     padding: 0.85rem 1.8rem;
@@ -91,94 +91,40 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* ==========================================================================
-   RÉGUA DE BENEFÍCIOS (TRUST BADGES)
-   ========================================================================== */
-
-.benefits-bar {
+.hero-off-conteiner {
     width: 100%;
-    background-color: #ffffff;
-    border-top: 1px solid rgba(138, 50, 79, 0.08);
-    border-bottom: 1px solid rgba(138, 50, 79, 0.08);
-    padding: 1.2rem 1rem;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas no Mobile */
-    gap: 1.2rem 1rem;
-    box-sizing: border-box;
-}
-
-.benefit-item {
+    height: 42px;
+    background-color: #581825;
+    overflow: hidden;
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    justify-content: flex-start;
-    padding: 0 0.5rem;
+    position: relative;
 }
 
-.benefit-icon {
-    color: #8a324f;
-    flex-shrink: 0;
-}
-
-.benefit-text {
+.hero-off-track {
     display: flex;
-    flex-direction: column;
-    text-align: left;
+    width: max-content;
+    will-change: transform;
 }
 
-.benefit-text strong {
-    font-size: 0.78rem;
-    color: #4A121E;
-    font-weight: 600;
-}
-
-.benefit-text span {
-    font-size: 0.68rem;
-    color: #777777;
-    margin-top: 1px;
-}
-
-/* ==========================================================================
-   INDICADOR DE SCROLL INFERIOR
-   ========================================================================== */
-
-.scroll-indicator {
+.hero-off-wrapper {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 0.3rem;
-    padding: 1.5rem 0 1rem 0;
-    color: #8a324f;
-    text-decoration: none;
-    font-size: 0.7rem;
+    white-space: nowrap;
+}
+
+.hero-off-wrapper > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: serif ;
     font-weight: 600;
-    letter-spacing: 0.15em;
-    transition: opacity 0.3s ease;
+    font-size: 0.88rem;
+    color: #ffffff;
+    padding: 0 2.5rem;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
 }
-
-.scroll-indicator:hover {
-    opacity: 0.7;
-}
-
-.bounce-arrow {
-    animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-5px);
-    }
-    60% {
-        transform: translateY(-3px);
-    }
-}
-
-/* ==========================================================================
-   RESPONSIVIDADE (DESKTOP)
-   ========================================================================== */
 
 @media (min-width: 768px) {
     .hero-title {
@@ -190,13 +136,8 @@
         max-width: 450px;
     }
 
-    .benefits-bar {
-        grid-template-columns: repeat(4, 1fr); /* 4 colunas no Desktop */
-        padding: 1.5rem 2rem;
-        justify-items: center;
-    }
-
-    .benefit-item {
-        justify-content: center;
+    .hero-off-wrapper > span {
+        font-size: 0.88rem;
+        padding: 0 4rem;
     }
 }

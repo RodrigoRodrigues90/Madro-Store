@@ -1,8 +1,15 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+// Estilos essenciais do Swiper
+import 'swiper/css';
+
 import '../css/HorizontalScrollSection.css';
 
-// Importação direta dos arquivos WebP
+// Importação das Imagens
 import oculosWebp from '../assets/oculos.webp';
 import pulseirasWebp from '../assets/pulseiras.webp';
 import aneisWebp from '../assets/aneis.webp';
@@ -18,28 +25,20 @@ const produtosManuais = [
 ];
 
 export default function HorizontalScrollSection() {
-    const trackRef = useRef(null);
-    const tweenRef = useRef(null);
     const wmUpRef = useRef(null);
     const wmBelowRef = useRef(null);
+    const swiperRef = useRef(null);
+
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    // Total de slides (1 intro + 5 produtos)
+    const totalSlides = produtosManuais.length + 1;
 
     useEffect(() => {
-        const track = trackRef.current;
         const wmUp = wmUpRef.current;
         const wmBelow = wmBelowRef.current;
-        if (!track) return;
 
         const ctx = gsap.context(() => {
-            // 1. Carrossel Infinito de Produtos
-            tweenRef.current = gsap.to(track, {
-                xPercent: -50,
-                ease: 'none',
-                duration: 25,
-                repeat: -1,
-                force3D: true,
-            });
-
-            // 2. Marca d'água Superior (Esquerda)
             if (wmUp) {
                 gsap.to(wmUp, {
                     xPercent: -50,
@@ -49,7 +48,6 @@ export default function HorizontalScrollSection() {
                 });
             }
 
-            // 3. Marca d'água Inferior (Direita)
             if (wmBelow) {
                 gsap.fromTo(
                     wmBelow,
@@ -62,87 +60,103 @@ export default function HorizontalScrollSection() {
                     }
                 );
             }
-        }, track);
+        });
 
         return () => ctx.revert();
     }, []);
-
-    // Pausa no Hover / Toque
-    const handleMouseEnter = () => tweenRef.current?.pause();
-    const handleMouseLeave = () => tweenRef.current?.play();
 
     const watermarkText = "COLEÇÃO • EM MOVIMENTO • MADRO • ";
 
     return (
         <section className="horizontal-section">
             {/* Marca d'água Superior */}
-            <div className="watermark-container watermark-up">
+            <div className="watermark-wrapper">
                 <div className="watermark-track" ref={wmUpRef}>
                     <span>{watermarkText.repeat(3)}</span>
                     <span>{watermarkText.repeat(3)}</span>
                 </div>
             </div>
 
-            {/* Trilha de Cards do Catálogo */}
-            <div
-                className="horizontal-track"
-                ref={trackRef}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                onTouchStart={handleMouseEnter}
-                onTouchEnd={handleMouseLeave}
-            >
-                {/* LOTE 1 */}
-                <div className="intro-card">
-                    <div className="intro-content">
-                        <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
-                        <p>Garanta os seus favoritos da estação.</p>
-                    </div>
-                </div>
+            {/* Container do Swiper */}
+            <div className="track-container">
+                {/* Botão Anterior Customizado */}
+                <button
+                    className="custom-nav-btn prev-btn"
+                    onClick={() => swiperRef.current?.slidePrev()}
+                    aria-label="Anterior"
+                >
+                    ‹
+                </button>
 
-                {produtosManuais.map((item) => (
-                    <div className="video-card" key={`set1-${item.id}`}>
-                        <div className="video-wrapper">
-                            <img
-                                src={item.imgSrc}
-                                alt={`Categoria ${item.categoria}`}
-                                loading="eager"
-                            />
-                            <span className="card-badge">{item.categoria}</span>
-                            <div className="card-details">
-                                <button className="buy-btn">Ver Produtos</button>
+                <Swiper
+                    modules={[Navigation, Pagination, Autoplay]}
+                    onSwiper={(swiper) => (swiperRef.current = swiper)}
+                    onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
+                    slidesPerView={'auto'}
+                    centeredSlides={true}
+                    centeredSlidesBounds={false}
+                    centerInsufficientSlides={true}
+                    spaceBetween={20}
+                    grabCursor={true}
+                    autoplay={{
+                        delay: 3000, // Tempo de espera entre os slides (3 segundos)
+                        disableOnInteraction: false, // Continua a rodar sozinho mesmo após o utilizador interagir/clicar
+                        pauseOnMouseEnter: true, // Pausa a reprodução quando o rato passa por cima
+                    }}
+                    className="horizontal-swiper-track"
+                >
+                    {/* Intro Card */}
+                    <SwiperSlide className="swiper-slide-custom">
+                        <div className="intro-card">
+                            <div className="intro-content">
+                                <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
+                                <p>Garanta os seus favoritos da estação.</p>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    </SwiperSlide>
 
-                {/* LOTE 2 (Loop contínuo sem emendas) */}
-                <div className="intro-card">
-                    <div className="intro-content">
-                        <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
-                        <p>Garanta os seus favoritos da estação.</p>
-                    </div>
-                </div>
-
-                {produtosManuais.map((item) => (
-                    <div className="video-card" key={`set2-${item.id}`}>
-                        <div className="video-wrapper">
-                            <img
-                                src={item.imgSrc}
-                                alt={`Categoria ${item.categoria}`}
-                                loading="lazy"
-                            />
-                            <span className="card-badge">{item.categoria}</span>
-                            <div className="card-details">
-                                <button className="buy-btn">Ver Produtos</button>
+                    {/* Cards dos Produtos */}
+                    {produtosManuais.map((item) => (
+                        <SwiperSlide key={item.id} className="swiper-slide-custom">
+                            <div className="video-card">
+                                <div className="video-wrapper">
+                                    <img
+                                        src={item.imgSrc}
+                                        alt={`Categoria ${item.categoria}`}
+                                        loading="eager"
+                                    />
+                                    <span className="card-badge">{item.categoria}</span>
+                                    <div className="card-details">
+                                        <button className="buy-btn">Ver Produtos</button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+
+                {/* Botão Próximo Customizado */}
+                <button
+                    className="custom-nav-btn next-btn"
+                    onClick={() => swiperRef.current?.slideNext()}
+                    aria-label="Próximo"
+                >
+                    ›
+                </button>
+            </div>
+
+            <div className="custom-pagination">
+                {Array.from({ length: totalSlides }).map((_, index) => (
+                    <button
+                        key={index}
+                        className={`custom-bullet ${index === activeIndex ? 'active' : ''}`}
+                        onClick={() => swiperRef.current?.slideTo(index)}
+                    />
                 ))}
             </div>
 
             {/* Marca d'água Inferior */}
-            <div className="watermark-container watermark-below">
+            <div className="watermark-wrapper">
                 <div className="watermark-track" ref={wmBelowRef}>
                     <span>{watermarkText.repeat(3)}</span>
                     <span>{watermarkText.repeat(3)}</span>
