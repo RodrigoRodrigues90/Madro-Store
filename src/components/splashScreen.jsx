@@ -8,6 +8,14 @@ gsap.registerPlugin(ScrollTrigger);
 export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
     const splashRef = useRef(null);
     const [progress, setProgress] = useState(0);
+    const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+
+    // Deteta alteração no tamanho da janela
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
@@ -15,9 +23,10 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
         let isFullyLoaded = false;
         let currentPercent = 0;
 
-        // Animação final de Zoom e saída da SplashScreen
+        // Animação final da SplashScreen
         const dismissPreloader = () => {
             const ctx = gsap.context(() => {
+                const isMobileScreen = window.innerWidth < 768;
                 const tl = gsap.timeline({
                     onComplete: () => {
                         document.body.style.overflow = 'auto';
@@ -31,21 +40,25 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
                     opacity: 0,
                     duration: 0.3,
                     ease: 'power2.in'
-                })
-                // 2. Transição de Zoom no elemento MADRO vazado
-                .to('#splash-zoom-target', {
-                    scale: 85,
-                    transformOrigin: '45.5% 50%',
-                    duration: 1.8,
-                    ease: 'power2.inOut'
-                }, '-=0.1')
-                // 3. Oculta suavemente o container da SplashScreen
-                .to(splashRef.current, {
+                });
+
+                // 2. Condição de Zoom: Apenas em dispositivos Mobile (< 768px)
+                if (isMobileScreen) {
+                    tl.to('#splash-zoom-target', {
+                        scale: 85,
+                        transformOrigin: '45.5% 50%',
+                        duration: 1.8,
+                        ease: 'power2.inOut'
+                    }, '-=0.1');
+                }
+
+                // 3. Oculta suavemente a SplashScreen inteira
+                tl.to(splashRef.current, {
                     opacity: 0,
-                    duration: 0.5,
+                    duration: 0.6,
                     pointerEvents: 'none',
                     ease: 'power2.out'
-                }, '-=0.6');
+                }, isMobileScreen ? '-=0.6' : '-=0.1');
             }, splashRef);
         };
 
@@ -78,7 +91,7 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
         };
     }, [onComplete]);
 
-    // Cálculo da linha SVG (dashoffset de 160 a 0)
+    // Cálculo do progresso da barra (160 a 0)
     const strokeDashoffset = 160 - (160 * progress) / 100;
 
     return (
@@ -88,12 +101,50 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
                 viewBox="0 0 1000 1000"
                 preserveAspectRatio="xMidYMid slice"
             >
-                <defs>
-                    <mask id="madro-splash-mask">
-                        {/* Fundo da máscara (Branco = Sólido) */}
+                {isMobile ? (
+                    <>
+                        <defs>
+                            <mask id="madro-splash-mask">
+                                <rect width="100%" height="100%" fill="#ffffff" />
+                                
+                                <g id="splash-zoom-target">
+                                    <text
+                                        x="500"
+                                        y="500"
+                                        textAnchor="middle"
+                                        dominantBaseline="central"
+                                        className="splash-svg-text"
+                                    >
+                                        {brandName}
+                                    </text>
+                                </g>
+
+                                <line
+                                    id="splash-loader-bar"
+                                    x1="420"
+                                    y1="550"
+                                    x2="580"
+                                    y2="550"
+                                    stroke="#000000"
+                                    strokeWidth="4"
+                                    strokeLinecap="round"
+                                    strokeDasharray="160"
+                                    strokeDashoffset={strokeDashoffset}
+                                />
+                            </mask>
+                        </defs>
+
+                        <rect
+                            width="100%"
+                            height="100%"
+                            fill="#fcbbc6ff"
+                            mask="url(#madro-splash-mask)"
+                        />
+                    </>
+                ) : (
+                    <>
                         <rect width="100%" height="100%" fill="#ffffff" />
-                        
-                        {/* Elemento de Zoom (Preto = Transparente no SVG mask) */}
+
                         <g id="splash-zoom-target">
                             <text
                                 x="500"
@@ -101,36 +152,29 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
                                 textAnchor="middle"
                                 dominantBaseline="central"
                                 className="splash-svg-text"
+                                style={{ fill: '#fcbbc6ff' }}
                             >
                                 {brandName}
                             </text>
                         </g>
 
-                        {/* Barra de progresso vazada */}
                         <line
                             id="splash-loader-bar"
                             x1="420"
                             y1="550"
                             x2="580"
                             y2="550"
-                            stroke="#000000"
+                            stroke="#fcbbc6ff"
                             strokeWidth="4"
                             strokeLinecap="round"
                             strokeDasharray="160"
                             strokeDashoffset={strokeDashoffset}
                         />
-                    </mask>
-                </defs>
-
-                <rect
-                    width="100%"
-                    height="100%"
-                    fill="#fbf7fcff"
-                    mask="url(#madro-splash-mask)"
-                />
+                    </>
+                )}
             </svg>
 
-            <div className="splash-progress-info">
+            <div className="splash-progress-info" style={{ color: '#000000' }}>
                 <span>{progress}%</span>
             </div>
         </div>
