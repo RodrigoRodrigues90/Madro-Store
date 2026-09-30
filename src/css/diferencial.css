@@ -1,87 +1,79 @@
 .diferenciais-bg {
-    border: 2px solid #fffffffa;
-    background-color: #F5E6E8;
-    padding: 4rem 1.5rem;
-    gap: 2rem;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    background-color: #faf4f6;
 }
 
 .diferenciais-container {
-    flex: 1.1;
     display: flex;
-    flex-direction: column;
     color: #ae325b;
     width: 100%;
+    max-width: 1200px;
+    justify-content: center;
+    align-items: center;
 }
 
-.diferenciais-tag {
-    font-family: sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
+.diferencial-swiper-track {
+    width: 100%;
+    padding: 0.5rem 0;
 }
 
-.diferenciais-title {
-    font-family: serif;
-    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
-    font-weight: 700;
-    margin: 0 0 1.75rem 0;
-    line-height: 1.15;
-}
-
-.diferenciais-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-}
-
-/* Cards individuais translúcidos */
 .diferencial-item {
     display: flex;
+    align-items: center;
     gap: 1rem;
-    padding: 1rem 1.25rem;
-    background: rgba(223, 133, 133, 0.103);
-    border: 1px solid #b3899757;
-    border-radius: 4px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    max-width: 320px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-
+    padding: 1.25rem;
+    background: #ffffff;
+    border: 1px solid #b8b2b457;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 350px; /* Limite máximo de largura solicitado */
+    margin: 0 auto;   /* Centraliza o card dentro da área do slide */
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.diferencial-item:hover {
-    background: #e7a3b454;
-    transform: translateX(6px);
-
-}
-
-/* Ícones redondos em branco e magenta */
 .diferencial-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
-    background-color: #ffffff;
-    color: #ae325b;
+    width: 40px;
+    height: 40px;
+    background-color: #ae325b;
+    color: #ffffff;
     border-radius: 50%;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 12px rgba(174, 50, 91, 0.2);
 }
 
 .diferencial-text h4 {
     font-family: sans-serif;
-    font-size: 1rem;
-    font-weight: 900;
-    margin: 0 0 0.2rem 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+    margin: 0 0 0.25rem 0;
+    color: #581825;
 }
 
 .diferencial-text p {
     font-family: sans-serif;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     margin: 0;
     color: #815061;
     line-height: 1.4;
+}
+
+@media (min-width: 992px) {
+    .diferencial-swiper-track .swiper-wrapper {
+        display: flex !important;
+        justify-content: center !important;
+        transform: none !important; /* Anula qualquer deslocamento do carrossel */
+        gap: 24px;
+    }
+
+    .diferencial-swiper-track .swiper-slide {
+        width: auto !important;
+        margin: 0 !important;
+    }
 }

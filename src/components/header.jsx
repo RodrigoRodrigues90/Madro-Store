@@ -68,29 +68,11 @@ export default function Header({ isSplashFinished = false }) {
         gsap.to(centerRef.current, {
             y: 0,
             opacity: 1,
+            boxShadow:'2 0 18 12 #31303183',
             duration: 0.8,
             ease: 'power3.out'
         });
 
-        ScrollTrigger.create({
-            start: 'top -50',
-            end: 99999,
-            onToggle: (self) => {
-                if (self.isActive) {
-                    gsap.to(centerRef.current, {
-                        boxShadow: '0px 8px 32px 0 rgba(0, 0, 0, 0.1)',
-                        duration: 0.4,
-                        ease: 'power2.out'
-                    });
-                } else {
-                    gsap.to(centerRef.current, {
-                        boxShadow: 'none',
-                        duration: 0.4,
-                        ease: 'power2.out'
-                    });
-                }
-            }
-        });
     }, { scope: headerRef, dependencies: [isSplashFinished] });
 
     return (
@@ -112,9 +94,10 @@ export default function Header({ isSplashFinished = false }) {
 
                         {/* Logo Centralizada */}
                         <Link to="/Madro-Store" id="logo-id">
-                            <div className="logo">
+                            {/* <div className="logo">
                                 <img src={logo} alt="Logo Madro" />
-                            </div>
+                            </div> */}
+                            <h1>MADRO</h1>
                         </Link>
 
                         {/* Ícones Direita */}

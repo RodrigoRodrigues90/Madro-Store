@@ -3,6 +3,7 @@ import gsap from 'gsap';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Gem } from 'lucide-react';
 
 // Estilos essenciais do Swiper
 import 'swiper/css';
@@ -25,29 +26,18 @@ const produtosManuais = [
 ];
 
 export default function HorizontalScrollSection() {
-    const wmUpRef = useRef(null);
     const wmBelowRef = useRef(null);
     const swiperRef = useRef(null);
 
     const [activeIndex, setActiveIndex] = useState(0);
 
-    // Total de slides (1 intro + 5 produtos)
-    const totalSlides = produtosManuais.length + 1;
+    const totalSlides = produtosManuais.length;
 
     useEffect(() => {
-        const wmUp = wmUpRef.current;
+
         const wmBelow = wmBelowRef.current;
 
         const ctx = gsap.context(() => {
-            if (wmUp) {
-                gsap.to(wmUp, {
-                    xPercent: -50,
-                    ease: 'none',
-                    duration: 32,
-                    repeat: -1,
-                });
-            }
-
             if (wmBelow) {
                 gsap.fromTo(
                     wmBelow,
@@ -55,27 +45,22 @@ export default function HorizontalScrollSection() {
                     {
                         xPercent: 0,
                         ease: 'none',
-                        duration: 32,
+                        duration: 42,
                         repeat: -1,
                     }
                 );
             }
+
         });
 
         return () => ctx.revert();
     }, []);
 
-    const watermarkText = "COLEÇÃO • EM MOVIMENTO • MADRO • ";
-
     return (
         <section className="horizontal-section">
-            {/* Marca d'água Superior */}
-            <div className="watermark-wrapper">
-                <div className="watermark-track" ref={wmUpRef}>
-                    <span>{watermarkText.repeat(3)}</span>
-                    <span>{watermarkText.repeat(3)}</span>
-                </div>
-            </div>
+            <div className="footer-divider" />
+            <span className="horizontal-title">QUALIDADE & PERSONALIDADE</span>
+            <h2 className="horizontal-subtitle">Escolha por Categoria </h2>
 
             {/* Container do Swiper */}
             <div className="track-container">
@@ -105,16 +90,6 @@ export default function HorizontalScrollSection() {
                     }}
                     className="horizontal-swiper-track"
                 >
-                    {/* Intro Card */}
-                    <SwiperSlide className="swiper-slide-custom">
-                        <div className="intro-card">
-                            <div className="intro-content">
-                                <h2>CONHEÇA NOSSO CATÁLOGO EXCLUSIVO</h2>
-                                <p>Garanta os seus favoritos da estação.</p>
-                            </div>
-                        </div>
-                    </SwiperSlide>
-
                     {/* Cards dos Produtos */}
                     {produtosManuais.map((item) => (
                         <SwiperSlide key={item.id} className="swiper-slide-custom">
@@ -158,10 +133,25 @@ export default function HorizontalScrollSection() {
             {/* Marca d'água Inferior */}
             <div className="watermark-wrapper">
                 <div className="watermark-track" ref={wmBelowRef}>
-                    <span>{watermarkText.repeat(3)}</span>
-                    <span>{watermarkText.repeat(3)}</span>
+                    {/* Bloco 1 e Bloco 2 para o loop perfeito do GSAP */}
+                    {[1, 2].map((_, idx) => (
+                        <div key={idx} className="watermark-item">
+                            {/* Repetição interna para garantir largura maior que 100vw */}
+                            {[...Array(4)].map((_, itemIdx) => (
+                                <span key={itemIdx} className="watermark-content">
+                                    <Gem size={20} strokeWidth={1.8} />
+                                    <span>COLEÇÃO</span>
+                                    <Gem size={20} strokeWidth={1.8} />
+                                    <span>EM MOVIMENTO</span>
+                                    <Gem size={20} strokeWidth={1.8} />
+                                    <span>MADRO</span>
+                                </span>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             </div>
+            <div className="footer-divider" />
         </section>
     );
 }

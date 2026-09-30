@@ -9,7 +9,7 @@ import Preloader from './components/splashScreen.jsx';
 import Overlay from './components/overlay.jsx';
 import Header from './components/header';
 import Void from "./components/void";
-import Main from "./components/HorizontalScrollSection.jsx";
+import Horizontal from "./components/HorizontalScrollSection.jsx";
 import Diferencial from "./components/diferenciais.jsx"
 import Newsletter from './components/newsletter';
 import Siganos from './components/siganos';
@@ -55,22 +55,21 @@ function App() {
       {!splashFinished && (
         <Preloader onComplete={() => setSplashFinished(true)} />
       )}
-      <Overlay isOpen={activeState} />
+      <Overlay isOpen={activeState}  />
 
       {/* O Header só inicia a animação de entrada quando splashFinished for true */}
       <Header isSplashFinished={splashFinished} />
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <HeroSection isLoaded={setSplashFinished} />
-          <Main />
-          <Void />
-          <Destaques />
-          <Diferencial />
-          <Void />
+          <HeroSection/>
+          <Horizontal/>
+          <Diferencial/>
+          <Destaques/>
+          <Void/>
           <Paralax foto={imageParalax} />
-          <Newsletter />
-          <Siganos />
-          <Footer />
+          <Newsletter/>
+          <Siganos/>
+          <Footer/>
         </div>
       </div>
     </>

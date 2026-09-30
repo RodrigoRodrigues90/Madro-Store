@@ -4,8 +4,9 @@ import Products from './produtos';
 import returnProducts from '../teste';
 import '../css/horizontalProducts.css';
 
+import { Sparkles, Sparkle, Crown } from 'lucide-react'
+
 export default function HorizontalProductsSection() {
-    const wmUpRef = useRef(null);
     const wmBelowRef = useRef(null);
 
     // Obtém os produtos via função mantendo 
@@ -15,19 +16,10 @@ export default function HorizontalProductsSection() {
         : rawProducts.slice(0, 8);
 
     useEffect(() => {
-        const wmUp = wmUpRef.current;
+
         const wmBelow = wmBelowRef.current;
 
         const ctx = gsap.context(() => {
-            if (wmUp) {
-                gsap.to(wmUp, {
-                    xPercent: -50,
-                    ease: 'none',
-                    duration: 40,
-                    repeat: -1,
-                });
-            }
-
             if (wmBelow) {
                 gsap.fromTo(
                     wmBelow,
@@ -44,21 +36,13 @@ export default function HorizontalProductsSection() {
 
     return (
         <section className="products-grid-section">
-            {/* Marca d'água Superior */}
-            <div className="products-watermark watermark-up">
-                <div className="watermark-track" ref={wmUpRef}>
-                    <span>{watermarkText.repeat(3)}</span>
-                    <span>{watermarkText.repeat(3)}</span>
-                </div>
-            </div>
+            <div className="footer-divider" />
 
+            {/* <div className="title-wrapper"> */}
+            <span className="horizontal-title"> NOSSAS NOVIDADES  </span>
+            <h2 className="horizontal-subtitle">Destaques da coleção</h2>
+            {/* </div> */}
             <div className="products-container">
-                {/* Cabeçalho do Bloco */}
-                <div className="products-intro-header">
-                    <h2>NOSSOS PRODUTOS EM ALTA</h2>
-                    <p>Descubra os destaques da loja.</p>
-                </div>
-
                 {/* Grade em Colunas */}
                 <div className="products-grid">
                     {productList.map((item, index) => {
@@ -79,13 +63,32 @@ export default function HorizontalProductsSection() {
                 </div>
             </div>
 
-            {/* Marca d'água Inferior */}
-            <div className="products-watermark watermark-below">
+            <div className='button-div'>
+                <button className='button-comprar'>Ver mais produtos</button>
+            </div>
+
+            <div className="watermark-wrapper">
                 <div className="watermark-track" ref={wmBelowRef}>
-                    <span>{watermarkText.repeat(3)}</span>
-                    <span>{watermarkText.repeat(3)}</span>
+                    {/* Bloco 1 e Bloco 2 para o loop perfeito do GSAP */}
+                    {[1, 2].map((_, idx) => (
+                        <div key={idx} className="watermark-item">
+                            {/* Repetição interna para garantir largura maior que 100vw */}
+                            {[...Array(4)].map((_, itemIdx) => (
+                                <span key={itemIdx} className="watermark-content">
+                                    <Sparkles size={20} strokeWidth={1.8} />
+                                    <span>DESTAQUES</span>
+                                    <Sparkle size={20} strokeWidth={1.8} />
+                                    <span>EM MOVIMENTO</span>
+                                    <Crown size={20} strokeWidth={1.8} />
+                                    <span>MADRO</span>
+                                </span>
+                            ))}
+                        </div>
+                    ))}
                 </div>
             </div>
+
+            <div className="footer-divider" />
         </section>
     );
 }

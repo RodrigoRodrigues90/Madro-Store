@@ -1,5 +1,4 @@
 import "../css/siganos.css"
-import { Gem, Sparkles, Gift, ShieldCheck } from "lucide-react";
 import image from "../assets/footer/icons8-instagram-logo.svg"
 export default function Siganos() {
     return (
