@@ -9,68 +9,70 @@
   gap: 1.25rem;
   box-sizing: border-box;
   overflow: hidden;
+  box-shadow: 0 2px 15px rgba(29, 28, 28, 0.329);
 }
+
 .horizontal-title {
-    font-family: sans-serif;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-  }
-  
-  .horizontal-subtitle {
-    text-decoration:underline;
-    color: #8a324f;
-    font-size: clamp(2.6rem, 3.2vw, 3.8rem);
-    font-weight: 900;
-    line-height: .6;
-    margin: 0 0 20px 0;
+  font-family: sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.horizontal-subtitle {
+  text-decoration: underline;
+  color: #8a324f;
+  font-size: clamp(2.6rem, 3.2vw, 3.8rem);
+  font-weight: 900;
+  line-height: .6;
+  margin: 0 0 20px 0;
 }
 
 .watermark-wrapper {
-    width: 100vw;
-    position: relative;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    overflow: hidden;
-    background-color: #dbadb9; 
-    padding: 1rem 0;
-    font-size: 1.5rem;
+  width: 100vw;
+  position: relative;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  overflow: hidden;
+  background-color: #dbadb9;
+  padding: 1rem 0;
+  font-size: 1.5rem;
 }
 
 .watermark-track {
-    display: flex;
-    width: max-content;
-    will-change: transform;
+  display: flex;
+  width: max-content;
+  will-change: transform;
 }
 
 .watermark-item {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    color: #ffffff;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  color: #ffffff;
 }
 
 .watermark-content {
-    display: inline-flex;
-    align-items: center;
-    gap: 1.2rem;
-    padding-right: 1.2rem;
-    font-size: 1.6rem;
-    font-weight: 200;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding-right: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 200;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
 .watermark-content svg {
-    flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 /* Container do Carrossel Central */
 .track-container {
   position: relative;
-  width: 100%;
+  width: 800px;
   overflow: hidden;
   display: flex;
   align-items: center;

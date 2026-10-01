@@ -2,18 +2,19 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import Products from './produtos';
 import returnProducts from '../teste';
-import '../css/horizontalProducts.css';
+import '../css/ProductsSection.css';
 
 import { Sparkles, Sparkle, Crown } from 'lucide-react'
 
 export default function HorizontalProductsSection() {
     const wmBelowRef = useRef(null);
 
-    // Obtém os produtos via função mantendo 
+    // Obtém os produtos 
     const rawProducts = returnProducts()?.retorno?.produtos || [];
-    const productList = rawProducts.length < 5
-        ? [...rawProducts, rawProducts[0]].slice(0, 6)
-        : rawProducts.slice(0, 8);
+    const taggedProducts = rawProducts.filter(item => Boolean(item?.produto?.tag?.trim()));
+    const productList = taggedProducts.length < 5
+        ? [...taggedProducts, taggedProducts[0]].slice(0, 6)
+        : taggedProducts.slice(0, 8);
 
     useEffect(() => {
 
@@ -32,8 +33,6 @@ export default function HorizontalProductsSection() {
         return () => ctx.revert();
     }, []);
 
-    const watermarkText = "MODA • DESTAQUES • MADRO • ";
-
     return (
         <section className="products-grid-section">
             <div className="footer-divider" />
@@ -51,6 +50,7 @@ export default function HorizontalProductsSection() {
                             <div className="product-card-wrapper" key={p.id || index}>
                                 <Products
                                     foto={p.imagem?.[0]?.link}
+                                    tagProduct={p.tag}
                                     nome={p.descricao}
                                     valor={parseFloat(p.preco)}
                                     categoria={p.categoria?.descricao}

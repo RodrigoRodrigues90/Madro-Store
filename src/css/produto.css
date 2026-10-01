@@ -1,13 +1,13 @@
 .produto-wraper {
     width: 100%;
-    max-width: 320px;
+    max-width: 420px;
     height: 100%;
     background-color: #FFFFFF;
-    box-shadow: 0 10px 25px rgba(88, 24, 37, 0.08);
     border-radius: 4px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .produto {
@@ -20,6 +20,20 @@
     padding: 1rem;
     box-sizing: border-box;
     cursor: pointer;
+}
+.produto-tag{
+    position: absolute;
+    content:'';
+    width: fit-content;
+    height: fit-content;
+    padding: .4em;
+    background-color: beige;
+    text-transform: uppercase;
+    color: #581825;
+    top: 2px;
+    left: 0px;
+    z-index: 1;
+    font-style: italic;
 }
 
 .image-produto {

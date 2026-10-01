@@ -11,7 +11,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 // Regista o plugin ScrollTrigger do GSAP
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Products({ foto, nome, valor, categoria, descricao, descricaoComplementar }) {
+export default function Products({ foto, tagProduct, nome, valor, categoria, descricao, descricaoComplementar }) {
     const [loading, setloading] = useState(false);
     const dispatch = useDispatch();
     const cardRef = useRef(null);
@@ -86,6 +86,7 @@ export default function Products({ foto, nome, valor, categoria, descricao, desc
     return (
         <section className="produto-wraper" ref={cardRef}>
             <div className="produto">
+                <div className="produto-tag" style={{display: tagProduct ? 'block' : 'none'}}>{tagProduct}</div>
                 <div className="image-produto">
                     <img src={foto} alt="produto-foto"></img>
                 </div>

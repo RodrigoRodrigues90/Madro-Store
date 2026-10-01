@@ -1,64 +1,60 @@
-import '../css/cart.css'
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
-import bag from '../assets/header/bag.png'
-import truck from '../assets/section/truck.svg'
-import menu from '../assets/header/close.svg'
-import ItemCart from '../components/itemcart.jsx'
-import actionTypes from '../Redux/cart/actiontype'
-import calculateFrete from '../api/api-correios'
-import ItemFrete from '../components/itemfrete'
-import warning from '../assets/header/warning.svg'
+import '../css/cart.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { X, ShoppingBag, Truck } from 'lucide-react';
+
+import ItemCart from '../components/itemcart.jsx';
+import actionTypes from '../Redux/cart/actiontype';
+import calculateFrete from '../api/api-correios';
+import ItemFrete from '../components/itemfrete';
 import Loading from '../components/loading';
 
-
-export default function cart() {
-    //===pega o estado do carrinho===//
+export default function Cart() {
+    // === Pega o estado do carrinho === //
     const { valorFrete, frete, produtos = [], activeState } = useSelector(({ cartReducer }) => cartReducer);
     const shippingServices = frete?.data?.ShippingSevicesArray || [];
 
-    // ===altera o estado de ativo/desativo do menu do carrinho de compras===//
+    // === Altera o estado de ativo/desativo do menu do carrinho === //
     const dispatch = useDispatch();
     const changeActiveState = () => {
         dispatch({
             type: actionTypes.active,
-        })
-    }
-    //===================================//
+        });
+    };
 
-    //=====calculo de subtotal===========//
+    // ===== Cálculo de subtotal =========== //
     const [subtotal, setSubtotal] = useState(0);
     useEffect(() => {
         // Calcula subtotal quando a lista de produtos se altera
         const newSubtotal = (produtos.length > 0 ? produtos.reduce((acc, item) => acc + item.valorsomado, 0) : 0);
         setSubtotal(newSubtotal);
     }, [produtos]);
-    // soma o subtotal com o valor de frete selecionado
+
+    // Soma o subtotal com o valor de frete selecionado
     const [total, setTotal] = useState(0);
     useEffect(() => {
-        setTotal(parseFloat(valorFrete) + parseFloat(subtotal))
-    }, [subtotal, valorFrete])
-    //===================================//
+        setTotal(parseFloat(valorFrete || 0) + parseFloat(subtotal || 0));
+    }, [subtotal, valorFrete]);
 
-    //===string de cep escrita no input===//
+    // === String de CEP escrita no input === //
     const [cep, setCep] = useState("");
     const handleCepChange = (event) => {
         setCep(event.target.value);
     };
-    //====================================//
 
-    //===formatar strings de preço===//
+    // === Formatar strings de preço === //
     function formString(string) {
         return string.replace('.', ',');
     }
-    //===============================//
 
     const [isloading, setloading] = useState(false);
-    const [res, setResponse] = useState(null)
+    const [res, setResponse] = useState(null);
 
     const changeRes = (response) => {
-        setResponse(response)
-    }
+        setResponse(response);
+    };
+
     const sendToFetch = async () => {
         try {
             dispatch({
@@ -67,109 +63,155 @@ export default function cart() {
             });
             setloading(true);
             const response = await calculateFrete(dispatch, cep);
-            changeRes(response)
+            changeRes(response);
         } catch (e) {
-            console.log(e)
+            console.log(e);
         } finally {
             setloading(false);
         }
-    }
+    };
+
     return (
         <section>
             <div id="cart-screen" className={activeState ? "show-cart" : "wrapper-cart-screen"}>
+                {/* Header do Carrinho */}
                 <div className='header-cart'>
-                    <button onClick={changeActiveState} className='menu-div-mobile'>
-                        <img src={menu} />
-                    </button>
-                    <div style={{ display: "flex", alignItems: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <ShoppingBag size={20} color="#f7d2db" />
                         <h1>Minhas compras</h1>
-                        <img src={bag}></img>
                     </div>
+                    <button onClick={changeActiveState} aria-label="Fechar carrinho">
+                        <X size={22} />
+                    </button>
                 </div>
-                <div className='cart-wrapper-products'>
-                    {produtos.map((product, index) => (
-                        <ItemCart
-                            key={product.id}
-                            image={product.foto}
-                            descricao={product.nome}
-                            valor={product.valor}
-                            unidades={product.unidades}
-                            id={product.id}
-                        />
-                    ))}
-                    <div className='msg-produtos' style={produtos.length == 0 ? { display: "block" } : { display: "none" }}>
-                        <p style={activeState ? { color: "#daabbd", alignItems: "center", display: "flex" } : { display: "none" }}><span><img style={{ width: "20px" }} src={warning} alt='icon' /></span>Seu carrinho está vazio</p>
+
+                {produtos.length === 0 ? (
+                    /* ESTADO VAZIO: Ilustração & Mensagem Editorial */
+                    <div className="cart-empty-state">
+                        <svg
+                            className="cart-empty-icon"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <path d="M16 10a4 4 0 0 1-8 0" />
+                        </svg>
+
+                        <h3>Seu carrinho está vazio</h3>
+                        <Link to="/Madro-Store/produtos" onClick={changeActiveState} className="btn-shop-now">
+                            Ver Coleção
+                        </Link>
                     </div>
-                </div>
-                <div style={produtos.length == 0 ? { display: "none" } : { display: "block" }} className='subtotal-Wrapper-div'>
-                    <div className='subtotal-content' >
-                        <h5>Subtotal(sem frete):</h5>
-                        <h5>R${formString(subtotal.toFixed(2).toString())}</h5>
-                    </div>
-                </div>
-                <div style={produtos.length == 0 ? { display: "none" } : { display: "block" }} className='fretecalc-wrapper-div'>
-                    <div className='fretecalc-content'>
-                        <div className='linha'>
-                            <p><span><img src={truck} /> </span>Meios de envio</p>
+                ) : (
+                    /* CONTEÚDO COM ITENS NO CARRINHO */
+                    <>
+                        <div className='cart-wrapper-products'>
+                            {produtos.map((product) => (
+                                <ItemCart
+                                    key={product.id}
+                                    image={product.foto}
+                                    descricao={product.nome}
+                                    valor={product.valor}
+                                    unidades={product.unidades}
+                                    id={product.id}
+                                />
+                            ))}
                         </div>
-                        <div className='input-fretecalc-div'>
-                            <input className="input-fretecalc" onChange={handleCepChange} type="text" placeholder='Digite seu cep' />
-                            <button className='button-fretecalc' onClick={() => sendToFetch()} >CALCULAR</button>
+
+                        {/* Subtotal */}
+                        <div className='subtotal-Wrapper-div'>
+                            <div className='subtotal-content'>
+                                <span>Subtotal (sem frete):</span>
+                                <span>R${formString(subtotal.toFixed(2).toString())}</span>
+                            </div>
                         </div>
-                        <a href='https://buscacepinter.correios.com.br/app/endereco/index.php' target='blank'>Não sei meu cep</a>
-                    </div>
-                </div>
-                <div style={produtos.length > 0 || isloading ? { display: "block" } : { display: "none" }} className='frete-options-wrapper'>
 
-                    {/* loading */}
-                    {isloading && <Loading />}
-
-                    {/* info frete */}
-                    {frete && frete.servicos && frete.servicos[2]?.ShippingPrice && (
-                        <ItemFrete
-                            prazo={frete.servicos[2].DeliveryTime}
-                            valor={frete.servicos[2].ShippingPrice}
-                            nome={frete.servicos[2].ServiceDescription}
-                        />
-                    )}
-                    {frete && frete.servicos && frete.servicos[0]?.ShippingPrice && (
-                        <ItemFrete
-                            prazo={frete.servicos[0].DeliveryTime}
-                            valor={frete.servicos[0].ShippingPrice}
-                            nome={frete.servicos[0].ServiceDescription}
-                        />
-                    )}
-
-                    {/* cep inválido */}
-                    {(res && !isloading && shippingServices.length === 0) && (
-                        <p style={{
-                            color: "#daaddb9",
-                            padding: "1em",
-                            display: "flex",
-                            justifyContent: "center",
-                            fontWeight: "bold"
-                        }}>Verifique o Cep</p>
-                    )}
-
-                    <p style={{ fontSize: "12px" }}>O prazo de entrega <strong> não contabiliza feriados.</strong></p>
-                </div>
-
-                {/* Total da compra */}
-                <div style={produtos.length === 0 || parseFloat(valorFrete) === 0 ? { display: "none" } : { display: "block" }} className='payment-wrapper'>
-                    <div className='price-wrapper'>
-                        <h1>Total: </h1>
-                        <div style={{ textAlign: 'end' }}>
-                            <h1>R${formString(total.toFixed(2).toString())}</h1>
-                            <p>ou até 3x de <strong>R${formString((total / 3).toFixed(2).toString())}</strong> sem juros.</p>
+                        {/* Cálculo de Frete */}
+                        <div className='fretecalc-wrapper-div'>
+                            <div className='fretecalc-content'>
+                                <div className='linha'>
+                                    <p><Truck size={18} /> Meios de envio</p>
+                                </div>
+                                <div className='input-fretecalc-div'>
+                                    <input
+                                        className="input-fretecalc"
+                                        onChange={handleCepChange}
+                                        type="text"
+                                        placeholder='Digite seu CEP'
+                                    />
+                                    <button className='button-fretecalc' onClick={sendToFetch}>
+                                        CALCULAR
+                                    </button>
+                                </div>
+                                <a href='https://buscacepinter.correios.com.br/app/endereco/index.php' target='_blank' rel='noopener noreferrer'>
+                                    Não sei meu CEP
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div className='button-div-payment'>
-                        <button style={{ width: "80%" }} disabled={true} className='button-comprar'>
-                            IR PARA PAGAMENTO
-                        </button>
-                    </div>
-                </div>
+
+                        {/* Opções de Frete */}
+                        <div className='frete-options-wrapper'>
+                            {isloading && <Loading />}
+
+                            {frete?.servicos && frete.servicos[2]?.ShippingPrice && (
+                                <ItemFrete
+                                    prazo={frete.servicos[2].DeliveryTime}
+                                    valor={frete.servicos[2].ShippingPrice}
+                                    nome={frete.servicos[2].ServiceDescription}
+                                />
+                            )}
+                            {frete?.servicos && frete.servicos[0]?.ShippingPrice && (
+                                <ItemFrete
+                                    prazo={frete.servicos[0].DeliveryTime}
+                                    valor={frete.servicos[0].ShippingPrice}
+                                    nome={frete.servicos[0].ServiceDescription}
+                                />
+                            )}
+
+                            {res && !isloading && shippingServices.length === 0 && (
+                                <p style={{
+                                    color: "#ae325b",
+                                    padding: "0.5em",
+                                    textAlign: "center",
+                                    fontWeight: "600",
+                                    fontSize: "0.85rem"
+                                }}>
+                                    Verifique o CEP digitado.
+                                </p>
+                            )}
+
+                            <p style={{ fontSize: "11px", opacity: 0.8, marginTop: "8px" }}>
+                                O prazo de entrega <strong>não contabiliza feriados.</strong>
+                            </p>
+                        </div>
+
+                        {/* Resumo Final & Checkout */}
+                        <div className='payment-wrapper'>
+                            <div className='price-wrapper'>
+                                <span>Total:</span>
+                                <div style={{ textAlign: 'end' }}>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                        R${formString(total.toFixed(2).toString())}
+                                    </span>
+                                    <p style={{ fontSize: '0.78rem', margin: '4px 0 0 0', opacity: 0.85 }}>
+                                        ou até 3x de <strong>R${formString((total / 3).toFixed(2).toString())}</strong> sem juros
+                                    </p>
+                                </div>
+                            </div>
+                            <div className='button-div-payment'>
+                                <button disabled={produtos.length === 0} className='button-comprar'>
+                                    IR PARA PAGAMENTO
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </section>
-    )
+    );
 }

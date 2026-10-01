@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
-import imageParalax from './assets/roses/roses5.avif'
 import Preloader from './components/splashScreen.jsx';
 import Overlay from './components/overlay.jsx';
 import Header from './components/header';
-import Void from "./components/void";
 import Horizontal from "./components/HorizontalScrollSection.jsx";
 import Diferencial from "./components/diferenciais.jsx"
 import Newsletter from './components/newsletter';
@@ -17,7 +15,7 @@ import Paralax from './components/paralaxsection.jsx'
 import Footer from './components/footer';
 import loadProducts from "./api/api-bling";
 import HeroSection from "./components/heroSection.jsx";
-import Destaques from "./components/HorizontalProductsSection.jsx"
+import Destaques from "./components/ProductsSection.jsx"
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 ScrollTrigger.config({ ignoreMobileResize: true });
@@ -62,11 +60,10 @@ function App() {
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <HeroSection/>
-          <Horizontal/>
-          <Diferencial/>
           <Destaques/>
-          <Void/>
-          <Paralax foto={imageParalax} />
+          <Diferencial/>
+          <Horizontal/>
+          <Paralax/>
           <Newsletter/>
           <Siganos/>
           <Footer/>
