@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ShoppingBag, Truck } from 'lucide-react';
+import bag from "../assets/header/bag.png" 
+
 
 import ItemCart from '../components/itemcart.jsx';
 import actionTypes from '../Redux/cart/actiontype';
@@ -86,21 +88,9 @@ export default function Cart() {
                 </div>
 
                 {produtos.length === 0 ? (
-                    /* ESTADO VAZIO: Ilustração & Mensagem Editorial */
+                   
                     <div className="cart-empty-state">
-                        <svg
-                            className="cart-empty-icon"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="1.2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                            <line x1="3" y1="6" x2="21" y2="6" />
-                            <path d="M16 10a4 4 0 0 1-8 0" />
-                        </svg>
+                       <img src={bag} alt='bag-shop' className='bag-empty'/>
 
                         <h3>Seu carrinho está vazio</h3>
                         <Link to="/Madro-Store/produtos" onClick={changeActiveState} className="btn-shop-now">

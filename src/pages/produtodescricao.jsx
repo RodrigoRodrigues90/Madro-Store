@@ -8,9 +8,6 @@ import Main from '../components/mainProducts'
 import Siganos from '../components/siganos'
 import Footer from '../components/footer'
 import Paralax from "../components/paralaxsection"
-import card from '../assets/section/card.svg'
-import desconto from '../assets/section/desconto.svg'
-import truck from '../assets/section/truck.svg'
 import cartActionTypes from "../Redux/cart/actiontype";
 import loadRoses from '../assets/loadRoses';
 

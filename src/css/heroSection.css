@@ -3,19 +3,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgb(185, 125, 135);
+    background-color: rgb(255, 255, 255);
 }
 
 .hero-banner-container {
     position: relative;
     width: 100%;
+    height: 400px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.hero-banner-image {
+.hero-banner-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -26,7 +27,7 @@
 .hero-banner-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.45) 100%);
+    background: linear-gradient(180deg, rgba(83, 83, 83, 0.384) 0%, rgba(10, 8, 8, 0.932) 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,14 +131,24 @@
     .hero-title {
         font-size: 3rem;
     }
-
+    
     .hero-description {
         font-size: 1rem;
         max-width: 450px;
     }
-
+    
     .hero-off-wrapper > span {
         font-size: 0.88rem;
         padding: 0 4rem;
     }
+}
+@media (min-width: 1032px){
+    .hero-banner-container{
+        height:500px;
+        width: fit-content;
+    }
+    .hero-banner-video{
+        object-fit: contain;
+    }
+    
 }

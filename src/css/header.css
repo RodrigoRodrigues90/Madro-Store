@@ -110,7 +110,7 @@ a {
    SUBMENUS DESKTOP
    ========================================================================== */
 .sub-menu,
-#log > .sub-menu {
+#log>.sub-menu {
     position: absolute;
     top: 100%;
     left: 50%;
@@ -128,8 +128,8 @@ a {
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
 }
 
-.item-menu-produtos:hover > .sub-menu,
-#log:hover > .sub-menu {
+.item-menu-produtos:hover>.sub-menu,
+#log:hover>.sub-menu {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
@@ -219,9 +219,10 @@ a {
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
+    height: 100svh;
     width: 300px;
-    background: #42121c; /* Bordô Luxo */
+    background: #42121c;
+    /* Bordô Luxo */
     color: #ffffff;
     z-index: 99999;
     display: flex;
@@ -261,7 +262,7 @@ a {
     list-style: none;
 }
 
-.hidden-menu-list > li {
+.hidden-menu-list>li {
     padding: 1rem 0;
     border-bottom: 1px solid rgba(247, 210, 219, 0.1);
 }
@@ -341,6 +342,26 @@ a {
     background-color: #f7d2db;
     color: #42121c;
     border-color: #f7d2db;
+}
+
+.bag-empty {
+    width: 148px;
+    height: auto;
+    animation: bounce 4s ease-in-out infinite;
+    transform-origin: center center;
+    display: inline-block;
+
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
 }
 
 /* RESPONSIVIDADE */
