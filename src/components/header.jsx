@@ -1,24 +1,14 @@
 import "../css/header.css";
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import logo from '../assets/header/logo.webp';
-
-// GSAP
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { User, ShoppingCart, Menu, X } from 'lucide-react';
 
 import Menucart from "../components/cart";
 import Msgcart from "../components/mensagemcart";
 import actionTypes from '../Redux/cart/actiontype';
 
-gsap.registerPlugin(ScrollTrigger);
-
-export default function Header({ isSplashFinished = false }) {
-    const headerRef = useRef(null);
-    const centerRef = useRef(null);
+export default function Header() {
     const [showBanner, setShowBanner] = useState(false);
 
     const { msgActive, produtos } = useSelector(({ cartReducer }) => cartReducer);
@@ -56,34 +46,15 @@ export default function Header({ isSplashFinished = false }) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Controle do GSAP acoplado ao Splash Screen
-    useGSAP(() => {
-        if (!isSplashFinished) {
-            // Garante que o Header começa escondido enquanto o Splash está ativo
-            gsap.set(centerRef.current, { y: -60, opacity: 0 });
-            return;
-        }
-
-        // Quando isSplashFinished passar a true, executa a animação de entrada
-        gsap.to(centerRef.current, {
-            y: 0,
-            opacity: 1,
-            boxShadow:'2 0 18 12 #31303183',
-            duration: 0.8,
-            ease: 'power3.out'
-        });
-
-    }, { scope: headerRef, dependencies: [isSplashFinished] });
-
     return (
         <>
-            <header ref={headerRef} className="header">
+            <header className="header">
                 {/* Banner de Frete Grátis */}
                 <div className={`top-banner ${showBanner ? "visible" : ""}`}>
                     <span>FRETE GRÁTIS para a região de Florianópolis</span>
                 </div>
 
-                <div ref={centerRef} id="center" className="center">
+                <div id="center" className="center">
                     <div className="wrapper-itens">
                         {/* Menu Mobile */}
                         <div className="icons-search-menu-mobile">
@@ -94,9 +65,6 @@ export default function Header({ isSplashFinished = false }) {
 
                         {/* Logo Centralizada */}
                         <Link to="/Madro-Store" id="logo-id">
-                            {/* <div className="logo">
-                                <img src={logo} alt="Logo Madro" />
-                            </div> */}
                             <h1>MADRO</h1>
                         </Link>
 

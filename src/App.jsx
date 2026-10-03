@@ -56,10 +56,10 @@ function App() {
       <Overlay isOpen={activeState}  />
 
       {/* O Header só inicia a animação de entrada quando splashFinished for true */}
-      <Header isSplashFinished={splashFinished} />
+      <Header />
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <HeroSection isSplashFinished={splashFinished}/>
+          <HeroSection/>
           <Destaques/>
           <Diferencial/>
           <Horizontal/>

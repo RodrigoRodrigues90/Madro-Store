@@ -77,7 +77,7 @@ export default function PaginaProdutos() {
                 />
             </div>
             <Void />
-            <Paralax foto={loadRoses()} />
+            <Paralax/>
             <Void />
             <Siganos />
             <Void />

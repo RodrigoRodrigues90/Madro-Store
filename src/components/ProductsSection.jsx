@@ -6,7 +6,7 @@ import '../css/ProductsSection.css';
 
 import { Sparkles, Sparkle, Crown } from 'lucide-react'
 
-export default function HorizontalProductsSection() {
+export default function ProductsSection() {
     const wmBelowRef = useRef(null);
 
     // Obtém os produtos 

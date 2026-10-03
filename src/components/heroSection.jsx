@@ -12,61 +12,22 @@ const promoItems = [
     { id: 3, icon: <Gift size={22} />, text: 'Embalagens personalizadas para presentear' },
 ];
 
-export default function Hero({ isSplashFinished = false }) {
-    const heroRef = useRef(null);
+export default function Hero() {
     const trackRef = useRef(null);
 
     useGSAP(() => {
-        // 1. Barra Promocional Infinita (Marquee)
-        if (trackRef.current) {
-            gsap.to(trackRef.current, {
-                xPercent: -50,
-                ease: 'none',
-                duration: 20,
-                repeat: -1,
-            });
-        }
+        if (!trackRef.current) return;
 
-        // 2. Se a Splash Screen ainda NÃO terminou, mantém os elementos escondidos
-        if (!isSplashFinished) {
-            gsap.set(['.hero-subtitle', '.hero-title', '.hero-description', '.hero-cta-button'], {
-                opacity: 0,
-                y: 30,
-            });
-            return;
-        }
-
-        // 3. Quando isSplashFinished === true, executa a animação de entrada
-        const tl = gsap.timeline({
-            defaults: {
-                ease: 'power3.out',
-                duration: 0.9,
-            },
+        gsap.to(trackRef.current, {
+            xPercent: -50,
+            ease: 'none',
+            duration: 20,
+            repeat: -1,
         });
-
-        tl.to('.hero-subtitle', {
-            y: 0,
-            opacity: 1,
-            delay: 0.2, // Pequeno delay após a remoção da splash screen
-        })
-        .to('.hero-title', {
-            y: 0,
-            opacity: 1,
-        }, '-=0.6')
-        .to('.hero-description', {
-            y: 0,
-            opacity: 1,
-        }, '-=0.6')
-        .to('.hero-cta-button', {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-        }, '-=0.9');
-
-    }, { scope: heroRef, dependencies: [isSplashFinished] });
+    }, { scope: trackRef });
 
     return (
-        <section className="hero-section" ref={heroRef}>
+        <section className="hero-section">
             <div className="hero-banner-container">
                 <video
                     src={bannerVideo}
