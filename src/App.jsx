@@ -59,7 +59,7 @@ function App() {
       <Header isSplashFinished={splashFinished} />
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <HeroSection/>
+          <HeroSection isSplashFinished={splashFinished}/>
           <Destaques/>
           <Diferencial/>
           <Horizontal/>

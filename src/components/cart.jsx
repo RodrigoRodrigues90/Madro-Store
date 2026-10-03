@@ -125,7 +125,7 @@ export default function Cart() {
                         <div className='fretecalc-wrapper-div'>
                             <div className='fretecalc-content'>
                                 <div className='linha'>
-                                    <p><Truck size={18} /> Meios de envio</p>
+                                    <p><Truck size={18} color="#9c3d63ff" /> Meios de envio</p>
                                 </div>
                                 <div className='input-fretecalc-div'>
                                     <input

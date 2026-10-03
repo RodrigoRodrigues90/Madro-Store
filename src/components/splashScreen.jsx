@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import '../css/Preloader.css';
@@ -25,7 +25,7 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
 
         // Animação final da SplashScreen
         const dismissPreloader = () => {
-            const ctx = gsap.context(() => {
+            gsap.context(() => {
                 const isMobileScreen = window.innerWidth < 768;
                 const tl = gsap.timeline({
                     onComplete: () => {
@@ -35,8 +35,8 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
                     }
                 });
 
-                // 1. Esconde a porcentagem e a barra de carregamento
-                tl.to(['.splash-progress-info', '#splash-loader-bar'], {
+                // 1. Esconde a barra de carregamento
+                tl.to('#splash-loader-bar', {
                     opacity: 0,
                     duration: 0.3,
                     ease: 'power2.in'
@@ -73,7 +73,7 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
                 clearInterval(interval);
                 dismissPreloader();
             }
-        }, 15);
+        }, 1);
 
         const handlePageLoad = () => {
             isFullyLoaded = true;
@@ -125,7 +125,7 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
                                     y1="550"
                                     x2="580"
                                     y2="550"
-                                    stroke="#000000"
+                                    stroke="#fcf8f8ff"
                                     strokeWidth="4"
                                     strokeLinecap="round"
                                     strokeDasharray="160"
@@ -157,26 +157,9 @@ export default function SplashScreen({ onComplete, brandName = "MADRO" }) {
                                 {brandName}
                             </text>
                         </g>
-
-                        <line
-                            id="splash-loader-bar"
-                            x1="420"
-                            y1="550"
-                            x2="580"
-                            y2="550"
-                            stroke="#fcbbc6ff"
-                            strokeWidth="4"
-                            strokeLinecap="round"
-                            strokeDasharray="160"
-                            strokeDashoffset={strokeDashoffset}
-                        />
                     </>
                 )}
             </svg>
-
-            <div className="splash-progress-info" style={{ color: '#000000' }}>
-                <span>{progress}%</span>
-            </div>
         </div>
     );
 }

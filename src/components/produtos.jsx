@@ -34,7 +34,7 @@ export default function Products({ foto, tagProduct, nome, valor, categoria, des
                 ease: 'power3.out',
                 scrollTrigger: {
                     trigger: element,
-                    start: 'top 88%', // Dispara quando o topo do card atinge 88% da altura da viewport
+                    start: 'top 90%', // Dispara quando o topo do card atinge 88% da altura da viewport
                     toggleActions: 'play none none none',
                 },
             }

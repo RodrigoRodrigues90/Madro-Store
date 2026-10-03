@@ -367,10 +367,7 @@ a {
 /* RESPONSIVIDADE */
 @media (max-width: 1000px) {
     .center {
-        padding: 0.8rem 1.2rem;
+        padding: 1rem 1.5rem;
     }
-
-    .menu-mobile {
-        display: block;
-    }
+  
 }

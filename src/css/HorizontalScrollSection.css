@@ -22,9 +22,8 @@
 }
 
 .horizontal-subtitle {
-  text-decoration: underline;
   color: #8a324f;
-  font-size: clamp(2.6rem, 3.2vw, 3.8rem);
+  font-size: clamp(2.2rem, 3.2vw, 3.8rem);
   font-weight: 900;
   line-height: .6;
   margin: 0 0 20px 0;

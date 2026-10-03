@@ -1,7 +1,8 @@
 .itemfrete-wrapper {
+    font-family: serif;
     background-color: #fffaf4;
     width: 100%;
-    color: #daabbd;
+    color: #50172f;
     display: flex;
     justify-content: space-between;
     margin-bottom: 12px;
@@ -15,23 +16,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #daabbd;
+    background-color:  #50172f;
     border-top-left-radius:20px;
     border-bottom-left-radius:5px ;
 }
 
 .option-info-frete-wrapper {
     display: flex;
-}
-
-.option-info-frete-wrapper img {
-    width: 18px;
+    justify-content: center;
+    align-items: center;
 }
 
 .option-label-frete {
     display: flex;
     flex-direction: column;
     align-items: left;
+    >span{
+        display: flex;
+        align-items: center; gap: 5px;
+    }
 }
 
 .option-label-frete label {

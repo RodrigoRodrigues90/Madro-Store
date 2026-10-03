@@ -2,7 +2,8 @@ import "../css/itemfrete.css"
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import actionTypes from '../Redux/cart/actiontype'
-import image from "../assets/section/truck.svg"
+
+import { Truck } from "lucide-react"
 
 export default function itemFrete({ prazo, valor, nome }) {
     const { valorFrete } = useSelector(({ cartReducer }) => cartReducer);
@@ -34,7 +35,10 @@ export default function itemFrete({ prazo, valor, nome }) {
             <div className="option-info-frete-wrapper">
                 <div className="option-label-frete">
                     <label>Correios {nome}</label>
-                    <label style={{ color: "#daabbe", fontSize: "12px" }}> <span><img src={image} /></span> chega em até {prazo} dias uteis</label>
+                    <span>
+                    <Truck color="#a34e70ff" />
+                    chega em até {prazo} dias uteis
+                    </span> 
                 </div>
             </div>
             <div className="value-frete">

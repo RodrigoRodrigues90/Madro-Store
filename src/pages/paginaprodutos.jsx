@@ -11,7 +11,6 @@ import Produtos from '../components/produtos'
 import Paralax from "../components/paralaxsection";
 import Void from '../components/void';
 import Siganos from '../components/siganos';
-import loadRoses from '../assets/loadRoses';
 
 export default function PaginaProdutos() {
     //recuperando os valores dos produtos com Redux

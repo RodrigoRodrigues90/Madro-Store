@@ -7,9 +7,7 @@ import Void from '../components/void'
 import Main from '../components/mainProducts'
 import Siganos from '../components/siganos'
 import Footer from '../components/footer'
-import Paralax from "../components/paralaxsection"
 import cartActionTypes from "../Redux/cart/actiontype";
-import loadRoses from '../assets/loadRoses';
 
 export default function ProdutoDescrito() {
     //===pega o estado do carrinho===//
@@ -89,14 +87,7 @@ export default function ProdutoDescrito() {
             <Overlay isOpen={activeState} />
             <Header />
             <section >
-                <div className='marquee'>
-                    <marquee>
-                        <p>
-                            <span><img src={truck} /></span>
-                            Frete grátis para região de Florianópolis
-                        </p>
-                    </marquee>
-                </div>
+
                 <div className="content-wrapper-descricao">
                     <div className='image-produto-descricao'>
                         <img src={produto.foto} />
@@ -147,7 +138,6 @@ export default function ProdutoDescrito() {
                     titulo="Produtos Relacionados"
                     produtos={produtosRelacionados}
                 />
-                <Paralax foto={loadRoses()} />
             <Void/>
 
             </section>
