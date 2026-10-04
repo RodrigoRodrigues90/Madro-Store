@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { User, ShoppingCart, Menu, X } from 'lucide-react';
+import logo from '../assets/header/logoHeader.webp';
 
 import Menucart from "../components/cart";
 import Msgcart from "../components/mensagemcart";
@@ -64,9 +65,10 @@ export default function Header() {
                         </div>
 
                         {/* Logo Centralizada */}
-                        <Link to="/Madro-Store" id="logo-id">
+                        {/* <Link to="/Madro-Store" id="logo-id">
                             <h1>MADRO</h1>
-                        </Link>
+                        </Link> */}
+                        <img src={logo} alt="logo-marca" style={{ width: '110px', height: 'auto' }}  id="logo-id"/>
 
                         {/* Ícones Direita */}
                         <div className="icons-log-cart-div">

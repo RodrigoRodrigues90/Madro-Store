@@ -72,19 +72,18 @@
 
 .hero-cta-button {
     display: flex;
-    background-color: #8a324f;
+    background-color: #581825;
+    opacity: 0.7;
     color: #ffffff;
     padding: 0.85rem 1.8rem;
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    border-radius: 2px;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
-
 .hero-cta-button:hover {
     background-color: #581825;
     transform: translateY(-2px);

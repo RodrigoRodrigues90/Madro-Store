@@ -1,87 +1,89 @@
-import '../css/paginaprodutos.css'
-import React from 'react';
+import '../css/paginaprodutos.css';
+import '../css/HorizontalScrollSection.css';
+import { useMemo } from 'react';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+
 import Overlay from '../components/overlay';
-import Main from '../components/mainProducts'
-import Header from '../components/header'
-import Footer from '../components/footer'
-import Produtos from '../components/produtos'
+import Header from '../components/header';
+import Products from '../components/produtos';
+import Diferencial from '../components/diferenciais';
 import Paralax from "../components/paralaxsection";
-import Void from '../components/void';
 import Siganos from '../components/siganos';
+import Footer from '../components/footer';
+import Void from '../components/void';
 
 export default function PaginaProdutos() {
-    //recuperando os valores dos produtos com Redux
-    const { produtos } = useSelector((rootReducer) => rootReducer.allProducts)
-
-    //===pega o estado do carrinho===//
+    // Recupera produtos do Redux com fallback para array vazio
+    const { produtos = [] } = useSelector((rootReducer) => rootReducer.allProducts);
+    console.log("Produtos do Redux:", produtos); // Log para depuração
+    // Estado do carrinho para o Overlay
     const { activeState } = useSelector(({ cartReducer }) => cartReducer);
 
-    //capturar a categoria pela URL 
-    const { categorie } = useParams();
-    //seta categoria ou produtos gerais
-    const [categoria, setCategory] = useState();
-    useEffect(() => {
-        if (categorie == null ?
-            setCategory("Produtos") : setCategory(categorie));
-    }, [categorie])
+    // Captura a categoria pela URL
+    const params = useParams();
+    const categorie = params.categoria;
 
-    // "pesquisa" os produtos por nome e retorna a lista
-    const [produtosFiltrados, setProdutosFiltrados] = useState([]);
-    useEffect(() => {
-        if (categorie != null) {
-            // Filtra os produtos com base na categoria
-            const Filtro = produtos.filter(produto =>
-                produto.categoria.toLowerCase().includes(categorie.toLowerCase())
-            );
-            setProdutosFiltrados(Filtro);
-        } else {
-            setProdutosFiltrados(produtos);
-        }
-    }, [categorie]);
+    // 1. Título da categoria
+    const categoriaTitulo = categorie || "Produtos";
+
+    // 2. Filtro de Produtos Corrigido
+    const produtosFiltrados = useMemo(() => {
+        if (!categorie) return produtos;
+
+        return produtos.filter(item => {
+            // Garante o acesso correto quer o objeto seja 'item.produto' ou 'item'
+            const p = item.produto || item;
+            
+            // Obtém a string da categoria (seja objeto com .descricao ou string direta)
+            const nomeCategoria = typeof p.categoria === 'object' 
+                ? p.categoria?.descricao 
+                : p.categoria;
+
+            return nomeCategoria?.toLowerCase().includes(categorie.toLowerCase());
+        });
+    }, [categorie, produtos]);
 
     return (
         <>
-
             <Overlay isOpen={activeState} />
             <Header />
             <Void />
+
             <section className='main-content'>
-                <div className='mid-content' >
-                    <div className='title'>
-                        <h1>{categoria}</h1>
-                    </div>
-                    <div className='content-wide-screen'>
-                        {produtosFiltrados.map((produto, index) => (
-                            <React.Fragment key={index}>
-                                <Produtos
-                                    foto={produto.foto}
-                                    nome={produto.nome}
-                                    valor={produto.valor}
-                                    categoria={produto.categoria}
-                                    descricao={produto.descricao}
-                                    descricaoComplementar={produto.descricaoComplementar}
+                <div className='mid-content'>
+                    <span className='horizontal-title'>
+                        {categoriaTitulo}
+                    </span>
+                   <div className="products-grid">
+                    {produtosFiltrados.map((item, index) => {
+                        const p = item.produto;
+                        return (
+                            <div className="product-card-wrapper" key={p.id || index}>
+                                <Products
+                                    foto={p.imagem?.[0]?.link}
+                                    tagProduct={p.tag}
+                                    nome={p.descricao}
+                                    valor={parseFloat(p.preco)}
+                                    categoria={p.categoria?.descricao}
+                                    descricao={p.descricaoCurta}
+                                    descricaoComplementar={p.descricaoComplementar}
                                 />
-                            </React.Fragment>
-                        ))}
-                    </div>
+                            </div>
+                        );
+                    })}
+                </div>
                 </div>
             </section>
-            {/* componente swiper para telas mobile */}
-            <div className='content-mobile'>
-                <Main
-                    titulo={categoria}
-                    produtos={produtosFiltrados}
-                />
-            </div>
-            <Void />
-            <Paralax/>
-            <Void />
+            <Void/>
+            <Diferencial />
+            <Void/>
+            <Paralax />
+            <Void/>
             <Siganos />
             <Void />
+
             <Footer />
         </>
-    )
+    );
 }

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Overlay from '../components/overlay';
 import Header from '../components/header'
 import Void from '../components/void'
-import Main from '../components/mainProducts'
+
 import Siganos from '../components/siganos'
 import Footer from '../components/footer'
 import cartActionTypes from "../Redux/cart/actiontype";
