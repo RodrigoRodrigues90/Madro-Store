@@ -9,7 +9,6 @@
   gap: 1.25rem;
   box-sizing: border-box;
   overflow: hidden;
-  box-shadow: 0 2px 15px rgba(29, 28, 28, 0.329);
 }
 
 .horizontal-title {

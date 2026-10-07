@@ -1,23 +1,24 @@
 import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import gsap from 'gsap';
 import Products from './produtos';
-import returnProducts from '../teste';
 import '../css/ProductsSection.css';
 
-import { Sparkles, Sparkle, Crown } from 'lucide-react'
+import { Sparkles, Sparkle, Crown } from 'lucide-react';
 
 export default function ProductsSection() {
     const wmBelowRef = useRef(null);
 
-    // Obtém os produtos 
-    const rawProducts = returnProducts()?.retorno?.produtos || [];
-    const taggedProducts = rawProducts.filter(item => Boolean(item?.produto?.tag?.trim()));
-    const productList = taggedProducts.length < 5
-        ? [...taggedProducts, taggedProducts[0]].slice(0, 6)
-        : taggedProducts.slice(0, 8);
+    // 1. Obtém o estado do Redux para todos os produtos
+    const allProductsState = useSelector((state) => state.allProducts);
+
+    // 2. Extrai o array 'produtos'
+    const rawProducts = allProductsState?.produtos || [];
+
+    // 3. Aplica filtragem dos itens com tags
+    const taggedProducts = rawProducts.filter(item => Boolean(item?.tag?.trim()));
 
     useEffect(() => {
-
         const wmBelow = wmBelowRef.current;
 
         const ctx = gsap.context(() => {
@@ -37,25 +38,25 @@ export default function ProductsSection() {
         <section className="products-grid-section">
             <div className="footer-divider" />
 
-            {/* <div className="title-wrapper"> */}
-            <span className="horizontal-title"> NOSSAS NOVIDADES  </span>
+            <span className="horizontal-title"> NOSSAS NOVIDADES </span>
             <h2 className="horizontal-subtitle">Destaques da coleção</h2>
-            {/* </div> */}
+
             <div className="products-container">
                 {/* Grade em Colunas */}
                 <div className="products-grid">
-                    {productList.map((item, index) => {
-                        const p = item.produto;
+                    {taggedProducts.map((item, index) => {
+                        const p = item?.produto || item;
+
                         return (
-                            <div className="product-card-wrapper" key={p.id || index}>
+                            <div className="product-card-wrapper" key={p?.id || index}>
                                 <Products
-                                    foto={p.imagem?.[0]?.link}
-                                    tagProduct={p.tag}
-                                    nome={p.descricao}
-                                    valor={parseFloat(p.preco)}
-                                    categoria={p.categoria?.descricao}
-                                    descricao={p.descricaoCurta}
-                                    descricaoComplementar={p.descricaoComplementar}
+                                    foto={p?.foto || p?.imagem?.[0]?.link}
+                                    tagProduct={p?.tag}
+                                    nome={p?.nome || p?.descricao}
+                                    valor={p?.valor ?? (parseFloat(p?.preco) || 0)}
+                                    categoria={typeof p?.categoria === 'string' ? p?.categoria : p?.categoria?.descricao}
+                                    descricao={p?.descricao || p?.descricaoCurta}
+                                    descricaoComplementar={p?.descricaoComplementar}
                                 />
                             </div>
                         );
@@ -69,10 +70,8 @@ export default function ProductsSection() {
 
             <div className="watermark-wrapper">
                 <div className="watermark-track" ref={wmBelowRef}>
-                    {/* Bloco 1 e Bloco 2 para o loop perfeito do GSAP */}
                     {[1, 2].map((_, idx) => (
                         <div key={idx} className="watermark-item">
-                            {/* Repetição interna para garantir largura maior que 100vw */}
                             {[...Array(4)].map((_, itemIdx) => (
                                 <span key={itemIdx} className="watermark-content">
                                     <Sparkles size={20} strokeWidth={1.8} />

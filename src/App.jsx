@@ -1,28 +1,26 @@
 import "./index.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
-import Preloader from './components/splashScreen.jsx';
 import Overlay from './components/overlay.jsx';
 import Header from './components/header';
 import Horizontal from "./components/HorizontalScrollSection.jsx";
-import Diferencial from "./components/diferenciais.jsx"
+import Diferencial from "./components/diferenciais.jsx";
 import Newsletter from './components/newsletter';
 import Siganos from './components/siganos';
-import Paralax from './components/paralaxsection.jsx'
+import Paralax from './components/paralaxsection.jsx';
 import Footer from './components/footer';
 import loadProducts from "./api/api-bling";
 import HeroSection from "./components/heroSection.jsx";
-import Destaques from "./components/ProductsSection.jsx"
+import Destaques from "./components/ProductsSection.jsx";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 ScrollTrigger.config({ ignoreMobileResize: true });
+
 function App() {
-  const { produtos } = useSelector((rootReducer) => rootReducer.allProducts);
   const dispatch = useDispatch();
-  const [splashFinished, setSplashFinished] = useState(false);
 
   useEffect(() => {
     loadProducts(dispatch);
@@ -49,24 +47,18 @@ function App() {
 
   return (
     <>
-      {/* Exibe o SplashScreen e chama setSplashFinished(true) quando terminar */}
-      {!splashFinished && (
-        <Preloader onComplete={() => setSplashFinished(true)} />
-      )}
-      <Overlay isOpen={activeState}  />
-
-      {/* O Header só inicia a animação de entrada quando splashFinished for true */}
+      <Overlay isOpen={activeState} />
       <Header />
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <HeroSection/>
-          <Destaques/>
-          <Diferencial/>
-          <Horizontal/>
-          <Paralax/>
-          <Newsletter/>
-          <Siganos/>
-          <Footer/>
+          <HeroSection />
+          <Destaques />
+          <Diferencial />
+          <Horizontal />
+          <Paralax />
+          <Newsletter />
+          <Siganos />
+          <Footer />
         </div>
       </div>
     </>
