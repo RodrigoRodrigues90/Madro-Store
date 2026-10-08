@@ -1,11 +1,11 @@
-import '../css/paginaprodutos.css';
-import '../css/HorizontalScrollSection.css';
-import { useMemo } from 'react';
-import { useSelector } from "react-redux";
+import { useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
+import loadProducts from '../api/api-bling';
 
 import Overlay from '../components/overlay';
 import Header from '../components/header';
+import HeroSections from '../components/heroSection';
 import Products from '../components/produtos';
 import Diferencial from '../components/diferenciais';
 import Paralax from "../components/paralaxsection";
@@ -14,31 +14,37 @@ import Footer from '../components/footer';
 import Void from '../components/void';
 
 export default function PaginaProdutos() {
-    // Recupera produtos do Redux com fallback para array vazio
-    const { produtos = [] } = useSelector((rootReducer) => rootReducer.allProducts);
-    console.log("Produtos do Redux:", produtos); // Log para depuração
-    // Estado do carrinho para o Overlay
+    const dispatch = useDispatch();
+
+    const allProductsState = useSelector((rootReducer) => rootReducer.allProducts);
+    const produtos = Array.isArray(allProductsState)
+        ? allProductsState
+        : allProductsState?.produtos || [];
+
+    useEffect(() => {
+        if (produtos.length === 0) {
+            loadProducts(dispatch);
+        }
+    }, [dispatch, produtos.length]);
+
     const { activeState } = useSelector(({ cartReducer }) => cartReducer);
 
-    // Captura a categoria pela URL
-    const params = useParams();
-    const categorie = params.categoria;
+    const { categorie } = useParams();
 
-    // 1. Título da categoria
-    const categoriaTitulo = categorie || "Produtos";
+    const categoriaTitulo = (categorie && categorie.toLowerCase() !== 'todos')
+        ? categorie.toUpperCase()
+        : "TODOS OS PRODUTOS";
 
-    // 2. Filtro de Produtos Corrigido
     const produtosFiltrados = useMemo(() => {
-        if (!categorie) return produtos;
+        if (!categorie || categorie.toLowerCase() === 'todos' || categorie.toLowerCase() === 'all') {
+            return produtos;
+        }
 
         return produtos.filter(item => {
-            // Garante o acesso correto quer o objeto seja 'item.produto' ou 'item'
-            const p = item.produto || item;
-            
-            // Obtém a string da categoria (seja objeto com .descricao ou string direta)
-            const nomeCategoria = typeof p.categoria === 'object' 
-                ? p.categoria?.descricao 
-                : p.categoria;
+            const p = item?.produto || item;
+            const nomeCategoria = typeof p?.categoria === 'object'
+                ? p?.categoria?.descricao
+                : p?.categoria;
 
             return nomeCategoria?.toLowerCase().includes(categorie.toLowerCase());
         });
@@ -48,38 +54,46 @@ export default function PaginaProdutos() {
         <>
             <Overlay isOpen={activeState} />
             <Header />
-            <Void />
-
-            <section className='main-content'>
-                <div className='mid-content'>
-                    <span className='horizontal-title'>
+            <HeroSections/>
+            <Void/>
+            <section className="page-products-container">
+                <div className="footer-divider"></div>
+                <div className='products-container'>
+                    <span className='horizontal-title' style={{ lineHeight: '7em', backgroundColor: '#742a39', color: '#fff', padding: '0.5em 1em', borderRadius: '0.5em' }}>
                         {categoriaTitulo}
                     </span>
-                   <div className="products-grid">
-                    {produtosFiltrados.map((item, index) => {
-                        const p = item.produto;
-                        return (
-                            <div className="product-card-wrapper" key={p.id || index}>
-                                <Products
-                                    foto={p.imagem?.[0]?.link}
-                                    tagProduct={p.tag}
-                                    nome={p.descricao}
-                                    valor={parseFloat(p.preco)}
-                                    categoria={p.categoria?.descricao}
-                                    descricao={p.descricaoCurta}
-                                    descricaoComplementar={p.descricaoComplementar}
-                                />
+                    <div className="products-grid">
+                        {produtosFiltrados.length > 0 ? (
+                            produtosFiltrados.map((item, index) => {
+                                const p = item?.produto || item;
+
+                                return (
+                                    <div className="product-card-wrapper" key={p?.id || index}>
+                                        <Products
+                                            foto={p?.foto || p?.imagem?.[0]?.link}
+                                            tagProduct={p?.tag}
+                                            nome={p?.nome || p?.descricao}
+                                            valor={p?.valor ?? (parseFloat(p?.preco) || 0)}
+                                            categoria={typeof p?.categoria === 'string' ? p?.categoria : p?.categoria?.descricao}
+                                            descricao={p?.descricao || p?.descricaoCurta}
+                                            descricaoComplementar={p?.descricaoComplementar}
+                                        />
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '3rem', color: '#7a515c' }}>
+                                <p>Nenhum produto encontrado para a categoria "{categorie}".</p>
                             </div>
-                        );
-                    })}
-                </div>
+                        )}
+                    </div>
                 </div>
             </section>
-            <Void/>
+            <Void />
             <Diferencial />
-            <Void/>
+            <Void />
             <Paralax />
-            <Void/>
+            <Void />
             <Siganos />
             <Void />
 

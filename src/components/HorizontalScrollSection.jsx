@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Gem } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Estilos essenciais do Swiper
 import 'swiper/css';
@@ -102,7 +103,9 @@ export default function HorizontalScrollSection() {
                                     />
                                     <span className="card-badge">{item.categoria}</span>
                                     <div className="card-details">
+                                        <Link to={"/Madro-Store/produtos/" + item.categoria.toLowerCase()}>
                                         <button className="buy-btn">Ver Produtos</button>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

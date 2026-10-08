@@ -14,7 +14,7 @@ import Paralax from './components/paralaxsection.jsx';
 import Footer from './components/footer';
 import loadProducts from "./api/api-bling";
 import HeroSection from "./components/heroSection.jsx";
-import Destaques from "./components/ProductsSection.jsx";
+import Destaques from "./components/DestaquesSection.jsx";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 ScrollTrigger.config({ ignoreMobileResize: true });

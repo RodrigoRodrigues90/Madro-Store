@@ -23,6 +23,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import ScrollToTop from './components/ScrollToTop.jsx'
 //************ */
 
 
@@ -30,6 +31,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
     <BrowserRouter>
+    <ScrollToTop/>
     <Routes>
       <Route path='/Madro-Store' element={<App/>} />
       <Route path='/Madro-Store/contatos' element={<Contatos />}/>

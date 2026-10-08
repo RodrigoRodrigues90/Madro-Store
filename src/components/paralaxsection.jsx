@@ -8,47 +8,70 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ParalaxSection() {
     const textRef = useRef(null);
+    const imgRef = useRef(null); // Ref para controlar a imagem no parallax
 
     const frase = "Você brilha mais quando se sente linda ";
 
     useEffect(() => {
-    const ctx = gsap.context(() => {
-        const words = textRef.current.querySelectorAll('.word');
+        const ctx = gsap.context(() => {
+            if (imgRef.current) {
+                gsap.fromTo(
+                    imgRef.current,
+                    { yPercent: -15 }, // Começa ligeiramente acima
+                    {
+                        yPercent: 15,  // Move ligeiramente para baixo durante o scroll
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: imgRef.current.parentElement,
+                            start: "top bottom",
+                            end: "bottom top",
+                            scrub: true, // Acompanha o movimento do scroll do utilizador
+                            invalidateOnRefresh: true,
+                        }
+                    }
+                );
+            }
 
-        gsap.to(words, {
-            color: "rgba(80, 21, 82, 0.78)",
-            y: 0, // Anima do translateY(20px) do CSS até o 0
-            stagger: 0.2,
-            ease: "power2.out",
-            scrollTrigger: {
-                trigger: textRef.current,
-                start: "top 85%",
-                end: "bottom 35%",
-                scrub: 1.5,
-                invalidateOnRefresh: true, // Recalcula as posições em caso de mudança de altura
-            },
+            // 2. Animação de revelação do texto palavra por palavra
+            const words = textRef.current?.querySelectorAll('.word');
+            if (words && words.length > 0) {
+                gsap.to(words, {
+                    color: "rgba(80, 21, 82, 0.78)",
+                    y: 0,
+                    stagger: 0.2,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: textRef.current,
+                        start: "top 85%",
+                        end: "bottom 35%",
+                        scrub: 1.5,
+                        invalidateOnRefresh: true,
+                    },
+                });
+            }
         });
-    }, textRef);
 
-    // Garante que o GSAP recalcule as posições após a montagem do ScrollSmoother
-    const timer = setTimeout(() => {
-        ScrollTrigger.refresh();
-    }, 100);
+        const timer = setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 200);
 
-    return () => {
-        clearTimeout(timer);
-        ctx.revert();
-    };
-}, []);
+        return () => {
+            clearTimeout(timer);
+            ctx.revert();
+        };
+    }, []);
 
     return (
         <section className="paralax-wraper">
-            {/* Imagem em movimento Parallax */}
-            <div className="paralax-img-container" data-speed="0.5">
-                <img src={rosesImg} alt="Roses Background" className="paralax-bg-img" />
+            <div className="paralax-img-container">
+                <img 
+                    ref={imgRef} 
+                    src={rosesImg} 
+                    alt="Roses Background" 
+                    className="paralax-bg-img" 
+                />
             </div>
 
-            {/* Texto animado com revelação palavra por palavra */}
             <div className="inner-paralaxe">
                 <h1 ref={textRef}>
                     {frase.split(" ").map((palavra, index) => (

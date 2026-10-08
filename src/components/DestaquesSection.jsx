@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import Products from './produtos';
-import '../css/ProductsSection.css';
+import '../css/DestaquesSection.css';
 
 import { Sparkles, Sparkle, Crown } from 'lucide-react';
 
-export default function ProductsSection() {
+export default function DestaquesSection() {
     const wmBelowRef = useRef(null);
 
     // 1. Obtém o estado do Redux para todos os produtos
@@ -65,9 +66,10 @@ export default function ProductsSection() {
             </div>
 
             <div className='button-div'>
-                <button className='button-comprar'>Ver mais produtos</button>
+                <Link to='/Madro-Store/produtos'>
+                    <button className='button-comprar'>Ver mais produtos</button>
+                </Link>
             </div>
-
             <div className="watermark-wrapper">
                 <div className="watermark-track" ref={wmBelowRef}>
                     {[1, 2].map((_, idx) => (

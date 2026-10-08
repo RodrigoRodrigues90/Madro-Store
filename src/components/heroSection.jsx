@@ -43,7 +43,7 @@ export default function Hero() {
                         Nova Coleção Verão <Sun size={28} color="#ffffff" />
                     </h1>
                     <p className='hero-description'>Conheça a exclusividade MADRO</p>
-                    <Link to="/Madro-Store/Allprodutos" className="hero-cta-button">
+                    <Link to="/Madro-Store/produtos" className="hero-cta-button">
                         VER MAIS
                     </Link>
                 </div>
