@@ -111,7 +111,7 @@ export default function Header() {
                                         <li onClick={setState}><Link to="/Madro-Store/produtos/Óculos">Óculos</Link></li>
                                     </ul>
                                 </li>
-                                <li><Link to="/Madro-Store/Contatos">Contatos</Link></li>
+                                <li><Link to="/Madro-Store/Contatos">Suporte</Link></li>
                             </ul>
                         </div>
                         <div className="account-div">
