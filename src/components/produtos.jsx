@@ -86,7 +86,7 @@ export default function Products({ foto, tagProduct, nome, valor, categoria, des
     return (
         <section className="produto-wraper" ref={cardRef}>
             <div className="produto">
-                <div className="produto-tag" style={{display: tagProduct ? 'block' : 'none'}}>{tagProduct}</div>
+                <div className="produto-tag" style={{ display: tagProduct ? 'block' : 'none' }}>{tagProduct}</div>
                 <div className="image-produto">
                     <img src={foto} alt="produto-foto"></img>
                 </div>
@@ -94,12 +94,21 @@ export default function Products({ foto, tagProduct, nome, valor, categoria, des
                 <div className="valor-produto">R$ {valor.toFixed(2)}</div>
                 <div className="parcelamento"><p>3x de <strong> R$ {valorFormatado}</strong> sem juros</p></div>
                 <div className="div-button-comprar">
-                    <button id="botaoCompra"
-                        onClick={sendToCart}
-                        className={!loading ? "button-comprar" : "button-loading"}
-                        disabled={loading} >
-                        {!loading ? "COMPRAR" : ""}
-                    </button>
+                    {
+                        loading ?
+                            <div className="loading-spinner">
+                                <div className="spinner"></div>
+                            </div>
+                            :
+                            <button
+                                id="botaoCompra"
+                                onClick={sendToCart}
+                                className={!loading ? "button-comprar" : "button-loading"}
+                                disabled={loading}
+                            >
+                                COMPRAR
+                            </button>
+                    }
                     <Link to="/Madro-Store/produtodescricao">
                         <button onClick={changeProductDescribe} className="button-ver"><img src={eye} /></button>
                     </Link>

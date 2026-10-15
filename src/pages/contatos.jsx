@@ -9,7 +9,6 @@ import Overlay from '../components/overlay';
 import Header from "../components/header";
 import Footer from '../components/footer';
 import Void from '../components/void';
-import Siganos from '../components/siganos';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -156,7 +155,6 @@ export default function Contatos() {
             </div>
 
             <Void />
-            <Siganos />
             <Footer />
         </>
     );
