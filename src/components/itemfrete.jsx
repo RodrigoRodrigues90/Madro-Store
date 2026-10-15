@@ -34,15 +34,15 @@ export default function itemFrete({ prazo, valor, nome }) {
             </div>
             <div className="option-info-frete-wrapper">
                 <div className="option-label-frete">
-                    <label>Correios {nome}</label>
-                    <span>
-                    <Truck color="#a34e70ff" />
+                    <label style={{ color: "#1e020d" }}>Correios {nome}</label>
+                    <span style={{ color: "#5b0728" }}>
+                    <Truck size={24} />
                     chega em até {prazo} dias uteis
                     </span> 
                 </div>
             </div>
             <div className="value-frete">
-                <h5>R${valor}</h5>
+                <h5 style={{color: "#5b0728"}}>R${valor}</h5>
             </div>
         </div>
     )

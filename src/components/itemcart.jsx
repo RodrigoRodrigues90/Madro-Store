@@ -1,7 +1,7 @@
 import '../css/itemcart.css'
 import { useState, useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
-import trash from '../assets/header/trash.svg'
+import { Trash } from "lucide-react";
 import actionTypes from '../Redux/cart/actiontype'
 
 
@@ -60,10 +60,10 @@ export default function ItemCart({ image, descricao, valor, unidades, id}) {
                     </div>
                 </div>
                 <div className="preco-produto-itemcart">
-                    <h1>R$ {valorsomado.toFixed(2).toString()}</h1>
+                    <h1  style={{fontFamily:'serif'}}>R$ {valorsomado.toFixed(2).toString().replace('.', ',')}</h1>
                 </div>
                 <button  onClick={excluirItem} className="button-exclude-itemcart">
-                    <img src={trash} />
+                    <Trash size={20} color="rgb(183, 3, 51)" />
                 </button>
             </div>
         </section>

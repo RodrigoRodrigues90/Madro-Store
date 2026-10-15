@@ -51,6 +51,7 @@
 }
 
 .descricao-produto h1 {
+    font-family: serif !important;
     font-size: 2.2rem;
     font-weight: 700;
     color: #b53a62;
@@ -62,6 +63,7 @@
     font-weight: 800;
     color: #b53a62;
     margin-bottom: 20px;
+    font-family: serif !important;
 }
 
 .descricao-produto p {
@@ -70,10 +72,13 @@
     display: flex;
     align-items: center;
     margin-bottom: 16px;
+    font-family: serif !important;
+
 }
 
 .descricao-produto strong {
     color: #b53a62;
+    font-family: serif !important;
 }
 
 /* QUANTIDADE E BOTÕES */
@@ -92,7 +97,7 @@
     align-items: center;
     border: 1px solid #daabba;
     padding: 8px 12px;
-    border-radius: 12px;
+    border-radius: 2px;
     background-color: #fff;
 }
 
@@ -103,7 +108,7 @@
     font-weight: bold;
     width: 30px;
     height: 30px;
-    border-radius: 8px;
+    border-radius: 2px;
     color: #b53a62;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -123,13 +128,13 @@
 }
 
 /* BOTÃO COMPRAR */
-#botaoCompra, .button-comprar {
+#botaoCompra,
+.button-comprar {
     flex: 1;
     padding: 0.9rem 1.5rem;
     background-color: #b53a62;
     color: white;
     border: none;
-    border-radius: 12px;
     font-weight: bold;
     letter-spacing: 1px;
     cursor: pointer;
@@ -138,7 +143,8 @@
     text-align: center;
 }
 
-#botaoCompra:hover, .button-comprar:hover {
+#botaoCompra:hover,
+.button-comprar:hover {
     background-color: #822544;
     transform: translateY(-2px);
 }
@@ -153,8 +159,8 @@
 .spinner {
     width: 45px;
     height: 45px;
-    border: 4px solid rgba(218, 171, 186, 0.3); 
-    border-top: 4px solid #501552; 
+    border: 4px solid rgba(218, 171, 186, 0.3);
+    border-top: 4px solid #501552;
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
@@ -163,6 +169,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -200,7 +207,7 @@
         padding: 2.5em;
         gap: 20px;
     }
-    
+
     .buttons-wrapper {
         flex-direction: column;
         align-items: stretch;
@@ -239,20 +246,12 @@
     border-radius: 2px;
 }
 
-/* GRADE DE PRODUTOS (LAYOUT DE 4 COLUNAS RESPONSIVAS) */
-.products-grid {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 2rem;
-    justify-content: center;
-}
-
 .product-card-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
 }
+
 /* AJUSTES DAS SETAS DE NAVEGAÇÃO DO SWIPER */
 .section-relacionados .swiper-button-next,
 .section-relacionados .swiper-button-prev {

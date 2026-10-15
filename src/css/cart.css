@@ -137,21 +137,21 @@
     padding: 0.75rem 1.8rem;
     background-color: #581825;
     color: #f7d2db;
+    border-style: none;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    border-radius: 30px;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(88, 24, 37, 0.15);
 }
 
 .btn-shop-now:hover {
-    background-color: #ae325b;
+    background-color: #761a38;
     color: #ffffff;
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(174, 50, 91, 0.25);
+    box-shadow: 0 6px 18px rgba(107, 27, 54, 0.25);
 }
 
 /* ==========================================================================
@@ -177,11 +177,14 @@
     width: 100%;
     padding: 0.8rem 1.5rem 1rem 1.5rem;
     box-sizing: border-box;
+
 }
 
 .fretecalc-content {
     color: #581825;
     font-size: 0.85rem;
+    font-family: serif !important;
+
 }
 
 .linha p {
@@ -204,6 +207,7 @@
     color: #8a324f;
     text-decoration: underline;
     transition: color 0.2s ease;
+
 }
 
 .fretecalc-content a:hover {
@@ -220,8 +224,6 @@
     flex: 1;
     outline: none;
     border: 1px solid rgba(88, 24, 37, 0.2);
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
     padding: 0.65rem 1rem;
     font-size: 0.85rem;
     color: #42121c;
@@ -243,8 +245,7 @@
     color: #ffffff;
     background-color: #581825;
     border: none;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+
     letter-spacing: 0.1em;
     font-size: 0.75rem;
     font-weight: 600;
@@ -254,7 +255,7 @@
 }
 
 .button-fretecalc:hover {
-    background-color: #ae325b;
+    background-color: #761a38;
 }
 
 .frete-options-wrapper {
@@ -294,28 +295,6 @@
     padding: 1rem 1.5rem 1.5rem 1.5rem;
 }
 
-.button-div-payment button {
-    width: 100%;
-    padding: 0.95rem;
-    background-color: #42121c;
-    color: #f7d2db;
-    border: none;
-    border-radius: 30px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(66, 18, 28, 0.2);
-}
-
-.button-div-payment button:hover:not(:disabled) {
-    background-color: #ae325b;
-    color: #ffffff;
-    box-shadow: 0 6px 20px rgba(174, 50, 91, 0.3);
-}
-
 .button-div-payment button:disabled,
 .button-div-payment button[disabled] {
     background-color: #e2d7da;
@@ -325,8 +304,8 @@
 }
 
 /* ==========================================================================
-   SCROLLBAR CUSTOMIZADO
-   ========================================================================== */
+SCROLLBAR CUSTOMIZADO
+========================================================================== */
 ::-webkit-scrollbar {
     width: 5px;
 }

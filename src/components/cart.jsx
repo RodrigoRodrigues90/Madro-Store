@@ -117,7 +117,7 @@ export default function Cart() {
                         <div className='subtotal-Wrapper-div'>
                             <div className='subtotal-content'>
                                 <span>Subtotal (sem frete):</span>
-                                <span>R${formString(subtotal.toFixed(2).toString())}</span>
+                                <span style={{fontFamily:'serif'}}>R${formString(subtotal.toFixed(2).toString())}</span>
                             </div>
                         </div>
 
@@ -185,16 +185,16 @@ export default function Cart() {
                             <div className='price-wrapper'>
                                 <span>Total:</span>
                                 <div style={{ textAlign: 'end' }}>
-                                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                                    <span style={{ fontSize: '1.2rem', fontWeight: 'bold', fontFamily: 'serif' }}>
                                         R${formString(total.toFixed(2).toString())}
                                     </span>
-                                    <p style={{ fontSize: '0.78rem', margin: '4px 0 0 0', opacity: 0.85 }}>
-                                        ou até 3x de <strong>R${formString((total / 3).toFixed(2).toString())}</strong> sem juros
+                                    <p style={{ fontSize: '0.78rem', margin: '4px 0 0 0', opacity: 0.85 , fontFamily: 'serif'}}>
+                                        ou até 3x de <strong style={{fontFamily:'serif'}}  >R${formString((total / 3).toFixed(2).toString())}</strong> sem juros
                                     </p>
                                 </div>
                             </div>
                             <div className='button-div-payment'>
-                                <button disabled={produtos.length === 0} className='button-comprar'>
+                                <button disabled={produtos.length === 0} className='btn-shop-now'>
                                     IR PARA PAGAMENTO
                                 </button>
                             </div>

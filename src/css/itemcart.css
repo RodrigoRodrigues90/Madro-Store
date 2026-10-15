@@ -4,7 +4,7 @@
     height: fit-content;
     box-shadow: 1px 1px 3px #0000006b;
     margin-top: 10px;
-    color: #daabbd;
+    color: #702340;
 }
 .wrapper-content-itemcart{
     position: relative;
@@ -29,16 +29,11 @@
     margin-left: auto;
 }
 .button-exclude-itemcart{
-    width: 5%;
     position: absolute;
     top: 5px;
     right: 5px;
     border: none;
     background-color:transparent;
     box-shadow: 1px 1px 3px #0000006b;
-    border-radius: 4px;
     cursor: pointer;
-}
-.button-exclude-itemcart img{
-    width:80%;
 }
