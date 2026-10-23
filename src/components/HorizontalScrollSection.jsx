@@ -1,17 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { Gem } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Estilos essenciais do Swiper
 import 'swiper/css';
 
 import '../css/HorizontalScrollSection.css';
 
-// Importação dos videos
 
 import oculosVideo from '../assets/mp4/oculos.mp4';
 import aneisVideo from '../assets/mp4/aneis.mp4';
@@ -27,46 +25,116 @@ const produtosManuais = [
     { id: 5, categoria: 'BRINCOS', videoSrc: brincosVideo },
 ];
 
+const reduzirMovimento = () =>
+    typeof window !== 'undefined' &&
+    window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+const economiaDeDados = () =>
+    typeof navigator !== 'undefined' && navigator.connection?.saveData === true;
+
+const CardVideo = memo(function CardVideo({ src, label }) {
+    const videoRef = useRef(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        video.muted = true;
+
+        const podeTocar = !reduzirMovimento() && !economiaDeDados();
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting && podeTocar) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            },
+            { threshold: 0.4 }
+        );
+
+        observer.observe(video);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <video
+            ref={videoRef}
+            src={src}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            disablePictureInPicture
+            disableRemotePlayback
+            aria-label={label}
+        />
+    );
+});
+
 export default function HorizontalScrollSection() {
+    const sectionRef = useRef(null);
     const wmBelowRef = useRef(null);
     const swiperRef = useRef(null);
+    const tweenRef = useRef(null);
 
     const [activeIndex, setActiveIndex] = useState(0);
 
     const totalSlides = produtosManuais.length;
 
-    useEffect(() => {
 
+    useEffect(() => {
         const wmBelow = wmBelowRef.current;
+        if (!wmBelow || reduzirMovimento()) return;
 
         const ctx = gsap.context(() => {
-            if (wmBelow) {
-                gsap.fromTo(
-                    wmBelow,
-                    { xPercent: -50 },
-                    {
-                        xPercent: 0,
-                        ease: 'none',
-                        duration: 42,
-                        repeat: -1,
-                    }
-                );
-            }
-
+            tweenRef.current = gsap.fromTo(
+                wmBelow,
+                { xPercent: -50 },
+                {
+                    xPercent: 0,
+                    ease: 'none',
+                    duration: 42,
+                    repeat: -1,
+                    force3D: true,
+                }
+            );
         });
 
-        return () => ctx.revert();
+        return () => {
+            tweenRef.current = null;
+            ctx.revert();
+        };
+    }, []);
+
+    useEffect(() => {
+        const section = sectionRef.current;
+        if (!section) return;
+
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                tweenRef.current?.play();
+                swiperRef.current?.autoplay?.start();
+            } else {
+                tweenRef.current?.pause();
+                swiperRef.current?.autoplay?.stop();
+            }
+        });
+
+        observer.observe(section);
+        return () => observer.disconnect();
     }, []);
 
     return (
-        <section className="horizontal-section">
+        <section className="horizontal-section" ref={sectionRef}>
             <div className="footer-divider" />
             <span className="horizontal-title">QUALIDADE & PERSONALIDADE</span>
             <h2 className="horizontal-subtitle">Escolha por Categoria </h2>
 
             {/* Container do Swiper */}
             <div className="track-container">
-                {/* Botão Anterior Customizado */}
+
                 <button
                     className="custom-nav-btn prev-btn"
                     onClick={() => swiperRef.current?.slidePrev()}
@@ -76,7 +144,7 @@ export default function HorizontalScrollSection() {
                 </button>
 
                 <Swiper
-                    modules={[Navigation, Pagination, Autoplay]}
+                    modules={[Autoplay]}
                     onSwiper={(swiper) => (swiperRef.current = swiper)}
                     onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
                     slidesPerView={'auto'}
@@ -87,8 +155,8 @@ export default function HorizontalScrollSection() {
                     grabCursor={true}
                     autoplay={{
                         delay: 3000, // Tempo de espera entre os slides (3 segundos)
-                        disableOnInteraction: false, // Continua a rodar sozinho mesmo após o utilizador interagir/clicar
-                        pauseOnMouseEnter: true, // Pausa a reprodução quando o rato passa por cima
+                        disableOnInteraction: false, 
+                        pauseOnMouseEnter: true,
                     }}
                     className="horizontal-swiper-track"
                 >
@@ -97,14 +165,9 @@ export default function HorizontalScrollSection() {
                         <SwiperSlide key={item.id} className="swiper-slide-custom">
                             <div className="video-card">
                                 <div className="video-wrapper">
-                                    <video
+                                    <CardVideo
                                         src={item.videoSrc}
-                                        autoPlay
-                                        muted
-                                        loop
-                                        playsInline
-                                        preload="metadata"
-                                        aria-label={`Categoria ${item.categoria}`}
+                                        label={`Categoria ${item.categoria}`}
                                     />
                                     <span className="card-badge">{item.categoria}</span>
                                     <div className="card-details">
@@ -118,7 +181,6 @@ export default function HorizontalScrollSection() {
                     ))}
                 </Swiper>
 
-                {/* Botão Próximo Customizado */}
                 <button
                     className="custom-nav-btn next-btn"
                     onClick={() => swiperRef.current?.slideNext()}
@@ -134,6 +196,7 @@ export default function HorizontalScrollSection() {
                         key={index}
                         className={`custom-bullet ${index === activeIndex ? 'active' : ''}`}
                         onClick={() => swiperRef.current?.slideTo(index)}
+                        aria-label={`Ir para o slide ${index + 1}`}
                     />
                 ))}
             </div>
