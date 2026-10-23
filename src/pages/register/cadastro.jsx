@@ -11,7 +11,6 @@ import Footer from '../../components/footer';
 import Void from '../../components/void';
 import Loading from '../../components/loading';
 import createUser from '../../api/register';
-import rosesImg from "../../assets/roses/roses5.jpg";
 
 const Cadastro = () => {
     const { activeState } = useSelector(({ cartReducer }) => cartReducer);
@@ -49,7 +48,7 @@ const Cadastro = () => {
             <Header />
             <Void />
 
-            <div className="contact-hero-wrapper" style={{ backgroundImage: `url(${rosesImg})` }}>
+            <div className="contact-hero-wrapper">
                 <div className="contact-hero-overlay" />
 
                 <div className="contact-main-content">

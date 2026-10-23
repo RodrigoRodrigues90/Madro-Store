@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Sun, CreditCard, Tag, Gift } from 'lucide-react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
-import bannerVideo from '../assets/video.mp4';
+import bannerVideo from '../assets/mp4/video.mp4';
 import '../css/heroSection.css';
 
 const promoItems = [

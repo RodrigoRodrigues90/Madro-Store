@@ -11,19 +11,20 @@ import 'swiper/css';
 
 import '../css/HorizontalScrollSection.css';
 
-// Importação das Imagens
-import oculosWebp from '../assets/oculos.webp';
-import pulseirasWebp from '../assets/pulseiras.webp';
-import aneisWebp from '../assets/aneis.webp';
-import colaresWebp from '../assets/colares.webp';
-import brincosWebp from '../assets/brincos.webp';
+// Importação dos videos
+
+import oculosVideo from '../assets/mp4/oculos.mp4';
+import aneisVideo from '../assets/mp4/aneis.mp4';
+import colaresVideo from '../assets/mp4/colares.mp4';
+import brincosVideo from '../assets/mp4/brincos.mp4';
+import pulseirasVideo from '../assets/mp4/pulseiras.mp4';
 
 const produtosManuais = [
-    { id: 1, categoria: 'ÓCULOS', imgSrc: oculosWebp },
-    { id: 2, categoria: 'PULSEIRAS', imgSrc: pulseirasWebp },
-    { id: 3, categoria: 'ANÉIS', imgSrc: aneisWebp },
-    { id: 4, categoria: 'COLARES', imgSrc: colaresWebp },
-    { id: 5, categoria: 'BRINCOS', imgSrc: brincosWebp },
+    { id: 1, categoria: 'ÓCULOS', videoSrc: oculosVideo },
+    { id: 2, categoria: 'PULSEIRAS', videoSrc: pulseirasVideo },
+    { id: 3, categoria: 'ANÉIS', videoSrc: aneisVideo },
+    { id: 4, categoria: 'COLARES', videoSrc: colaresVideo },
+    { id: 5, categoria: 'BRINCOS', videoSrc: brincosVideo },
 ];
 
 export default function HorizontalScrollSection() {
@@ -96,15 +97,19 @@ export default function HorizontalScrollSection() {
                         <SwiperSlide key={item.id} className="swiper-slide-custom">
                             <div className="video-card">
                                 <div className="video-wrapper">
-                                    <img
-                                        src={item.imgSrc}
-                                        alt={`Categoria ${item.categoria}`}
-                                        loading="eager"
+                                    <video
+                                        src={item.videoSrc}
+                                        autoPlay
+                                        muted
+                                        loop
+                                        playsInline
+                                        preload="metadata"
+                                        aria-label={`Categoria ${item.categoria}`}
                                     />
                                     <span className="card-badge">{item.categoria}</span>
                                     <div className="card-details">
                                         <Link to={"/Madro-Store/produtos/" + item.categoria.toLowerCase()}>
-                                        <button className="buy-btn">Ver Produtos</button>
+                                            <button className="buy-btn">Ver Produtos</button>
                                         </Link>
                                     </div>
                                 </div>

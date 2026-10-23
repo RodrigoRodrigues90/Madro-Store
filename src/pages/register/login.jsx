@@ -10,7 +10,6 @@ import Footer from '../../components/footer';
 import Loading from '../../components/loading';
 import Void from '../../components/void';
 import logUser from '../../api/log';
-import rosesImg from "../../assets/roses/roses5.jpg";
 
 const Login = () => {
     const { activeState } = useSelector(({ cartReducer }) => cartReducer);
@@ -49,7 +48,7 @@ const Login = () => {
             <Header />
             <Void />
 
-            <div className="contact-hero-wrapper" style={{ backgroundImage: `url(${rosesImg})` }}>
+            <div className="contact-hero-wrapper">
                 <div className="contact-hero-overlay" />
 
                 <div className="contact-main-content">
